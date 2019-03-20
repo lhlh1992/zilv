@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间是对应接口的包名+类名 -->
+<mapper namespace="com.liu.mvc.dao.dictype.DictypeMapper">
+
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.liu.mvc.pojo.DicType">
+	    <id column="id" property="id" />
+		<result column="dic_type_code" property="dic_type_code" />
+		<result column="dic_type_name" property="dic_type_name" />
+		<result column="dic_type_state" property="dic_type_state" />
+		<result column="create_time" property="create_time" />
+		<result column="dictypecode" property="dictypecode" />
+	</resultMap>
+    
+    <sql id="Base_Column_List">
+		id,dic_type_code,dic_type_name,dic_type_state,create_time
+	</sql>
+	
+	<select id="selectDictype" resultType="com.liu.mvc.pojo.DicType">
+		select
+		<include refid="Base_Column_List" />
+		from dic_type
+		<where>
+		1=1
+		  	<if test="name != null">
+			and dic_type_name like CONCAT('%',#{name},'%')
+	    	</if>
+	    	<if test="code != null">
+			and dic_type_code like CONCAT('%',#{code},'%')
+	    	</if>
+	    	ORDER BY create_time DESC
+		</where>
+		
+	</select>
+	
+	<insert id="insertDictype"  parameterType="DicType">
+	  INSERT INTO dic_type (dic_type_code,dic_type_name,dic_type_state,create_time)VALUES
+	 (#{dic_type_code}, #{dic_type_name},#{dic_type_state},now())  
+	</insert>
+	
+	
+	<update id="updateDictype"  parameterType="DicType">
+	      UPDATE dic_type  
+	       <set>   
+	        dic_type_code = #{dic_type_code} ,
+	        dic_type_name = #{dic_type_name},
+	    </set>   
+	      WHERE 
+	      id = #{id}
+	</update>
+	
+	<delete id="deleteDictype" parameterType="String">
+		DELETE FROM dic_type 
+		WHERE id = #{id}
+	</delete>
+</mapper> 
