@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    username: root
+    password: zaqxsw
+    url: jdbc:mysql://localhost:3306/zilv?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+    
+    
+mybatis:
+  mapper-locations: classpath:mybatis/*Mapper.xml
+  type-aliases-package: com.liu.mvc.pojo
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImp1
+
+#springboot 控制台输出SQL
+logging:           
+     level:
+       com.liu.mvc.dao.*:
+                      debug
+              
+                
+    
+  
+  
+
+  
+
+ 
