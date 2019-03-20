@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间是对应接口的包名+类名 -->
+<mapper namespace="com.liu.mvc.dao.dicitem.DicitemMapper">
+
+    <!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.liu.mvc.pojo.DicItem">
+		<result column="id" property="id" />
+		<result column="dic_item_code" property="dicItemCode" />
+		<result column="dic_item_name" property="dicItemName" />
+		<result column="dic_type_id" property="dicTypeId" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+    
+    <sql id="Base_Column_List">
+		id,dic_item_code,dic_item_name,dic_type_id,create_time
+	</sql>
+	
+	<select id="selectDicitem"   resultMap="BaseResultMap" resultType="com.liu.mvc.pojo.DicItem">
+		select
+		<include refid="Base_Column_List" />
+		from dic_item
+		<where>
+		1=1
+	    	<if test="code != null">
+			and dic_type_id = #{code}
+	    	</if>
+		</where>
+	</select>
+	
+	
+	
+	<insert id="insertDicItem"  parameterType="DicItem">
+	  INSERT INTO dic_item (dic_item_code,dic_item_name,dic_type_id,create_time)VALUES
+	 (#{dicItemCode}, #{dicItemName},#{dicTypeId},now())  
+	</insert>
+	
+	
+	<update id="updateDicitem"  parameterType="DicItem">
+	      UPDATE dic_item  
+	       <set>   
+	        dic_item_code = #{dicItemCode} ,
+	        dic_item_name = #{dicItemName},
+	    </set>   
+	      WHERE 
+	      id = #{id}
+	</update>
+	
+	<delete id="deleteDicitem" parameterType="String">
+		DELETE FROM dic_item 
+		WHERE id = #{id}
+	</delete>
+	
+	
+	<delete id="deleteDicitemAll" parameterType="String">
+		DELETE FROM dic_item 
+		WHERE dic_type_id = #{dicTypeId}
+	</delete>
+	
+	
+	
+</mapper> 
