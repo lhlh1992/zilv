@@ -1,0 +1,77 @@
+<nz-layout>
+  <nz-content style=" height: 90%; width: 49%;left: 0;border-right:2px solid lightslategray">
+    <nz-header style='background-color:white;text-align:left;font-size: 16px;'>
+      字典类型
+    </nz-header>
+     <!-- 搜索框及按钮 --> 
+<div class="mb-md" (keydown)="keydown($event)">
+  <input nz-input [(ngModel)]="searchText" name="searchText" style="width: 250px;" class="mr-sm">
+  <button nz-button (click)="query()"  [nzType]="'primary'">搜索</button>
+  <button nz-button (click)="add()">添加</button>
+  <!-- <button nz-button (click)="deleteuser();st.load(1)">删除</button> -->
+</div>
+       <div>
+        <st #st [data]="data" [columns]="columns"  (change)="dictypeClick($event)"[size]='small'></st>
+       </div>
+  </nz-content>
+
+  <nz-content style=" position:absolute;right: 0;  width: 45%;">
+    <nz-header style='background-color:white;text-align:left;font-size: 16px;'>
+        {{dicpeizhiCode}}字典配置
+    </nz-header>
+    <div class="mb-md" (keydown)="keydown($event)">
+      <input nz-input [(ngModel)]="searchText" name="searchText" style="width: 250px;" class="mr-sm">
+      <button nz-button (click)="query()"  [nzType]="'primary'">搜索</button>
+      <button nz-button (click)="addItem()">添加</button>
+      <!-- <button nz-button (click)="deleteuser();st.load(1)">删除</button> -->
+    </div>
+    <div>
+      <st #itemst [data]="itemData" [columns]="columnsItem" [size]='small'></st>
+     </div>
+  </nz-content>
+  
+</nz-layout>
+
+
+
+
+<!-- 新增用户弹出框 -->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="字典类型编辑" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-form-item>
+    <nz-form-label nzFor="yhm">类型编号</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="dic_type_code" name="dic_type_code" id="dic_type_code">
+    </nz-form-control>
+    <nz-form-label nzFor="password">字典名称</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="dic_type_name" name="dic_type_name" type="text" id="dic_type_name">
+    </nz-form-control>
+  </nz-form-item>
+</nz-modal>
+
+
+<!-- 删除确认弹出框 -->
+<nz-modal [(nzVisible)]="isVisibledelete" nzTitle="删除确认" (nzOnCancel)="handleCanceldelete()" (nzOnOk)="handledelete()">
+     确定要删除吗？
+</nz-modal>
+
+
+
+<!-- 新增用户弹出框  配置 -->
+<nz-modal [(nzVisible)]="isVisibleItem" nzTitle="字典配置编辑" (nzOnCancel)="handleCancelItem()" (nzOnOk)="handleOkItem()">
+  <nz-form-item>
+    <nz-form-label nzFor="yhm">字典编号</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="dicItemCode" name="dicItemCode" id="dicItemCode">
+    </nz-form-control>
+    <nz-form-label nzFor="password">字典名称</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="dicItemName" name="dicItemName" type="text" id="dicItemName">
+    </nz-form-control>
+  </nz-form-item>
+</nz-modal>
+
+<!-- 删除确认弹出框 -->
+<nz-modal [(nzVisible)]="isVisibledeleteItem" nzTitle="删除确认" (nzOnCancel)="handleCanceldeleteItem()" (nzOnOk)="handledeleteItem()">
+  确定要删除吗？
+</nz-modal>

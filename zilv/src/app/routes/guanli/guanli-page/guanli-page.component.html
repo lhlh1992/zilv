@@ -1,0 +1,25 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="add()" nz-button nzType="primary" (click)="add()">新建</button>
+  </ng-template>
+</page-header>
+<nz-card>
+
+  <st #st [data]="data" [columns]="columns"></st>
+</nz-card>
+
+
+
+<!-- 新增用户弹出框 -->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="字典类型编辑" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-form-item>
+    <nz-form-label nzFor="yhm">学习时间</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="studyTime" name="studyTime" id="studyTime">
+    </nz-form-control>
+    <nz-form-label nzFor="password">字典名称</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="dic_type_name" name="dic_type_name" type="text" id="dic_type_name">
+    </nz-form-control>
+  </nz-form-item>
+</nz-modal>
