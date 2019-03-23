@@ -43,64 +43,6 @@ public class loginController {
 		        	return list;
 	              }
 	           
-	           @RequestMapping(value="/dictypeList")
-	           @ResponseBody        
-	              public  List<DicType> dictypeList() {
-		        	List<DicType> list =   dictypeService.selectDictype("", "");
-		        	return list;
-	              }
-	           
-	           @RequestMapping(value="/dicitemList")
-	           @ResponseBody        
-	              public  List<DicItem> dicitemList(@RequestBody  Map<String,Object> map) {	  
-	        	  System.out.println();
-	        	     String code = map.get("code").toString();
-		        	 List<DicItem> list =   dicitemService.selectDicitem(code);
-		        	 return list;
-	              }
-	           
-	           @RequestMapping(value="/insertDictype")
-	           @ResponseBody        
-	              public  int insertDictype(@RequestBody DicType dic) {	  
-		        	 return  dictypeService.insertDictype(dic);
-	              }
-	           
-	           @RequestMapping(value="/updateDictype")
-	           @ResponseBody        
-	              public  int updateDictype(@RequestBody DicType dic) {	  
-		        	 return  dictypeService.updateDictype(dic);
-	              }
-	           
-	           
-	           @RequestMapping(value="/deleteDictype")
-	           @ResponseBody    
-	           @Transactional
-	              public  int deleteDictype(@RequestBody  Map<String,Object> map) {	  
-	        	    String id = map.get("id").toString();
-	        	    dicitemService.deleteDicitemAll(id);
-		        	 return  dictypeService.deleteDictype(id);
-	              }
-	           
-	           
-	           
-	           @RequestMapping(value="/insertDicItem")
-	           @ResponseBody        
-	              public  int insertDicItem(@RequestBody DicItem dic) {	         	 
-		        	 return  dicitemService.insertDicItem(dic);
-	              }
-	           
-	           @RequestMapping(value="/updateDicitem")
-	           @ResponseBody        
-	              public  int updateDicitem(@RequestBody DicItem dic) {	  
-		        	 return  dicitemService.updateDicitem(dic);
-	              }
-	           
-	           
-	           @RequestMapping(value="/deleteDicitem")
-	           @ResponseBody        
-	              public  int deleteDicitem(@RequestBody  Map<String,Object> map) {	    
-	        	    String id = map.get("id").toString();
-		        	return  dicitemService.deleteDicitem(id);
-	              }
+	        
 	           
 }

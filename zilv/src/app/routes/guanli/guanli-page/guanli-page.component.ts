@@ -4,15 +4,16 @@ import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { Router} from '@angular/router';
 import { ServicesService} from '../../../services/services.service';
+
 @Component({
   selector: 'app-guanli-guanli-page',
   templateUrl: './guanli-page.component.html',
+  styleUrls: ['./guanli-page.component.css']
 })
 export class GuanliGuanliPageComponent implements OnInit {
-  
   data:any[]=[]; //列表数据
   isVisible=false;//新增修改弹出框开关
-
+  laydate : any; 
  
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -31,7 +32,9 @@ export class GuanliGuanliPageComponent implements OnInit {
   constructor(private http: _HttpClient, private modal: ModalHelper,private router: Router,private config:ServicesService) { }
 
   ngOnInit() {
-           this.query();
+         this.query();
+       
+     
    }
   jumpHandle(){
     //这是在html中绑定的click跳转事件
@@ -63,5 +66,18 @@ export class GuanliGuanliPageComponent implements OnInit {
     handleCancel(){
       this.isVisible = false;
     }
+
+
+    onChange(result: Date): void {
+      console.log('onChange: ', result);
+    }
+
+       //键盘回车事件
+   keydown(data){
+    if (data.keyCode === 13) {
+      this.query();
+    }
+  }
+
 
 }

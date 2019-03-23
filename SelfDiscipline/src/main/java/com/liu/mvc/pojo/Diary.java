@@ -9,6 +9,7 @@ public class Diary {
 	         private  String sportsContent;  //健身内容
 	         private  String BadHabits;  //是否有不良习惯（0:否  1：是）
 	         private  String sleepTime;  //晚上睡觉时间
+	         private  String aijiuTime;   //艾灸时间，是否艾灸
 	         private  String healthStatus;  //健康状态（字典表）
 	         private  String dinner;  //晚餐（字典表获取）
 	         private  String appetite;  //是否吃宵夜，控制饮食（0:否 1：是）
@@ -100,6 +101,14 @@ public class Diary {
 			public void setSentiment(String sentiment) {
 				this.sentiment = sentiment;
 			}
+			public String getAijiuTime() {
+				return aijiuTime;
+			}
+			public void setAijiuTime(String aijiuTime) {
+				this.aijiuTime = aijiuTime;
+			}
+			
+			
 	         
 	         
 	         

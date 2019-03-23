@@ -6,6 +6,7 @@ import { ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-guanli-view',
   templateUrl: './view.component.html',
+  styleUrls: ['./view.component.css']
 })
 export class GuanliViewComponent implements OnInit {
   aa=''
@@ -45,7 +46,7 @@ export class GuanliViewComponent implements OnInit {
   }
 
   ngOnInit() { 
-        alert(this.aa);
+  
   }
 
   add() {

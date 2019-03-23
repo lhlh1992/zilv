@@ -93,7 +93,7 @@ export class StartupService {
     };
     const user: any = {
       name: 'Admin',
-      avatar: './assets/tmp/img/avatar.jpg',
+      avatar: './assets/tmp/img/heipi.jpg',
       email: 'cipchk@qq.com',
       token: '123456789'
     };
@@ -109,11 +109,11 @@ export class StartupService {
         text: '主导航',
         group: true,
         children: [
-          {
-            text: '仪表盘',
-            link: '/dashboard',
-            icon: { type: 'icon', value: 'appstore' }
-          },
+          // {
+          //   text: '仪表盘',
+          //   link: '/dashboard',
+          //   icon: { type: 'icon', value: 'appstore' }
+          // },
   
           {
             text: '每日记录',
