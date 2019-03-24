@@ -9,7 +9,9 @@ import { ActivatedRoute} from '@angular/router';
   styleUrls: ['./view.component.css']
 })
 export class GuanliViewComponent implements OnInit {
-  aa=''
+  dateTime=''
+  sportsData:any[]=[];//运动项目表数据
+  isVisibleSports = false;
   url = `/user`;
   searchSchema: SFSchema = {
     properties: {
@@ -23,36 +25,47 @@ export class GuanliViewComponent implements OnInit {
   
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    { title: '运动项目', index: 'no' },
+    { title: '运动强度', index: 'no' },
+
+
     {
-      title: '',
+      title: '操作',
       buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+        {
+          text: '编辑',
+          click: (item: any) => {
+             
+          },
+        },
+        {
+          text: '删除',
+          click: (item: any) => {
+             
+          },
+        },
       ]
     }
   ];
    
   constructor(private http: _HttpClient, private modal: ModalHelper,private activatedRoute: ActivatedRoute) { 
+    //路由传参接受方法
     activatedRoute.queryParams.subscribe(queryParams => {
-      let productId = queryParams.productId;
-      let title = queryParams.title;
-
-      this.aa = queryParams.productId;
+      //接收日期时间
+      this.dateTime = queryParams.date;
   });
   }
 
   ngOnInit() { 
-  
+         console.log(this.dateTime) 
   }
 
-  add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+  addSports() {
+    this.isVisibleSports = true;
+  }
+
+  handleCancel(){
+    this.isVisibleSports = false;
   }
 
 }

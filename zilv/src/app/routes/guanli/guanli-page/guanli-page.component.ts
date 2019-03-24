@@ -14,7 +14,8 @@ export class GuanliGuanliPageComponent implements OnInit {
   data:any[]=[]; //列表数据
   isVisible=false;//新增修改弹出框开关
   laydate : any; 
- 
+  selectedValue = new Date('2019-03-25');
+  
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     { title: '日期', index: 'create_time' },
@@ -36,12 +37,12 @@ export class GuanliGuanliPageComponent implements OnInit {
        
      
    }
-  jumpHandle(){
+  jumpHandle(ele){
     //这是在html中绑定的click跳转事件
     this.router.navigate(['/guanli/view'], {
         queryParams: {
-            productId: '1',
-            title: 'moon'
+           
+            date: ele
         }
     });
   }
@@ -71,6 +72,27 @@ export class GuanliGuanliPageComponent implements OnInit {
     onChange(result: Date): void {
       console.log('onChange: ', result);
     }
+
+    getMonthData(date: Date): number | null {
+      if (date.getMonth() === 8) {
+        return 1394;
+      }
+      return null;
+    }
+
+
+    nzPanelChange(){
+          alert('ddd');
+    }
+
+
+    selectChange(select: Date): void {
+     // console.log(`Select value: ${select}`);
+     
+    // this.jumpHandle(select)
+    }
+
+
 
        //键盘回车事件
    keydown(data){

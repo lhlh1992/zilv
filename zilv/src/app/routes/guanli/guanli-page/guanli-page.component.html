@@ -6,35 +6,42 @@
 
  <nz-content>
 <!-- 搜索框及按钮 --> 
-<div style="margin-top: 12px;margin-bottom: 12px;" (keydown)="keydown($event)">
+<!-- <div style="margin-top: 12px;margin-bottom: 12px;" (keydown)="keydown($event)">
   <input nz-input [(ngModel)]="searchText" name="searchText" style="width: 250px;" >
   <button nz-button (click)="query()"  [nzType]="'primary'">搜索</button>
   <button nz-button (click)="jumpHandle()">添加</button>
+</div> -->
+  <!-- <nz-card>
+    <st #st [data]="data" [columns]="columns" ></st>
+  </nz-card> -->
+
+<nz-alert nzMessage="Your selected date: {{ selectedValue | date: 'yyyy-MM-dd' }}"></nz-alert>
+<div style="width: 100%;height: 100%;" >
+    <nz-calendar [(ngModel)]="selectedValue" (nzSelectChange)="selectChange($event)">
+        <ul *nzDateCell="let date" class="events"  >    
+          <div *ngFor="let item of data">
+              <ng-container [ngSwitch]="date.getFullYear()">
+                  <ng-container *ngSwitchCase="item.yy">
+                      <ng-container [ngSwitch]="(date.getMonth()+1)">
+                          <ng-container *ngSwitchCase="item.mm">
+                              <ng-container [ngSwitch]="date.getDate()">
+                                  <ng-container *ngSwitchCase="item.dd">
+                                        
+                                     {{date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()}}
+                                          
+                          </ng-container>           
+                        </ng-container> 
+                      </ng-container>           
+                    </ng-container> 
+                  </ng-container>           
+                </ng-container> 
+          </div>     
+    
+        </ul>
+    </nz-calendar>
 </div>
-  <nz-card>
-    <st #st [data]="data" [columns]="columns"></st>
-  </nz-card>
  </nz-content>
 </nz-layout>
 
 
 
-
-<!-- 新增用户弹出框 -->
-<nz-modal [(nzVisible)]="isVisible" nzTitle="每日生活记录" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-  <nz-form-item>
-    <nz-form-label >学习时间</nz-form-label>
-    <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
-
-    <nz-form-label style="margin-bottom: 20px;">学习内容</nz-form-label>
-    <textarea  class="textarea" style="width:75%;margin-top: 12px;margin-bottom: 12px;"  rows="2" nz-input [(ngModel)]="studyContent"></textarea>
-    
-    <nz-form-label >健身时间</nz-form-label>
-    <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
-
-    
-    <nz-form-label >健身项目</nz-form-label>
-    <textarea  class="textarea" style="width:75%;margin-top: 12px;"  rows="2" nz-input [(ngModel)]="inputValue"></textarea>
-
-  </nz-form-item>
-</nz-modal>

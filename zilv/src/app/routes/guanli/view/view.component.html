@@ -1,46 +1,69 @@
-<nz-layout style="width:100%;">
-     <nz-content>
-   
-       <form nz-form>
-          <nz-form-item>
-              <div style="width: 100%;padding: 8px;margin-top: 20px;">
-                <div class="RecordType"> 
-                 <div class="circle">1</div>
-                 <div class="title">学习记录</div> 
-                </div>
-                <div class="xian"></div>
-                  <nz-form-label [nzSm]="1" [nzXs]="1" >学习时间</nz-form-label>
-                  <nz-form-control>
-                      <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习开始时间"></nz-time-picker> 至
-                      <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习结束时间"></nz-time-picker>
-                  </nz-form-control>
-                  <nz-form-label [nzSm]="1" [nzXs]="1">学习内容</nz-form-label>
-                  <nz-form-control>
-                      <textarea  class="textarea" style="width:65%;margin-top: 12px;margin-bottom: 12px;" placeholder="填写学习内容....." rows="3" nz-input [(ngModel)]="studyContent"></textarea>
-                  </nz-form-control>
-                 
-              </div>       
-              
-                <div style="width: 100%;padding: 8px;margin-top: 20px;">
-                    <div class="RecordType"> 
-                     <div class="circle">2</div>
-                     <div class="title">健身记录</div> 
-                    </div>
-                    <div class="xian"></div>
-                      <nz-form-label [nzSm]="1" [nzXs]="1" >健身时间</nz-form-label>
-                      <nz-form-control>
-                          <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习开始时间"></nz-time-picker> 至
-                          <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习结束时间"></nz-time-picker>
-                      </nz-form-control>
-                      <nz-form-label [nzSm]="1" [nzXs]="1">健身项目</nz-form-label>
-                      <nz-form-control>
-                          <textarea  class="textarea" style="width:65%;margin-top: 12px;margin-bottom: 12px;" placeholder="填写学习内容....." rows="3" nz-input [(ngModel)]="studyContent"></textarea>
-                      </nz-form-control>
-                     
-                  </div>           
-          </nz-form-item >
-        </form>
 
+    <nz-layout style="width:100%;">
+        <nz-content>
       
-     </nz-content>
-</nz-layout>
+          <form nz-form>
+             <nz-form-item>
+                 <div style="width: 100%;padding: 8px;margin-top: 20px;">
+                   <div class="RecordType"> 
+                    <div class="circle">1</div>
+                    <div class="title">学习记录</div> 
+                   </div>
+                   <div class="xian"></div>
+                     <nz-form-label [nzSm]="1" [nzXs]="1" >学习时间</nz-form-label>
+                     <nz-form-control>
+                         <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习开始时间"></nz-time-picker> 至
+                         <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习结束时间"></nz-time-picker>
+                     </nz-form-control>
+                     <nz-form-label [nzSm]="1" [nzXs]="1">学习内容</nz-form-label>
+                     <nz-form-control>
+                         <textarea  class="textarea" style="width:65%;margin-top: 12px;margin-bottom: 12px;" placeholder="填写学习内容....." rows="3" nz-input ></textarea>
+                     </nz-form-control>
+                    
+                 </div>       
+                 
+                   <div style="width: 100%;padding: 8px;margin-top: 20px;">
+                       <div class="RecordType"> 
+                        <div class="circle">2</div>
+                        <div class="title">健身记录</div> 
+                       </div>
+                       <div class="xian"></div>
+                         <nz-form-label [nzSm]="1" [nzXs]="1" >健身时间</nz-form-label>
+                         <nz-form-control>
+                             <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习开始时间"></nz-time-picker> 至
+                             <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习结束时间"></nz-time-picker>
+                         </nz-form-control>
+                         <nz-form-label [nzSm]="1" [nzXs]="1">健身项目</nz-form-label>
+
+                         
+                         <button nz-button (click)="addSports()"  [nzType]="'primary'" >添加</button>
+                         <!-- <st #st [data]="sportsData" [columns]="columns" [size]="middle"></st> -->
+
+                        
+                     </div>           
+             </nz-form-item >
+           </form>
+   
+         
+        </nz-content>
+   </nz-layout>
+
+<!-- 新增运动项目弹出框 -->
+<!-- <nz-modal [(nzVisible)]="isVisibleSports" nzTitle="每日运动记录" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <nz-form-item>
+      <nz-form-label >学习时间</nz-form-label>
+      <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
+  
+      <nz-form-label style="margin-bottom: 20px;">学习内容</nz-form-label>
+      <textarea  class="textarea" style="width:75%;margin-top: 12px;margin-bottom: 12px;"  rows="2" nz-input [(ngModel)]="studyContent"></textarea>
+      
+      <nz-form-label >健身时间</nz-form-label>
+      <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
+  
+      
+      <nz-form-label >健身项目</nz-form-label>
+      <textarea  class="textarea" style="width:75%;margin-top: 12px;"  rows="2" nz-input [(ngModel)]="inputValue"></textarea>
+  
+    </nz-form-item>
+  </nz-modal> -->
+
