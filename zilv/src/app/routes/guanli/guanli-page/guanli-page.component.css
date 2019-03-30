@@ -10,6 +10,7 @@
   width: 100%;
   text-overflow: ellipsis;
   font-size: 12px;
+
 }
 
 .notes-month {
@@ -20,3 +21,21 @@
 .notes-month section {
   font-size: 28px;
 }
+ .ant-fullcalendar-cell ng-star-inserted{
+  background-color: aqua;
+}
+.but{
+    display: none;
+    margin-bottom: 0px;
+    
+}
+.divBut{
+  position: fixed;
+  bottom: 0; 
+}
+
+/* #rili
+  { 
+background-image: url(../../../../assets/tmp/img/bg8.jpg); 
+  } */
+

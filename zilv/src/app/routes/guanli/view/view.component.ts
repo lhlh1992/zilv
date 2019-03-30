@@ -52,7 +52,9 @@ export class GuanliViewComponent implements OnInit {
     //路由传参接受方法
     activatedRoute.queryParams.subscribe(queryParams => {
       //接收日期时间
-      this.dateTime = queryParams.date;
+      this.dateTime= queryParams.date;
+   
+      console.log(this.dateTime)
   });
   }
 

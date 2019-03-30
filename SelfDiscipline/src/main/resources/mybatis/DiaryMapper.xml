@@ -20,13 +20,10 @@
 		<result column="create_time" property="create_time" />
 		<result column="sentiment" property="sentiment" />
 		<result column="aijiuTime" property="aijiuTime" />
-		<result column="yy" property="yy" />
-		<result column="mm" property="mm" />
-		<result column="dd" property="dd" />
 	</resultMap>
     
     <sql id="Base_Column_List">
-		id,studyTime,studyContent,sportsTime,sportsContent,BadHabits,sleepTime,healthStatus,appetite,faceWash,brushTooth,create_time,sentiment,aijiuTime,yy,mm,dd
+		id,studyTime,studyContent,sportsTime,sportsContent,BadHabits,sleepTime,healthStatus,appetite,faceWash,brushTooth,create_time,sentiment,aijiuTime
 	</sql>
 	
 	<select id="selectDiary"   resultMap="BaseResultMap" resultType="com.liu.mvc.pojo.Diary">
@@ -38,8 +35,8 @@
 	
 	
 	<insert id="insertDiary"  parameterType="Diary">
-	  INSERT INTO diary (id,studyTime,studyContent,sportsTime,sportsContent,BadHabits,sleepTime,healthStatus,appetite,faceWash,brushTooth,create_time,sentiment,aijiuTime,yy,mm,dd)VALUES
-	 (#{id}, #{studyTime},#{studyContent},#{sportsTime},#{sportsContent},#{BadHabits},#{sleepTime},#{healthStatus},#{appetite},#{faceWash},#{brushTooth},#{create_time},#{sentiment},#{aijiuTime},#{yy},#{mm},#{dd})  
+	  INSERT INTO diary (id,studyTime,studyContent,sportsTime,sportsContent,BadHabits,sleepTime,healthStatus,appetite,faceWash,brushTooth,create_time,sentiment,aijiuTime)VALUES
+	 (#{id}, #{studyTime},#{studyContent},#{sportsTime},#{sportsContent},#{BadHabits},#{sleepTime},#{healthStatus},#{appetite},#{faceWash},#{brushTooth},#{create_time},#{sentiment},#{aijiuTime})  
 	</insert>
 	
 	

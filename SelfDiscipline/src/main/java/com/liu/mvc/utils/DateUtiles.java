@@ -1,19 +1,27 @@
-package com.liu;
+package com.liu.mvc.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class test {
+import com.liu.test;
+
+/**
+ * 日期转农历工具类
+ * @author Administrator
+ *
+ */
+public class DateUtiles {
 	private static int year;
     private static int month;
     private static int day;
     private  static boolean leap;
     final static String chineseNumber[] = {"一", "二", "三", "四", "五", "六", "七",
             "八", "九", "十", "十一", "十二"};
+    public String yy;
     static SimpleDateFormat chineseDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    final static long[] lunarInfo = new long[]{0x04bd8, 0x04ae0, 0x0a570,
+     static long[] lunarInfo = new long[]{0x04bd8, 0x04ae0, 0x0a570,
             0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2,
             0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0,
             0x0ada2, 0x095b0, 0x14977, 0x04970, 0x0a4b0, 0x0b4b5, 0x06a50,
@@ -35,6 +43,7 @@ public class test {
             0x0d530, 0x05aa0, 0x076a3, 0x096d0, 0x04bd7, 0x04ad0, 0x0a4d0,
             0x1d0b6, 0x0d250, 0x0d520, 0x0dd45, 0x0b5a0, 0x056d0, 0x055b2,
             0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0};
+    
     
     
     // ====== 传回农历 y年的总天数
@@ -99,10 +108,10 @@ public class test {
      * monCyl4:从1900年1月31日以来,闰月数 　　* dayCyl5:与1900年1月31日相差的天数,再加40 ? 　　* @param
      * cal 　　* @return
      */
-    public test() {
+    public DateUtiles() {
     	
     }
-    public test(Calendar cal) {
+    public DateUtiles(Calendar cal) {
     	 @SuppressWarnings("unused")
          int yearCyl, monCyl, dayCyl;
          int leapMonth = 0;
@@ -172,80 +181,6 @@ public class test {
          }
          month = iMonth;
          day = offset + 1;
-    }
-    
-    public static String aa(Calendar cal) {
-    	 @SuppressWarnings("unused")
-         int yearCyl, monCyl, dayCyl;
-         int leapMonth = 0;
-         Date baseDate = null;
-         try {
-             baseDate = chineseDateFormat.parse("1900-1-31");
-         } catch (ParseException e) {
-             e.printStackTrace(); // To change body of catch statement use
-             // Options | File Templates.
-         }
-         // 求出和1900年1月31日相差的天数
-         int offset = (int) ((cal.getTime().getTime() - baseDate.getTime()) / 86400000L);
-         dayCyl = offset + 40;
-         monCyl = 14;
-         // 用offset减去每农历年的天数
-         // 计算当天是农历第几天
-         // i最终结果是农历的年份
-         // offset是当年的第几天
-         int iYear, daysOfYear = 0;
-         for (iYear = 1900; iYear < 2050 && offset > 0; iYear++) {
-             daysOfYear = yearDays(iYear);
-             offset -= daysOfYear;
-             monCyl += 12;
-         }
-         if (offset < 0) {
-             offset += daysOfYear;
-             iYear--;
-             monCyl -= 12;
-         }
-         // 农历年份
-         year = iYear;
-         yearCyl = iYear - 1864;
-         leapMonth = leapMonth(iYear); // 闰哪个月,1-12
-         leap = false;
-         // 用当年的天数offset,逐个减去每月（农历）的天数，求出当天是本月的第几天
-         int iMonth, daysOfMonth = 0;
-         for (iMonth = 1; iMonth < 13 && offset > 0; iMonth++) {
-             // 闰月
-             if (leapMonth > 0 && iMonth == (leapMonth + 1) && !leap) {
-                 --iMonth;
-                 leap = true;
-                 daysOfMonth = leapDays(year);
-             } else
-                 daysOfMonth = monthDays(year, iMonth);
-             offset -= daysOfMonth;
-             // 解除闰月
-             if (leap && iMonth == (leapMonth + 1))
-                 leap = false;
-             if (!leap)
-                 monCyl++;
-         }
-         // offset为0时，并且刚才计算的月份是闰月，要校正
-         if (offset == 0 && leapMonth > 0 && iMonth == leapMonth + 1) {
-             if (leap) {
-                 leap = false;
-             } else {
-                 leap = true;
-                 --iMonth;
-                 --monCyl;
-             }
-         }
-         // offset小于0时，也要校正
-         if (offset < 0) {
-             offset += daysOfMonth;
-             --iMonth;
-             --monCyl;
-         }
-         month = iMonth;
-         day = offset + 1;
-        
-        return year+""+month+""+day;
     }
 
     public static String getChinaDayString(int day) {
@@ -263,28 +198,18 @@ public class test {
         return year + "年" + (leap ? "闰" : "") + chineseNumber[month - 1] + "月"
                 + getChinaDayString(day);
     }
-	     
-	       
-	         public static void main(String[] args) {
-	        	 Date date = new Date();
-	             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	             String d = dateFormat.format(date);
-	             Calendar today = Calendar.getInstance();
-	             try {
-					today.setTime(chineseDateFormat.parse(d));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	             test lunar = new test(today);
-	             System.out.println("北京时间：" + chineseDateFormat.format(today.getTime())
-	                     + "　农历" + lunar);
-	        	 
-	        
-	        	 
-	        	 
-	              
-			}
-	
-
+    
+    
+    public static String  chineseDat(String date) {
+    	 Calendar today = Calendar.getInstance();
+    	 try {
+			today.setTime(chineseDateFormat.parse(date));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	  test lunar = new test(today);
+		return lunar.toString();
+    	 
+    }
 }
