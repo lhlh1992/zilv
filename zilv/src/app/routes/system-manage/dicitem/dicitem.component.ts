@@ -107,10 +107,9 @@ export class SystemManageDicitemComponent implements OnInit {
     //字典类型列表点击事件
     dictypeClick(ele){
      if(ele.click!=null && ele.click!=undefined){
-       console.log(ele)
        this.dicpeizhiCode=ele.click.item.dic_type_code;
-       this.dictypeCode = ele.click.item.id;
-       this.queryItem(ele.click.item.id);
+       this.dictypeCode = ele.click.item.dic_type_code;
+       this.queryItem(ele.click.item.dic_type_code);
      }
        
         
@@ -269,7 +268,6 @@ export class SystemManageDicitemComponent implements OnInit {
                   }
         });  
     }
-
 
       //键盘回车事件
    keydown(data){

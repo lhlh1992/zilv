@@ -1,5 +1,6 @@
 package com.liu.mvc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,9 +42,13 @@ public class dicController {
     @RequestMapping(value="/dicitemList")
     @ResponseBody        
        public  List<DicItem> dicitemList(@RequestBody  Map<String,Object> map) {	  
- 	  System.out.println();
- 	     String code = map.get("code").toString();
-     	 List<DicItem> list =   dicitemService.selectDicitem(code);
+ 	    String code ="";
+ 	   if( map.get("code")!=null) {
+ 		  code =  map.get("code").toString();
+ 	   }
+ 	 
+ 	    List<DicItem> list = new ArrayList<>();	    
+ 	    list =   dicitemService.selectDicitem(code);
      	 return list;
        }
     
@@ -73,7 +78,8 @@ public class dicController {
     
     @RequestMapping(value="/insertDicItem")
     @ResponseBody        
-       public  int insertDicItem(@RequestBody DicItem dic) {	         	 
+       public  int insertDicItem(@RequestBody DicItem dic) {	 
+    	System.out.println();
      	 return  dicitemService.insertDicItem(dic);
        }
     

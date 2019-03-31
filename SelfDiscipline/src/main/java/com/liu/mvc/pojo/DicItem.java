@@ -12,9 +12,19 @@ public class DicItem {
 	private int id;				// ID
 	private String dicItemCode;		// 编码
 	private String dicItemName;		// 字典名称
-	private int dicTypeId;		// 字典类型
+	private String dicTypeId;		// 字典类型
 	private String createTime;		// 创建时间
+	private String sportsTime;		// 单项运动时间
 	
+	
+	
+	
+	public String getSportsTime() {
+		return sportsTime;
+	}
+	public void setSportsTime(String sportsTime) {
+		this.sportsTime = sportsTime;
+	}
 	public int getId() {
 		return id;
 	}
@@ -34,10 +44,11 @@ public class DicItem {
 		this.dicItemName = dicItemName;
 	}
 
-	public int getDicTypeId() {
+	
+	public String getDicTypeId() {
 		return dicTypeId;
 	}
-	public void setDicTypeId(int dicTypeId) {
+	public void setDicTypeId(String dicTypeId) {
 		this.dicTypeId = dicTypeId;
 	}
 	public String getCreateTime() {

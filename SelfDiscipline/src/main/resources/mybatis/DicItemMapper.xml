@@ -23,7 +23,7 @@
 		from dic_item
 		<where>
 		1=1
-	    	<if test="code != null">
+	    	<if test="code != null and code!='' ">
 			and dic_type_id = #{code}
 	    	</if>
 		</where>
