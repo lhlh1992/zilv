@@ -1,8 +1,8 @@
 
     <nz-layout style="width:100%;">
-        <nz-content>
-          <nz-form-item>        
+        <nz-content>      
              <nz-form-item>
+                <!-- =============================================================================== -->
                  <div style="width: 100%;padding: 8px;margin-top: 20px;">
                    <div class="RecordType"> 
                     <div class="circle">1</div>
@@ -11,14 +11,15 @@
                    <div class="xian"></div>
                      <nz-form-label [nzSm]="1" [nzXs]="1" >学习时间</nz-form-label>
                      <nz-form-control>
-                         <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习开始时间"></nz-time-picker> 至
-                         <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="学习结束时间"></nz-time-picker>
+                         <nz-time-picker nzFormat="HH:mm" [(ngModel)]="studyTimeStart"   nzPlaceHolder="学习开始时间" ></nz-time-picker> 至
+                         <nz-time-picker nzFormat="HH:mm" [(ngModel)]="studyTimeEnd" nzPlaceHolder="学习结束时间" ></nz-time-picker>
                      </nz-form-control>
                      <nz-form-label [nzSm]="1" [nzXs]="1">学习内容</nz-form-label>
                      <nz-form-control>
-                         <textarea  class="textarea" style="width:65%;margin-top: 12px;margin-bottom: 12px;" placeholder="填写学习内容....." rows="3" nz-input ></textarea>
+                         <textarea   [(ngModel)]="studyContent"  class="textarea" style="width:65%;margin-top: 12px;margin-bottom: 12px;" placeholder="填写学习内容....." rows="3" nz-input ></textarea>
                      </nz-form-control>                 
-                 </div>                    
+                 </div>     
+                  <!-- =============================================================================== -->               
                    <div style="width: 100%;padding: 8px;margin-top: 20px;">
                        <div class="RecordType"> 
                         <div class="circle">2</div>
@@ -27,11 +28,11 @@
                        <div class="xian"></div>
                          <nz-form-label [nzSm]="1" [nzXs]="1" >健身时间</nz-form-label>
                          <nz-form-control>
-                             <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="健身开始时间"></nz-time-picker> 至
-                             <nz-time-picker nzFormat="HH:mm" nzPlaceHolder="健身结束时间"></nz-time-picker>
+                             <nz-time-picker  [(ngModel)]="jsTimeStart" nzFormat="HH:mm" nzPlaceHolder="健身开始时间" (ngModelChange)='jsTime1($event)'></nz-time-picker> 至
+                             <nz-time-picker  [(ngModel)]="jsTimeEnd" nzFormat="HH:mm" nzPlaceHolder="健身结束时间" (ngModelChange)='jsTime2($event)'></nz-time-picker>
                          </nz-form-control>
                          <nz-form-label [nzSm]="1" [nzXs]="1">健身项目</nz-form-label>           
-                         <nz-table  id='aaa' #basicTable [nzData]="listOfData" [nzShowPagination]='false'>
+                         <nz-table  id='aaa'  #basicTable [nzData]="listOfData" [nzShowPagination]='false'>
                             <thead>
                               <tr>
                                 <th>运动项目</th>                           
@@ -56,30 +57,95 @@
                             </tbody>
                           </nz-table>                      
                      </div>    
+                     <!-- =============================================================================== -->
+                     <div style="width: 100%;padding: 8px;margin-top: 20px;">
+                        <div class="RecordType"> 
+                         <div class="circle">3</div>
+                         <div class="title">生活习惯</div> 
+                        </div>
+                        <div class="xian"></div>
+                          <nz-form-label [nzSm]="1" [nzXs]="1" >是否戒撸 </nz-form-label>
+                          <nz-form-control>
+                              <nz-radio-group [(ngModel)]="BadHabits">
+                                  <label nz-radio nzValue="1">是</label>
+                                  <label nz-radio nzValue="0">否</label>               
+                                </nz-radio-group>
+                          </nz-form-control>
+                          <nz-form-label     [nzSm]="1" [nzXs]="1" >睡觉时间</nz-form-label>
+                          <nz-form-control>
+                              <nz-time-picker  [(ngModel)]="sleepTime" nzFormat="HH:mm" nzPlaceHolder="夜晚睡觉时间"  (ngModelChange)='sleepTimefon($event)'></nz-time-picker>             
+                          </nz-form-control>    
+                          <nz-form-label [nzSm]="1" [nzXs]="1" >艾灸时间</nz-form-label>
+                          <nz-form-control>
+                              <nz-time-picker  [(ngModel)]="ajTimeStart" nzFormat="HH:mm" nzPlaceHolder="艾灸开始时间" (ngModelChange)='ajTime1($event)'></nz-time-picker> 至 
+                              <nz-time-picker  [(ngModel)]="ajTimeEnt" nzFormat="HH:mm" nzPlaceHolder="艾灸结束时间" (ngModelChange)='ajTime2($event)'></nz-time-picker>            
+                          </nz-form-control>    
+                          <nz-form-label [nzSm]="1" [nzXs]="1" >是否尿床</nz-form-label>
+                          <nz-form-control>
+                              <nz-radio-group [(ngModel)]="healthStatus">
+                                  <label nz-radio nzValue="1">是</label>
+                                  <label nz-radio nzValue="0">否</label>               
+                                </nz-radio-group>
+                          </nz-form-control>   
+                          
+                          <nz-form-label [nzSm]="1" [nzXs]="1" >今日饮食</nz-form-label>
+                          <nz-form-control>
+                              <nz-checkbox-wrapper style="width: 80%;margin-left:5px;margin-top: 8px;" (nzOnChange)="checkbox($event)">
+                               
+                                  <div style="width:20%;float: left;"  *ngFor="let data of dietData" >
+                                      <div style='width: 130px;'><label nz-checkbox nzValue="{{data.dicItemCode}}">{{data.dicItemName}}</label></div>
+                                  </div>
+                                </nz-checkbox-wrapper>
+                          </nz-form-control>
+                          <nz-form-label [nzSm]="1" [nzXs]="1" >有无宵夜</nz-form-label>
+                          <nz-form-control>
+                              <nz-radio-group [(ngModel)]="appetite">
+                                  <label nz-radio nzValue="1">有</label>
+                                  <label nz-radio nzValue="0">无</label>               
+                                </nz-radio-group>
+                          </nz-form-control> 
+                          <nz-form-label [nzSm]="1" [nzXs]="1" >是否洗脸</nz-form-label>
+                          <nz-form-control>
+                              <nz-radio-group [(ngModel)]="faceWash">
+                                  <label nz-radio nzValue="1">是</label>
+                                  <label nz-radio nzValue="0">否</label>               
+                                </nz-radio-group>
+                          </nz-form-control>
+                          <nz-form-label [nzSm]="1" [nzXs]="1" >是否刷牙</nz-form-label>
+                          <nz-form-control>
+                              <nz-radio-group [(ngModel)]="brushTooth">
+                                  <label nz-radio nzValue="1">是</label>
+                                  <label nz-radio nzValue="0">否</label>               
+                                </nz-radio-group>
+                          </nz-form-control>
+                      </div> 
+                        <!-- ==================================================================================== -->
+                        <div style="width: 100%;padding: 8px;margin-top: 20px;">
+                            <div class="RecordType"> 
+                             <div class="circle">4</div>
+                             <div class="title">心情日记</div> 
+                            </div>
+                            <div class="xian"></div>
+                            <div style=" text-align: center;">
+                                <textarea  [(ngModel)]="sentiment" name="styled-textarea" id="styled" onfocus="this.value='';" onblur="">Enter your comment here...</textarea>
+                            </div>
+                           
+                        </div> 
+                   <!-- ==================================================================================== -->
+                   <div style="width: 100%;padding: 8px;margin-top: 20px;">
+                      
+                      <div class="xian"></div>
+                      <div style="height: 35px;width:30%;line-height: 35px;margin-left: 40%;">
+                          <div style="float: left;"><button nz-button  nzType="primary"  (click)="add()">确认</button></div>
+                          <div style="float: left;margin-left: 10px;"><button nz-button  >重置</button></div>
+                      </div>                     
+                  </div> 
              </nz-form-item >
 
            
-          </nz-form-item>
+       
          
         </nz-content>
    </nz-layout>
 
-<!-- 新增运动项目弹出框 -->
-<!-- <nz-modal [(nzVisible)]="isVisibleSports" nzTitle="每日运动记录" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-    <nz-form-item>
-      <nz-form-label >学习时间</nz-form-label>
-      <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
-  
-      <nz-form-label style="margin-bottom: 20px;">学习内容</nz-form-label>
-      <textarea  class="textarea" style="width:75%;margin-top: 12px;margin-bottom: 12px;"  rows="2" nz-input [(ngModel)]="studyContent"></textarea>
-      
-      <nz-form-label >健身时间</nz-form-label>
-      <nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" nzShowTime></nz-range-picker>
-  
-      
-      <nz-form-label >健身项目</nz-form-label>
-      <textarea  class="textarea" style="width:75%;margin-top: 12px;"  rows="2" nz-input [(ngModel)]="inputValue"></textarea>
-  
-    </nz-form-item>
-  </nz-modal> -->
 

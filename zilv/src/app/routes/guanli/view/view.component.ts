@@ -15,12 +15,30 @@ export class GuanliViewComponent implements OnInit {
 
   isVisibleSports = false;
   checked = false;
+
   //数字输入框==============
   demoValue = 0;
   formatterDollar = (value: number) => `${value}分钟`;
   parserDollar = (value: string) => value.replace('$ ', '');
   //===============================================
 
+  //==========================双向绑定数据库对应字段
+  studyTimeStart: Date | null = null; //学习开始时间
+  studyTimeEnd: Date | null = null;   //学习结束时间
+  studyContent = ''  //学习内容
+  jsTimeStart: Date | null = null; //健身开始时间
+  jsTimeEnd: Date | null = null; //健身结束时间
+  listmap=[]  //健身内容
+  sleepTime:Date | null = null; //晚上睡觉时间
+  ajTimeStart:Date | null = null;//艾灸开始时间
+  ajTimeEnd:Date | null = null;//艾灸结束时间
+  dinner=[]; //今日饮食数组
+  BadHabits='' //是否戒撸
+  healthStatus = '' //是否尿床
+  appetite = '' //有无宵夜
+  faceWash = '' //是否洗脸
+  brushTooth = '' //是否刷牙
+  sentiment= ''  //心情日记
   url = `/user`;
   searchSchema: SFSchema = {
     properties: {
@@ -34,6 +52,7 @@ export class GuanliViewComponent implements OnInit {
   listOfData = [    
    
   ]; 
+  dietData = [];//饮食字典列表
 
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
@@ -70,21 +89,24 @@ export class GuanliViewComponent implements OnInit {
 
   ngOnInit() { 
          this.queryItem();
+         this.queryDiet();
   }
-   //获取字典配置列表
+   //获取运动字典配置列表
    queryItem(){
     this.http.post(this.config.url+'dic/dicitemList',
-    {name:'sports_type'}
-    ) .subscribe((res: any) => {
-             console.log(res)
-             
-             this.listOfData = res
-             let l = res.length;
-
-
-             
+    {code:'sports_type'}
+    ) .subscribe((res: any) => {       
+             this.listOfData = res           
       });
   }
+    //获取饮食字典配置列表
+    queryDiet(){
+      this.http.post(this.config.url+'dic/dicitemList',
+      {code:'diet_type'}
+      ) .subscribe((res: any) => {     
+               this.dietData = res          
+        });
+    }
 
   //数字时间框改变事件
   ChangeNum(value: number){
@@ -92,12 +114,18 @@ export class GuanliViewComponent implements OnInit {
         item.sportsTime = value
       }
   }
+  //最终添加事件
   add(){
-          let tr = document.getElementsByTagName('tr');
-          let listmap=[]
+          let tr = document.getElementsByTagName('tr');  
+
+          let map=new Map();
+          let nameList = []
+          let numList  = []
           for(let i=0;i<tr.length;i++){
                let tdList =  tr[i].getElementsByTagName('td')
-               let map=new Map();
+             
+              
+              
                   for(let j = 0;j<tdList.length;j++){
                       let num = '';                 
                       let typeName = tdList[j].innerText                     
@@ -106,25 +134,146 @@ export class GuanliViewComponent implements OnInit {
                               let nn = input[n];
                               num = nn.getAttribute('ng-reflect-model')
                       }                               
-                     map.set(typeName,num);
+                    // map.set(typeName,num);
+
+                      if(typeName!=''){
+                        nameList.push(typeName)
+                      }
+                      if(num!=''){
+                        numList.push(num)
+                      }
+
                   }
-                  listmap.push(map)
+                for(let name of nameList){
+                
+                     for(let num of numList){
+                           map.set(name,num);
+                           
+                     }
+                    //  console.log(map)
+                    // let m= JSON.stringify(this.strMapToObj(map));
+                    //     console.log(m)
+                }
+                            
           }
-          console.log(listmap)
+     
+          this.listmap.push(map)
+          // console.log(this.listmap)
+           console.log(nameList)
+           console.log(numList)
+          let myMap = new Map().set('yes', true).set('no', false);
+       
+
+
+       
+       this.http.post(this.config.url+'Diary/addDiary',
+          {studyTimeStart:this.dateFtt('hh:mm',this.studyTimeStart)==null?'':this.dateFtt('hh:mm',this.studyTimeStart),
+           studyTimeEnd:this.dateFtt('hh:mm',this.studyTimeEnd)==null?'':this.dateFtt('hh:mm',this.studyTimeEnd),
+           studyContent:this.studyContent,
+           jsTimeStart:this.dateFtt('hh:mm',this.jsTimeStart)==null?'':this.dateFtt('hh:mm',this.jsTimeStart),
+           jsTimeEnd:this.dateFtt('hh:mm',this.jsTimeEnd)==null?'':this.dateFtt('hh:mm',this.jsTimeEnd),
+           nameList:nameList,
+           numList:numList,
+           sleepTime:this.dateFtt('hh:mm',this.sleepTime)==null?'':this.dateFtt('hh:mm',this.sleepTime),
+           ajTimeStart:this.dateFtt('hh:mm',this.ajTimeStart)==null?'':this.dateFtt('hh:mm',this.ajTimeStart),
+           ajTimeEnd:this.dateFtt('hh:mm',this.ajTimeEnd)==null?'':this.dateFtt('hh:mm',this.ajTimeEnd),
+           dinner:this.dinner,
+           BadHabits:this.BadHabits,
+           healthStatus:this.healthStatus,
+           appetite:this.appetite,
+           faceWash:this.faceWash,
+           brushTooth:this.brushTooth,
+           sentiment:this.sentiment,
+           create_time:this.dateTime
+          }
+          ) .subscribe((res: any) => {       
+                  console.log(res);          
+            });
+          
+        
+
   }
+  //今日饮食多选事件 
+  checkbox(ele){
+    this.dinner = ele
+  }
+  //=========时间控件数据提取
+  studyTime1(time: Date): void {
+
+    if(time!=null){
+      this.studyTimeStart = time
+    }
+   
+  }
+  studyTime2(time: Date): void {
+    if(time!=null){
+    this.studyTimeEnd = time
+    }
+  }
+  jsTime1(time: Date): void {
+    if(time!=null){
+    this.jsTimeStart = time
+    }
+  }
+  jsTime2(time: Date): void {
+    if(time!=null){
+    this.jsTimeEnd = time
+    }
+  }
+  sleepTimefon(time: Date): void {
+    if(time!=null){
+    this.sleepTime = time
+    }
+  }
+  ajTime1(time: Date): void {
+    if(time!=null){
+    this.ajTimeStart = time
+    }
+  }
+  ajTime2(time: Date): void {
+    if(time!=null){
+    this.ajTimeEnd = time
+    }  }
+ //==================================
 
 
 
 
+//============================================日期格式化
+dateFtt(fmt,date)   
+
+{ //author: meizz   
+  if(date==''||date==null){
+      return;
+  }
+  var o = {   
+    // "M+" : date.getMonth()+1,                 //月份   
+    // "d+" : date.getDate(),                    //日   
+    "h+" : date.getHours(),                   //小时   
+    "m+" : date.getMinutes(),                 //分   
+    "s+" : date.getSeconds(),                 //秒   
+    "q+" : Math.floor((date.getMonth()+3)/3), //季度   
+    "S"  : date.getMilliseconds()             //毫秒   
+  };   
+  if(/(y+)/.test(fmt))   
+    fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));   
+  for(var k in o)   
+    if(new RegExp("("+ k +")").test(fmt))   
+  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+  return fmt;   
+} 
+//==================================================================
 
 
 
+strMapToObj(strMap){
 
-
-
-
-
-
+  let obj= Object.create(null);
+  for (let[k,v] of strMap) {
+    obj[k] = v;
+  }
+  return obj;
+}
 
 
 

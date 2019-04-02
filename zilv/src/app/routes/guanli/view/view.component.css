@@ -38,9 +38,22 @@
 
 nz-input-number {
   margin-right: 8px;
+
 }
 
+textarea#styled{
+  font-family: Tahoma, sans-serif;
 
+  width: 90%;
+  height: 200px;
+  padding: 5px;
+
+  border: 3px solid #ccc;
+ /* background-image: url(bg.gif); */
+
+  background-repeat: no-repeat;
+  background-position: bottom right;
+}
 
 
 /* ==================================== */

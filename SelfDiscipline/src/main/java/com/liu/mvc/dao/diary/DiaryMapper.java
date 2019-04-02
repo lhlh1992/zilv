@@ -8,6 +8,6 @@ public interface DiaryMapper {
          
 	        List<Diary> selectDiary();
 	                     
-	      
+	        int insertDiary(Diary d);
 	    
 }

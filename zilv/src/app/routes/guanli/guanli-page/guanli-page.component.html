@@ -31,10 +31,27 @@
                       <div style="line-height: 5px;margin-top: 3px;">
                         <p>{{Data.create_time}}</p>
                         <p>{{Data.chinaDate}}</p>
-                        <span> <nz-tag [nzColor]="'#87d068'">学习120分钟</nz-tag> </span>
-                        <span> <nz-tag [nzColor]="'#2db7f5'">健身60分钟</nz-tag> </span>
-                        <span> <nz-tag [nzColor]="'#108ee9'">11:00睡觉</nz-tag> </span>
-                        <span> <nz-tag [nzColor]="'orange'">戒色</nz-tag> </span>
+                        <span *ngIf="Data.studyTime!=''">
+                           <nz-tag [nzColor]="'#87d068'">学习{{Data.studyTime}}分钟</nz-tag> 
+                        </span>
+                         <span *ngIf="Data.studyTime==''">
+                            <nz-tag [nzColor]="'#87d068'">没学习</nz-tag> 
+                         </span> 
+                        <span *ngIf="Data.sportsTime!=''"> 
+                          <nz-tag [nzColor]="'#2db7f5'">健身{{Data.sportsTime}}分钟</nz-tag>
+                         </span>
+                         <span *ngIf="Data.sportsTime==''"> 
+                            <nz-tag [nzColor]="'#2db7f5'">没健身</nz-tag>
+                         </span> 
+                        <span *ngIf="Data.sleepTime!=''">
+                           <nz-tag [nzColor]="'#108ee9'">{{Data.sleepTime}}睡觉</nz-tag>
+                        </span>
+                        <span *ngIf="Data.badHabits=='1'">
+                           <nz-tag [nzColor]="'orange'">戒色</nz-tag> 
+                        </span>
+                      <span *ngIf="Data.badHabits=='0'">
+                            <nz-tag [nzColor]="'#f50'">破戒！！</nz-tag> 
+                         </span> 
                        </div> 
                        <div calss='divBut' style="position: absolute; bottom: 0;right: 0;margin-right: 10px;margin-bottom: 3px; ">
                          <button  class="but" nz-button nzType="primary" nzSize="small" (click)="add(date)" title="编辑修改"> <i nz-icon [nzType]="'edit'"></i></button> 

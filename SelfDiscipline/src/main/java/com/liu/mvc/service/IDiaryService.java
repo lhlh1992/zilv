@@ -7,4 +7,5 @@ import com.liu.mvc.pojo.Diary;
 public interface IDiaryService {
           
 	        List<Diary> selectDiary();
+	        int insertDiary(Diary d);
 }
