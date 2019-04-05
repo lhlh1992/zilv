@@ -17,6 +17,12 @@ public class Diary {
 	         private  String brushTooth;  //是否刷牙(0：否 1：是)
 	         private  String create_time;  //当日日期
 	         private  String sentiment;  //心情感想日记
+	         private  String studyTimeStart;//学习开始时间
+	         private  String studyTimeEnd;//学习结束时间
+	         private  String sportsTimeStart;//健身开始时间
+	         private  String sportsTimeEnd;//健身结束时间
+	         private  String aijiuTimeStart;//艾灸开始时间
+	         private  String aijiuTimeEnd;//艾灸结束时间
 			public String getId() {
 				return id;
 			}
@@ -107,7 +113,44 @@ public class Diary {
 			public void setAijiuTime(String aijiuTime) {
 				this.aijiuTime = aijiuTime;
 			}
-		
+			public String getStudyTimeStart() {
+				return studyTimeStart;
+			}
+			public void setStudyTimeStart(String studyTimeStart) {
+				this.studyTimeStart = studyTimeStart;
+			}
+			public String getStudyTimeEnd() {
+				return studyTimeEnd;
+			}
+			public void setStudyTimeEnd(String studyTimeEnd) {
+				this.studyTimeEnd = studyTimeEnd;
+			}
+			public String getSportsTimeStart() {
+				return sportsTimeStart;
+			}
+			public void setSportsTimeStart(String sportsTimeStart) {
+				this.sportsTimeStart = sportsTimeStart;
+			}
+			public String getSportsTimeEnd() {
+				return sportsTimeEnd;
+			}
+			public void setSportsTimeEnd(String sportsTimeEnd) {
+				this.sportsTimeEnd = sportsTimeEnd;
+			}
+			public String getAijiuTimeStart() {
+				return aijiuTimeStart;
+			}
+			public void setAijiuTimeStart(String aijiuTimeStart) {
+				this.aijiuTimeStart = aijiuTimeStart;
+			}
+			public String getAijiuTimeEnd() {
+				return aijiuTimeEnd;
+			}
+			public void setAijiuTimeEnd(String aijiuTimeEnd) {
+				this.aijiuTimeEnd = aijiuTimeEnd;
+			}
+			
+			
 			
 			
 	         

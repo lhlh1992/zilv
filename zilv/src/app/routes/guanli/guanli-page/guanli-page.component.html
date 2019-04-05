@@ -54,9 +54,9 @@
                          </span> 
                        </div> 
                        <div calss='divBut' style="position: absolute; bottom: 0;right: 0;margin-right: 10px;margin-bottom: 3px; ">
-                         <button  class="but" nz-button nzType="primary" nzSize="small" (click)="add(date)" title="编辑修改"> <i nz-icon [nzType]="'edit'"></i></button> 
-                         <button  class="but" nz-button nzType="primary" nzSize="small" (click)="add(date)" title="查看详情"> <i nz-icon type="search"></i></button> 
-                         <button  class="but" nz-button nzType="danger" nzSize="small" (click)="add(date)" title="删除"> <i nz-icon [nzType]="'delete'"></i></button>  
+                         <button  class="but" nz-button nzType="primary" nzSize="small" (click)="update(Data)" title="编辑修改"> <i nz-icon [nzType]="'edit'"></i></button> 
+                         <button  class="but" nz-button nzType="primary" nzSize="small" (click)="add(Data)" title="查看详情"> <i nz-icon type="search"></i></button> 
+                         <button  class="but" nz-button nzType="danger" nzSize="small" (click)="delete(Data)" title="删除"> <i nz-icon [nzType]="'delete'"></i></button>  
                        </div>                       
                     </div>
               </div>             
@@ -67,6 +67,11 @@
  </nz-content>
 </nz-layout>
 
+
+<!-- 删除确认弹出框 -->
+<nz-modal [(nzVisible)]="isVisibledelete" nzTitle="删除确认" (nzOnCancel)="handleCanceldelete()" (nzOnOk)="handledelete()">
+   确定要删除{{todayData.create_time}}号的日记吗？
+ </nz-modal>
 
 
 

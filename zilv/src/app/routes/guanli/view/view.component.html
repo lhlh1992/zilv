@@ -7,6 +7,7 @@
                    <div class="RecordType"> 
                     <div class="circle">1</div>
                     <div class="title">学习记录</div> 
+                    <div style="margin-left: 45%;">{{dateTime}}</div>
                    </div>
                    <div class="xian"></div>
                      <nz-form-label [nzSm]="1" [nzXs]="1" >学习时间</nz-form-label>
@@ -36,7 +37,7 @@
                             <thead>
                               <tr>
                                 <th>运动项目</th>                           
-                                <th>运行强度(分钟)</th>                                           
+                                <th>运动强度(分钟)</th>                                           
                               </tr>
                             </thead>
                             <tbody>
@@ -44,13 +45,13 @@
                                 <td >{{ data.dicItemName }}</td>                   
                                 <td >
                                    <nz-input-number   name = 'data.sportsTime'
-                                      [(ngModel)]="data.sportsTime==null?0:data.sportsTime"
+                                      [(ngModel)]="data.sportsTime"
                                       [nzMin]="0"
                                       [nzMax]="100"
                                       [nzStep]="1"
                                       [nzFormatter]="formatterDollar"
                                       [nzParser]="parserDollar"
-                                      (ngModelChange)='ChangeNum(data.sportsTime)'
+                                      (ngModelChange)='ChangeNum(data)'
                                     ></nz-input-number>                                       
                                 </td>                         
                               </tr>
@@ -78,8 +79,8 @@
                           <nz-form-label [nzSm]="1" [nzXs]="1" >艾灸时间</nz-form-label>
                           <nz-form-control>
                               <nz-time-picker  [(ngModel)]="ajTimeStart" nzFormat="HH:mm" nzPlaceHolder="艾灸开始时间" (ngModelChange)='ajTime1($event)'></nz-time-picker> 至 
-                              <nz-time-picker  [(ngModel)]="ajTimeEnt" nzFormat="HH:mm" nzPlaceHolder="艾灸结束时间" (ngModelChange)='ajTime2($event)'></nz-time-picker>            
-                          </nz-form-control>    
+                              <nz-time-picker  [(ngModel)]="ajTimeEnd" nzFormat="HH:mm" nzPlaceHolder="艾灸结束时间" (ngModelChange)='ajTime2($event)'></nz-time-picker>            
+                          </nz-form-control>                
                           <nz-form-label [nzSm]="1" [nzXs]="1" >是否尿床</nz-form-label>
                           <nz-form-control>
                               <nz-radio-group [(ngModel)]="healthStatus">
@@ -90,10 +91,9 @@
                           
                           <nz-form-label [nzSm]="1" [nzXs]="1" >今日饮食</nz-form-label>
                           <nz-form-control>
-                              <nz-checkbox-wrapper style="width: 80%;margin-left:5px;margin-top: 8px;" (nzOnChange)="checkbox($event)">
-                               
-                                  <div style="width:20%;float: left;"  *ngFor="let data of dietData" >
-                                      <div style='width: 130px;'><label nz-checkbox nzValue="{{data.dicItemCode}}">{{data.dicItemName}}</label></div>
+                              <nz-checkbox-wrapper style="width: 80%;margin-left:5px;margin-top: 8px;" >
+                                  <div style='width:100%;'>                                  
+                                          <nz-checkbox-group [(ngModel)]="dietData"></nz-checkbox-group>
                                   </div>
                                 </nz-checkbox-wrapper>
                           </nz-form-control>
@@ -127,25 +127,17 @@
                             </div>
                             <div class="xian"></div>
                             <div style=" text-align: center;">
-                                <textarea  [(ngModel)]="sentiment" name="styled-textarea" id="styled" onfocus="this.value='';" onblur="">Enter your comment here...</textarea>
-                            </div>
-                           
+                                <textarea  [(ngModel)]="sentiment" name="styled-textarea" id="styled" placeholder="今天都发生了什么？我的心情是怎样的？脑子里都想的什么？在这里书写自己的秘密吧~ヾ(◍°∇°◍)ﾉﾞ（放心，刘辉，只有你自己能看到噢）" onblur=""></textarea>
+                            </div>                        
                         </div> 
                    <!-- ==================================================================================== -->
-                   <div style="width: 100%;padding: 8px;margin-top: 20px;">
-                      
+                   <div style="width: 100%;padding: 8px;margin-top: 20px;">                    
                       <div class="xian"></div>
                       <div style="height: 35px;width:30%;line-height: 35px;margin-left: 40%;">
                           <div style="float: left;"><button nz-button  nzType="primary"  (click)="add()">确认</button></div>
                           <div style="float: left;margin-left: 10px;"><button nz-button  >重置</button></div>
                       </div>                     
                   </div> 
-             </nz-form-item >
-
-           
-       
-         
+             </nz-form-item>     
         </nz-content>
    </nz-layout>
-
-

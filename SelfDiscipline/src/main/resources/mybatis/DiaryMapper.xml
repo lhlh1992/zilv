@@ -21,23 +21,36 @@
 		<result column="sentiment" property="sentiment" />
 		<result column="aijiuTime" property="aijiuTime" />
 		<result column="dinner" property="dinner" />
+		
+		<result column="studyTimeStart" property="studyTimeStart" />
+		<result column="studyTimeEnd" property="studyTimeEnd" />
+		<result column="sportsTimeStart" property="sportsTimeStart" />
+		<result column="sportsTimeEnd" property="sportsTimeEnd" />
+		<result column="aijiuTimeStart" property="aijiuTimeStart" />
+		<result column="aijiuTimeEnd" property="aijiuTimeEnd" />
 	</resultMap>
     
     <sql id="Base_Column_List">
-		id,studyTime,studyContent,sportsTime,sportsContent,BadHabits,sleepTime,healthStatus,appetite,faceWash,brushTooth,create_time,sentiment,aijiuTime,dinner
+		id,studyTime,studyContent,sportsTime,sportsContent,BadHabits,sleepTime,healthStatus,appetite,faceWash,brushTooth,create_time,sentiment,aijiuTime,dinner,studyTimeStart,studyTimeEnd,
+		sportsTimeStart,sportsTimeEnd,aijiuTimeStart,aijiuTimeEnd
 	</sql>
 	
 	<select id="selectDiary"   resultMap="BaseResultMap" resultType="com.liu.mvc.pojo.Diary">
 		select
 		<include refid="Base_Column_List" />
 		from diary
+		<if test="id != null and id!='' ">
+			where id = #{id}
+	    </if>
 	</select>
 	
 	
 	
 	<insert id="insertDiary"  parameterType="Diary">
-	  INSERT INTO diary (id,studyTime,studyContent,sportsTime,sportsContent,BadHabits,sleepTime,healthStatus,appetite,faceWash,brushTooth,create_time,sentiment,aijiuTime,dinner)VALUES
-	 (#{id}, #{studyTime},#{studyContent},#{sportsTime},#{sportsContent},#{BadHabits},#{sleepTime},#{healthStatus},#{appetite},#{faceWash},#{brushTooth},#{create_time},#{sentiment},#{aijiuTime},#{dinner})  
+	  INSERT INTO diary (id,studyTime,studyContent,sportsTime,sportsContent,BadHabits,sleepTime,healthStatus,appetite,faceWash,brushTooth,create_time,sentiment,aijiuTime,dinner,studyTimeStart,studyTimeEnd,
+		sportsTimeStart,sportsTimeEnd,aijiuTimeStart,aijiuTimeEnd)VALUES
+	 (#{id}, #{studyTime},#{studyContent},#{sportsTime},#{sportsContent},#{BadHabits},#{sleepTime},#{healthStatus},#{appetite},#{faceWash},#{brushTooth},#{create_time},#{sentiment},#{aijiuTime},#{dinner},
+	 #{studyTimeStart},#{studyTimeEnd},#{sportsTimeStart},#{sportsTimeEnd},#{aijiuTimeStart},#{aijiuTimeEnd})  
 	</insert>
 	
 	
@@ -47,6 +60,7 @@
 	        studyTime = #{studyTime} ,
 	        studyContent = #{studyContent},
 	        sportsTime = #{sportsTime},
+	        sportsContent= #{sportsContent},
 	        BadHabits = #{BadHabits},
 	        sleepTime = #{sleepTime},
 	        healthStatus = #{healthStatus},
@@ -55,7 +69,13 @@
 	        brushTooth = #{brushTooth},
 	        sentiment = #{sentiment},
 	        aijiuTime = #{aijiuTime},
-	        dinner = #{dinner},
+	        dinner = #{dinner},	        
+	        studyTimeStart = #{studyTimeStart},
+	        studyTimeEnd = #{studyTimeEnd},
+	        sportsTimeStart = #{sportsTimeStart},
+	        sportsTimeEnd = #{sportsTimeEnd},
+	        aijiuTimeStart = #{aijiuTimeStart},
+	        aijiuTimeEnd = #{aijiuTimeEnd}
 	    </set>   
 	      WHERE 
 	      id = #{id}

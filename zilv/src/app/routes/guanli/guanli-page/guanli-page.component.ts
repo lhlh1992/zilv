@@ -4,6 +4,7 @@ import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { Router} from '@angular/router';
 import { ServicesService} from '../../../services/services.service';
+import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-guanli-guanli-page',
@@ -12,12 +13,14 @@ import { ServicesService} from '../../../services/services.service';
 })
 export class GuanliGuanliPageComponent implements OnInit {
   data:any[]=[]; //列表数据
-  isVisible=false;//新增修改弹出框开关
   selectedValue = new Date(); //选中的日期
   Today = new Date(); //日历出师日期，默认当天
   lastTd :any;  //点击事件给dom元素加样式，此参数用于判断清除上一个点击dom的样式
- 
-  constructor(private http: _HttpClient, private modal: ModalHelper,private router: Router,private config:ServicesService) {   
+   //=========删除确认弹出框
+  isVisibledelete = false;
+  todayData=[];//当天数据
+  id=[]
+  constructor(private http: _HttpClient, private modal: ModalHelper,private router: Router,private config:ServicesService,private message: NzMessageService) {   
   }
 
   ngOnInit() {
@@ -25,19 +28,27 @@ export class GuanliGuanliPageComponent implements OnInit {
   }
 
   //路由传参到编辑页
-  jumpHandle(ele){
+  jumpHandle(ele,str){
     //这是在html中绑定的click跳转事件
-    this.router.navigate(['/guanli/view'], {
+    if(str=='add'){
+      this.router.navigate(['/guanli/view'], {
         queryParams: {
-           
             date: ele
         }
     }); 
+    }else if(str=='edit'){
+      this.router.navigate(['/guanli/view'], {
+        queryParams: {           
+          Id: ele
+        }
+    }); 
+    }
+  
   }
  //获取日记表数据
   query(){
        this.http.post(this.config.url+'Diary/selectDiary',
-       {'name':''}
+       {'id':''}
        ) .subscribe((res: any) => {
                   console.log(res)
                   this.data=res;      
@@ -47,7 +58,7 @@ export class GuanliGuanliPageComponent implements OnInit {
     add(date) {
       //如果是点击‘当日新增’
       if(date==undefined){     
-        this.jumpHandle( this.dateFtt('yyyy-MM-dd',new Date()));
+        this.jumpHandle( this.dateFtt('yyyy-MM-dd',new Date()),'add');
       }else{
         let m = date.getMonth()+1;
         let d = date.getDate();
@@ -59,9 +70,13 @@ export class GuanliGuanliPageComponent implements OnInit {
         }else if(d<10 && m>=10){
           daTime = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
         }     
-        this.jumpHandle(daTime);
+        this.jumpHandle(daTime,'add');
       } 
     }
+    update(date){    
+        this.jumpHandle(date.id,'edit');
+    }
+
      //点击日历日期变化事件
     selectChange(select): void {
       //获取节点，获取dom的子节点，
@@ -166,6 +181,34 @@ export class GuanliGuanliPageComponent implements OnInit {
       }
       return nullStr;
     }
+
+
+
+ //==========删除相关方法========================
+ //字典配置删除确认框关闭事件
+ handleCanceldelete(){
+  this.isVisibledelete = false;
+}
+//字典类型点击删除
+delete(ele){
+  this.todayData = ele;
+  this.id=ele.id;
+  this.isVisibledelete = true;
+}
+//删除方法
+handledelete(){
+  this.http.post(this.config.url+'Diary/delDiary',
+  {id:this.id}
+  ) .subscribe((res: any) => {
+              if(res==1){
+                this.message.success('删除成功');
+                this.isVisibledelete = false;
+                //刷新列表
+                this.query();     
+              }
+    });  
+}
+  
 //======================================================日期转换农历日期
  lunar = {
     tg: '甲乙丙丁戊己庚辛壬癸',

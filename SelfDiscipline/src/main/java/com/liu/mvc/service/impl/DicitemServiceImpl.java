@@ -21,8 +21,11 @@ public class DicitemServiceImpl   implements IDicitemService {
 
 	@Override
 	public List<DicItem> selectDicitem(String code) {
-		
-		return dicitem.selectDicitem(code);
+		List<DicItem> dic =dicitem.selectDicitem(code);
+		for(DicItem d:dic) {
+				d.setSportsTime("0");
+		}
+		return dic;
 	}
 
 	@Override
