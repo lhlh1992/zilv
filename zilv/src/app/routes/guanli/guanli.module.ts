@@ -3,6 +3,7 @@ import { SharedModule } from '@shared';
 import { GuanliRoutingModule } from './guanli-routing.module';
 import { GuanliGuanliPageComponent } from './guanli-page/guanli-page.component';
 import { GuanliViewComponent } from './view/view.component';
+import { GuanliDetailsComponent } from './details/details.component';
 
 
 
@@ -11,7 +12,8 @@ import { GuanliViewComponent } from './view/view.component';
 const COMPONENTS = [
   
   GuanliGuanliPageComponent,
-  GuanliViewComponent];
+  GuanliViewComponent,
+  GuanliDetailsComponent];
 const COMPONENTS_NOROUNT = [
   
   ];

@@ -5,7 +5,7 @@ import { SFSchema } from '@delon/form';
 import { Router} from '@angular/router';
 import { ServicesService} from '../../../services/services.service';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
-
+import { GuanliDetailsComponent} from '../details/details.component';
 @Component({
   selector: 'app-guanli-guanli-page',
   templateUrl: './guanli-page.component.html',
@@ -43,8 +43,8 @@ export class GuanliGuanliPageComponent implements OnInit {
         }
     }); 
     }
-  
   }
+  
  //获取日记表数据
   query(){
        this.http.post(this.config.url+'Diary/selectDiary',
@@ -73,9 +73,29 @@ export class GuanliGuanliPageComponent implements OnInit {
         this.jumpHandle(daTime,'add');
       } 
     }
+    //点击修改按钮
     update(date){    
         this.jumpHandle(date.id,'edit');
     }
+    //点击查看详情按钮
+    Details(ele){
+      //这是在html中绑定的click跳转事件
+      //   this.router.navigate(['/guanli/details'], {
+      //     queryParams: {           
+      //       Id: ele
+      //     }
+      // });  
+     
+        this.modal
+        .create(GuanliDetailsComponent, {data:ele})
+        .subscribe(() => {
+          //this.msg.info('回调，重新发起列表刷新');
+        // this.queryPerson();
+        });  
+     
+    
+    }
+ 
 
      //点击日历日期变化事件
     selectChange(select): void {

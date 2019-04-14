@@ -22,7 +22,9 @@ public class Diary {
 	         private  String sportsTimeStart;//健身开始时间
 	         private  String sportsTimeEnd;//健身结束时间
 	         private  String aijiuTimeStart;//艾灸开始时间
-	         private  String aijiuTimeEnd;//艾灸结束时间
+	         private  String aijiuTimeEnd;//艾灸结束时间	         
+	         //=========
+	         private  int luSum;//坚持不撸的天数   
 			public String getId() {
 				return id;
 			}
@@ -149,6 +151,13 @@ public class Diary {
 			public void setAijiuTimeEnd(String aijiuTimeEnd) {
 				this.aijiuTimeEnd = aijiuTimeEnd;
 			}
+			public int getLuSum() {
+				return luSum;
+			}
+			public void setLuSum(int luSum) {
+				this.luSum = luSum;
+			}
+		
 			
 			
 			

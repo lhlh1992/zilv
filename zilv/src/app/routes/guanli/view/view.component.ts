@@ -131,6 +131,7 @@ export class GuanliViewComponent implements OnInit {
              this.brushTooth  =  res[0].brushTooth;
              this.sentiment  =  res[0].sentiment;
              let str = res[0].dinner;
+             console.log(str)
              //回填饮食多选框
              this.dinner =  str.replace('[','').replace(']','').split(',');
               for(let d of this.dietData){
@@ -140,6 +141,7 @@ export class GuanliViewComponent implements OnInit {
                         }
                 }  
               }
+              console.log(this.dietData)
               //===============回填运动项目=====================  
               let sportsContent=res[0].sportsContent
               sportsContent= sportsContent.replace('[','').replace(']','').split(',');
@@ -180,6 +182,7 @@ export class GuanliViewComponent implements OnInit {
                 this.dietData.push(map) 
                }              
         });
+        console.log(this.dietData)
     }
 
   //数字时间框改变事件

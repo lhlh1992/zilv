@@ -39,7 +39,6 @@ public class diaryController {
 	          @ResponseBody
 	          public int addDiary(@RequestBody  Map<String,Object> map) {   
 	        	  Diary diary = new Diary();
-	        	  System.out.println(map);
 	        	  List<Map<String,String>> sportsContent = new ArrayList<>();   //健身内容集合  	 
 	        	  String studyTime="";//学习所用时间
 	        	  String sportsTime="";//健身所用时间
@@ -55,8 +54,7 @@ public class diaryController {
 	        			    break;
 	        		   }
 	        		   sportsContent.add(m);   		  
-	        	  }
-	        	  
+	        	  }        	  
 	        	  String studyTimeStart = map.get("studyTimeStart").toString();
 	        	  String studyTimeEnd = map.get("studyTimeEnd").toString();
 	        	  if(studyTimeStart!="" && studyTimeEnd!="") {
@@ -81,7 +79,6 @@ public class diaryController {
 	        		  diary.setAijiuTimeEnd(ajTimeEnd);
 	        	  }
 	        	  String aa =map.get("dinner").toString();
-	        	  System.out.println(aa);
 	        	  String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 	        	  diary.setId(uuid);//Id
 	        	  diary.setSportsContent(sportsContent.toString());//运动项目
@@ -97,10 +94,7 @@ public class diaryController {
 	        	  diary.setSportsTime(sportsTime);//健身所用时间
 	        	  diary.setAijiuTime(aijiuTime);//艾灸所用时间
 	        	  diary.setSentiment(map.get("sentiment").toString());//心情日记
-	        	  diary.setCreate_time(map.get("create_time").toString());
-	        	  
-	        	  
-	        	    	  
+	        	  diary.setCreate_time(map.get("create_time").toString());	        	  	               	    	  
 	        	  return iDiaryService.insertDiary(diary);       			 	  
 	          }
 	          
