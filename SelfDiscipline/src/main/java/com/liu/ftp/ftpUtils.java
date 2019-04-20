@@ -1,16 +1,16 @@
-package com.liu;
+package com.liu.ftp;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTPClient;
 
-
-public class test {
-
+public class ftpUtils {
+			
+			
 	/**
 	* ftp上传单个文件
 	* @param ftpUrl ftp地址
@@ -72,6 +72,4 @@ public class test {
 				e.printStackTrace();
 			}
 	}
-
-
 }
