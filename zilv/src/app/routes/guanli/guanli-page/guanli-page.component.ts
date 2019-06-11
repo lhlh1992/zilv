@@ -6,6 +6,8 @@ import { Router} from '@angular/router';
 import { ServicesService} from '../../../services/services.service';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import { GuanliDetailsComponent} from '../details/details.component';
+
+
 @Component({
   selector: 'app-guanli-guanli-page',
   templateUrl: './guanli-page.component.html',
@@ -227,6 +229,17 @@ handledelete(){
                 this.query();     
               }
     });  
+}
+
+//=============导出=======================
+
+download(){
+  this.http.post(this.config.url+'Diary/downExcel',
+  {'id':''}
+  ) .subscribe((res: any) => {
+             console.log(res)
+             this.data=res;      
+});     
 }
   
 //======================================================日期转换农历日期

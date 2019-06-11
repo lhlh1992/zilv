@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间是对应接口的包名+类名 -->
+<mapper namespace="com.liu.mvc.dao.classInfo.classInfoMapper">
+		<resultMap id="BaseResultMap" type="classInfo" >
+			<id column="c_id" property="cId" />
+			<result column="c_name" property="cName" />
+			<collection property="teachers"  ofType="com.liu.mvc.pojo.teacher"  javaType="ArrayList">
+					<id column="t_id" property="tId" />
+					<result column="t_name" property="tName" />
+					<result column="t_class" property="tClass" />
+			</collection>
+		</resultMap>
+  		
+  		
+  		<select id="queryClassInfo"  resultMap="BaseResultMap">
+  				SELECT
+				*
+				FROM
+					classInfo c
+				LEFT JOIN teacher t ON c.c_id = t.t_class	   
+		      	<if test="id != null and id!='' ">
+					where c.c_id = #{id}
+	    		</if>
+			
+  		</select>
+  		
+  	
+	
+</mapper> 

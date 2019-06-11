@@ -11,5 +11,7 @@ public class SelfDisciplineApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SelfDisciplineApplication.class, args);
 	}
+	
+	
 
 }

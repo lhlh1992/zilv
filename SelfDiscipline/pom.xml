@@ -47,13 +47,25 @@
             <artifactId>commons-net</artifactId>
             <version>3.5</version>
         </dependency>
-
-
+  		<!-- Redis -->
+  		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency> 
+        <!-- poi导出 -->
         <dependency>
-    <groupId>us.codecraft</groupId>
-    <artifactId>webmagic-core</artifactId>
-    <version>0.7.3</version>
-</dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>3.6</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>RELEASE</version>
+		</dependency>
+	
+		
+
 
 <dependency>
     <groupId>us.codecraft</groupId>

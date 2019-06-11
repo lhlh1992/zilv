@@ -10,4 +10,7 @@ public interface IDiaryService {
 	        int insertDiary(Diary d);
 	        int updateDiary(Diary d);
 	        int deleteDiary(String d);
+	        
+	        
+	        
 }

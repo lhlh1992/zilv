@@ -3,7 +3,10 @@
  <nz-content id='rili'>
  <div>
       <div style=" text-align: center;font-size: 18px;color: #ffffff;border-bottom: 1px solid #99CCFF;padding-bottom: 20px;padding-top: 10px;  background-color:#3366CC;  ">{{ Today | date: 'yyyy年MM月dd日' }}</div>
-         <div style="position:absolute;top:15%;margin-left: 15px;"><button nz-button  nzType="primary"  (click)="add(date)"><i nz-icon [nzType]="'plus'"></i>添加今日日记</button></div>
+         <div style="position:absolute;top:15%;margin-left: 15px;">
+            <button nz-button  nzType="primary"  (click)="add(date)"><i nz-icon [nzType]="'plus'"></i>添加今日日记</button>
+            <button nz-button  nzType="primary"  (click)="download()"><i nz-icon [nzType]="'plus'"></i>导出excel</button>
+         </div>
   </div>
 
 <div>  
@@ -52,6 +55,14 @@
                       <span *ngIf="Data.badHabits=='0'">
                             <nz-tag [nzColor]="'#f50'">破戒！！</nz-tag> 
                          </span> 
+                      
+                      <span *ngIf="Data.healthStatus=='1'">
+                            <nz-tag [nzColor]="'#CC3333'">尿床！！</nz-tag> 
+                         </span> 
+                         <span *ngIf="Data.healthStatus=='0'">
+                           <nz-tag [nzColor]="'#99CCFF'">正常！！</nz-tag> 
+                        </span> 
+                         
                        </div> 
                        <div calss='divBut' style="position: absolute; bottom: 0;right: 0;margin-right: 10px;margin-bottom: 3px; ">
                          <button  class="but" nz-button nzType="primary" nzSize="small" (click)="update(Data)" title="编辑修改"> <i nz-icon [nzType]="'edit'"></i></button> 

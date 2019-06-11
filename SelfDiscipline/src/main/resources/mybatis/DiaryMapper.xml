@@ -35,7 +35,7 @@
 		sportsTimeStart,sportsTimeEnd,aijiuTimeStart,aijiuTimeEnd
 	</sql>
 	
-	<select id="selectDiary"   resultMap="BaseResultMap" resultType="com.liu.mvc.pojo.Diary">
+	<select id="selectDiary"   resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from diary

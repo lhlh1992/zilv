@@ -3,6 +3,7 @@ package com.liu.mvc.dao.diary;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.hibernate.validator.constraints.ParameterScriptAssert;
 
 import com.liu.mvc.pojo.Diary;
@@ -16,5 +17,8 @@ public interface DiaryMapper {
 	        int updateDiary(Diary d);
 	        
 	        int deleteDiary(String d);
+	        
+	        @Select("SELECT * FROM diary")
+	        List<Diary> select(String id);
 	    
 }

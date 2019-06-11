@@ -6,7 +6,7 @@ import com.liu.mvc.pojo.Role;
 
 
 
-public interface IRoleService {
+public interface IRoleService{
 
 	public  List<Role> selectRoles(String str);
 }
