@@ -4,6 +4,7 @@ import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import { ActivatedRoute,Router} from '@angular/router';
 import { ServicesService} from '../../../services/services.service';
+
 @Component({
   selector: 'app-guanli-details',
   templateUrl: './details.component.html',
@@ -11,7 +12,38 @@ import { ServicesService} from '../../../services/services.service';
 export class GuanliDetailsComponent implements OnInit {
   data=[]
 
-  constructor(private http: _HttpClient, private modal: ModalHelper,private activatedRoute: ActivatedRoute,private config:ServicesService) { 
+  dataSet = [
+    {
+      content: '学习',
+      time: '60分钟',
+      
+    },
+    {
+      content: '健身',
+      time: '60分钟',
+
+    },
+    {
+      content: '娱乐',
+      time: '180分钟',
+   
+    },
+    {
+      content: '养生',
+      time: '0分钟'
+    },
+    {
+      content: '剩余(洗漱,吃饭等)',
+      time: '40分钟'
+    }
+  ];
+    
+
+  constructor(private http: _HttpClient, 
+              private modal: ModalHelper,
+              private activatedRoute: ActivatedRoute,
+              private config:ServicesService
+            ) { 
   }
 
   ngOnInit(): void { 
@@ -34,5 +66,62 @@ export class GuanliDetailsComponent implements OnInit {
                     this.data=res;      
       });
   } 
+  //雷达图
+  option = {
+    title : {
+        text: '今日业余时间分配',
+        show:false,
+        textStyle:{
+            color:'#0099CC'
+        }
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        x : 'center',
+        show:false  
+    },
+    toolbox: {
+        show : true,
+    },
+    calculable : true,
+    polar : [
+        {
+            indicator : [
+                {text : '学习', max  : 200},
+                {text : '健身', max  : 200},
+                {text : '娱乐', max  : 200},
+                {text : '养生', max  : 200},
+                {text : '剩余(洗漱,吃饭等)', max  : 200}
+            ],
+            //设置偏移位置
+            center : ['45%',210],
+            //设置半径，雷达图大小
+            radius : 80
+        },
+       
+       
+    ],
+    series : [
+        {
+            type: 'radar',
+             tooltip : {
+                trigger: 'item'
+            },
+            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            color:'#0099CC',
+            data : [
+                {
+                    value : [60,60,180,0,20],
+                    name :'今日业余时间分配'         
+                }
+            ]
+        },
+     
+    ]
+};
+                    
 
+  
 }

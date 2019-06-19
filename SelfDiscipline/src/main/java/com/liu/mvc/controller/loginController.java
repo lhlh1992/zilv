@@ -11,6 +11,7 @@ import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -86,6 +87,20 @@ public class loginController {
 	        	   List<classInfo> l= classInfoMapper.queryClassInfo(id);
 	        	   
 	        	   return l;
+	           }
+	        
+	           
+	           /**
+	            * mybatis一对多映射测试
+	            * @param id
+	            * @return
+	            */
+	           @RequestMapping(value="/test")
+	           @ResponseBody
+	           public Map<String,String> test(@RequestBody Map<String,String> name){
+	        	   System.out.println(name.get("name"));
+	        	   
+	        	   	return name;
 	           }
 	        
 	           

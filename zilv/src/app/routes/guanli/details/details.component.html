@@ -1,8 +1,68 @@
 
-  <nz-layout style="width:100%;margin-top: 15px;">
-    <nz-content>    
-            <button style="float: right;"  (click)="downExcel()" nz-button nzType="primary">导出Excel</button>  
-        <div>
+  <nz-layout style="width:100%;margin-top: 15px;background-color: #ffffff">
+    <nz-content>  
+      <div style="font-size:24px;text-align: center;">
+            {{data.create_time}}
+      </div>
+
+      <div style=" line-height: 30%; height:30%;width:100%;">
+            <div style="font-size: 20px;">
+             <div style="width: 100px;height: 100px;background-color: red;transform:rotate(45deg); -ms-transform:rotate(45deg); /* Internet Explorer */   -moz-transform:rotate(45deg); /* Firefox */   -webkit-transform:rotate(45deg); /* Safari 和 Chrome */   -o-transform:rotate(45deg); /* Opera */   margin:50px auto;"></div>
+          
+                  今日时间分配
+            </div>
+
+            <div style="width: 60%; line-height: 30%;  height: 30%;">
+                 <div echarts [options] = "option" [loading]="showloading" class="demo-chart"></div>         
+            </div>
+            <div style=" width: 30%; line-height: 25%; height: 25%; float:right;margin-right: 11%;margin-top: -43%;">
+                  <nz-table  style="height: 20%;" #borderedTable  nzBordered [nzShowPagination]="false" [nzData]="dataSet">
+                        <thead>
+                              <tr>
+                              <th>内容</th>
+                              <th>时间</th>
+                              </tr>
+                        </thead>
+                        <tbody>
+                              <tr *ngFor="let data of borderedTable.data">
+                              <td >{{ data.content }}</td>
+                              <td >{{ data.time }}</td>
+                              </tr>
+                        </tbody>
+                  </nz-table>
+            </div>
+      </div>
+
+      <div style="font-size: 20px;">
+      
+        <div *ngIf="data.luSum > 0" >
+              已经连续戒撸{{data.luSum}}天 ！
+        </div>
+        <div *ngIf="data.luSum == 0" style="color:red">
+              今天又破戒了......空即是色，色即是空。要从思想上根除！想想每一次撸完，你的懊悔！
+       </div>
+        <div *ngIf="data.studyTime!=''">
+              今天一共学习了{{data.studyTime}}分钟！
+        </div>
+        <div *ngIf="data.studyTime==''" style="color:red">
+               今天没学习？记住你的面试失败！！！记住你前几年的贪玩！！！记住你是个程序员需要不断学习！！！记住你3500的工资！！！
+         </div>
+         <div *ngIf="data.sportsTime!=''">
+          今天一共健身了{{data.sportsTime}}分钟！
+        </div>
+        <div *ngIf="data.sportsTime==''" style="color:red">
+              今天又没健身？忘记2018年被表白拒绝的心酸了？虽然减肥不一定让你变完美，但是减肥一点可以让你变的比现在强大！！！
+        </div>
+
+
+      </div>
+      
+     
+    </nz-content>
+   
+</nz-layout>
+
+   <!-- <div>
              {{data.create_time}}日记
         </div>
         <div *ngIf="data.luSum > 0" >
@@ -22,8 +82,4 @@
         </div>
         <div *ngIf="data.sportsTime==''" style="color:red">
               今天又没健身？忘记2018年被表白拒绝的心酸了？虽然减肥不一定让你变完美，但是减肥一点可以让你变的比现在强大！！！
-        </div>
-    </nz-content>
-</nz-layout>
-
-
+        </div> -->

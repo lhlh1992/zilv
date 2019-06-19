@@ -4,7 +4,7 @@ import { GuanliRoutingModule } from './guanli-routing.module';
 import { GuanliGuanliPageComponent } from './guanli-page/guanli-page.component';
 import { GuanliViewComponent } from './view/view.component';
 import { GuanliDetailsComponent } from './details/details.component';
-
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 
@@ -21,7 +21,8 @@ const COMPONENTS_NOROUNT = [
 @NgModule({
   imports: [
     SharedModule,
-    GuanliRoutingModule
+    GuanliRoutingModule,
+    NgxEchartsModule
   ],
   declarations: [
     ...COMPONENTS,
