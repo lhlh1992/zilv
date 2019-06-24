@@ -1,108 +1,143 @@
 package com.liu.mvc.controller;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.SystemPropertyUtils;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.liu.mvc.dao.classInfo.classInfoMapper;
-import com.liu.mvc.pojo.DicItem;
-import com.liu.mvc.pojo.DicType;
-import com.liu.mvc.pojo.Role;
-import com.liu.mvc.pojo.classInfo;
-import com.liu.mvc.service.IDicitemService;
-import com.liu.mvc.service.IDictypeService;
-import com.liu.mvc.service.IRoleService;
-
-
-import com.liu.redis.redisUtils.RedisUtil;
-
-
-
+import com.liu.mvc.dao.user.userMapper;
+import com.liu.mvc.pojo.User;
 
 @Controller
 @CrossOrigin
 public class loginController {
-	
 	@Autowired
-	private IRoleService roleService;
-	   
-	@Autowired
-	private IDictypeService dictypeService;
-	
-	@Autowired
-	private IDicitemService dicitemService;
-	
-	@Autowired
-	private classInfoMapper classInfoMapper;
-	
-	
-	@Autowired
-	private RedisUtil RedisUtil;
-	        
-	           @RequestMapping(value="/roleList")
-	           @ResponseBody        
-	              public  List<Role> roleList() {
-		        	List<Role> list =   roleService.selectRoles("");
-		        	return list;
-	              }
-	           
-	           
-	           
-	           @RequestMapping(value="/redisSet")
-	           @ResponseBody        
-	              public  void redisSet(@RequestBody String key) {
-	        	  
-	        	   RedisUtil.set(key, "oooo");
-	              }
-	           
-	           @RequestMapping(value="/redisfind")
-	           @ResponseBody        
-	              public boolean  redisfind(@RequestBody String key) {
-	        	   
+	private userMapper userMapper;
 
-	        	    boolean b = RedisUtil.exists(key);
-	        	    return b;
-	              }
+	   		
+	  //跳转到登录表单页面
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        return "need login";
+    }
+    
+    //登录成功后，跳转的页面
+    @RequestMapping("/success")
+    public String index(Model model) {
+        return "success";
+    }
+
+    //未登录，可以访问的页面
+    @RequestMapping("/index")
+    public String list(Model model) {
+        return "index";
+    }
+	
+
+    /**
+     * ajax登录请求接口方式登陆
+     * @param username
+     * @param password
+     * @return
+     */
+    @RequestMapping(value="/login",method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> submitLogin(@RequestBody Map<String,String> json) {
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        String username = json.get("username").toString();
+  	    String password = json.get("password").toString();
+        try {
+
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            SecurityUtils.getSubject().login(token);
+           
+//            resultMap.put("status", 200);
+//            resultMap.put("message", "登录成功");
+            Date d = new Date();
+      	   SimpleDateFormat s = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+      	   String time = s.format(d);
+      	   Map<String,String> userMap = new HashMap<String, String>();
+      	   userMap.put("token", "123456789");
+      	   userMap.put("name", username);
+      	   userMap.put("email", username+"qq@.com");
+      	   userMap.put("id", "10000");
+      	   userMap.put("time", time);
+      	   Map<String,Object> m = new HashMap<String, Object>();
+      	   m.put("user", userMap);
+      	   m.put("msg", "ok");
+      	   return m;
+
+        } catch (UnknownAccountException e) {
+        	Map<String,Object> m = new HashMap<String, Object>();
+        	m.put("msg", "no");
+        	m.put("count", "此账号不存在");
+        	return m;
+//            resultMap.put("status", 500);
+//            resultMap.put("message", e.getMessage());
+//            resultMap.put("count", "不存在的账号");
+        }catch (IncorrectCredentialsException e) {
+        	Map<String,Object> m = new HashMap<String, Object>();
+        	m.put("msg", "no");
+        	m.put("count", "密码不正确");
+        	return m;
+//            resultMap.put("status", 500);
+//            resultMap.put("message", e.getMessage());
+//            resultMap.put("count", "账号存在但是密码错误");
+        }
+     
+    }
+
+    
+    
+    /**
+     * mybatis一对多映射测试
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="/login1")
+    @ResponseBody
+    public Map<String,Object> login(@RequestBody Map<String,String> json){
+ 	   String username = json.get("userName").toString();
+ 	   String password = json.get("password").toString();
+ 	   User user=new User();
+ 	   
+ 	   user.setPassword(password);
+ 	   user.setUsername(username);
+ 	   User u = userMapper.getUser(user);
+ 	   
+ 	   Date d = new Date();
+ 	   SimpleDateFormat s = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
+ 	   String time = s.format(d);
+ 	   Map<String,String> userMap = new HashMap<String, String>();
+ 	   userMap.put("token", "123456789");
+ 	   userMap.put("name", username);
+ 	   userMap.put("email", username+"qq@.com");
+ 	   userMap.put("id", "10000");
+ 	   userMap.put("time", time);
+ 	   Map<String,Object> m = new HashMap<String, Object>();
+ 	   m.put("user", userMap);
+ 	   m.put("msg", "ok");
+ 	   return m;
+    }
+    
 	           
-	           /**
-	            * mybatis一对多映射测试
-	            * @param id
-	            * @return
-	            */
-	           @RequestMapping(value="/classInfo")
-	           @ResponseBody
-	           public List<classInfo> queryClassInfo(@RequestBody String id){
-	        	   System.out.println("pppppppp");
-	        	   List<classInfo> l= classInfoMapper.queryClassInfo(id);
-	        	   
-	        	   return l;
-	           }
-	        
 	           
-	           /**
-	            * mybatis一对多映射测试
-	            * @param id
-	            * @return
-	            */
-	           @RequestMapping(value="/test")
-	           @ResponseBody
-	           public Map<String,String> test(@RequestBody Map<String,String> name){
-	        	   System.out.println(name.get("name"));
-	        	   
-	        	   	return name;
-	           }
-	        
+	      
 	           
 	        
 

@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.liu.mvc.dao.dictype.DictypeMapper;
-import com.liu.mvc.dao.role.RoleMapper;
+
 import com.liu.mvc.pojo.DicType;
 import com.liu.mvc.service.IDictypeService;
 

@@ -3,6 +3,7 @@ import { Component, OnDestroy, Inject, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { ServicesService} from '../../../services/services.service';
 import {
   SocialService,
   SocialOpenType,
@@ -37,6 +38,7 @@ export class UserLoginComponent implements OnDestroy {
     private startupSrv: StartupService,
     public http: _HttpClient,
     public msg: NzMessageService,
+    private config:ServicesService
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required, Validators.minLength(4)]],
@@ -108,15 +110,14 @@ export class UserLoginComponent implements OnDestroy {
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
     this.http
-      .post('/login/account?_allow_anonymous=true', {
-        type: this.type,
-        userName: this.userName.value,
+      .post(this.config.url+'/login', {
+        username: this.userName.value,
         password: this.password.value,
       })
       .subscribe((res: any) => {
         if (res.msg !== 'ok') {
-          this.error = res.msg;
-          return;
+          this.error = res.count;
+          return 
         }
         // 清空路由复用信息
         this.reuseTabService.clear();

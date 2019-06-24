@@ -1,78 +1,53 @@
 package com.liu.mvc.pojo;
 
+import java.util.List;
+
 public class Role {
-             
-	        private int id;       //����id
-	        
-	        private int num;      //���
-	        
-	        private int pid;      //����ɫid
-	        
-	        private String name;   //��ɫ����
-	        
-	        private int deptid;    //��������
-	        
-	        private String tips;   //��ʾ
-	        
-	        private String version;  //�����ֶ�(��ʱû�ã�
+					
+				private int id;
+				
+				private String  rolename;
+				
+				private List<Permission> perList;
+				
+				private List<User> UserList;
 
-			public int getId() {
-				return id;
-			}
+				public int getId() {
+					return id;
+				}
 
-			public void setId(int id) {
-				this.id = id;
-			}
+				public void setId(int id) {
+					this.id = id;
+				}
 
-			public int getNum() {
-				return num;
-			}
+				public String getRolename() {
+					return rolename;
+				}
 
-			public void setNum(int num) {
-				this.num = num;
-			}
+				public void setRolename(String rolename) {
+					this.rolename = rolename;
+				}
 
-			public int getPid() {
-				return pid;
-			}
+				public List<Permission> getPerList() {
+					return perList;
+				}
 
-			public void setPid(int pid) {
-				this.pid = pid;
-			}
+				public void setPerList(List<Permission> perList) {
+					this.perList = perList;
+				}
 
-			public String getName() {
-				return name;
-			}
+				public List<User> getUserList() {
+					return UserList;
+				}
 
-			public void setName(String name) {
-				this.name = name;
-			}
-
-			public int getDeptid() {
-				return deptid;
-			}
-
-			public void setDeptid(int deptid) {
-				this.deptid = deptid;
-			}
-
-			public String getTips() {
-				return tips;
-			}
-
-			public void setTips(String tips) {
-				this.tips = tips;
-			}
-
-			public String getVersion() {
-				return version;
-			}
-
-			public void setVersion(String version) {
-				this.version = version;
-			}
-	        
-	        
-	        
-	        
+				public void setUserList(List<User> userList) {
+					UserList = userList;
+				}
+				
+				
+				
+				
+				
+			    
+						
 }
