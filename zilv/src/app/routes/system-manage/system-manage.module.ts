@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 import { SystemManageRoutingModule } from './system-manage-routing.module';
 import { SystemManageDicitemComponent } from './dicitem/dicitem.component';
+import { SystemManageUserComponent } from './user/user.component';
 
 
 const COMPONENTS = [
  
-  SystemManageDicitemComponent];
+  SystemManageDicitemComponent,
+  SystemManageUserComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({

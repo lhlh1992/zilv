@@ -32,7 +32,7 @@ public class ShiroRealm extends AuthorizingRealm{
 	        for(Role role:userInfo.getRoleList()){
 	            authorizationInfo.addRole(role.getRolename());
 	            for(Permission p:role.getPerList()){
-	                authorizationInfo.addStringPermission(p.getPName());
+	                authorizationInfo.addStringPermission(p.getPermissionName());
 	            }
 	        }
 	        return authorizationInfo;
@@ -43,18 +43,12 @@ public class ShiroRealm extends AuthorizingRealm{
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		  System.out.println("MyShiroRealm.doGetAuthenticationInfo()，认证方法");
 	        //获取用户的输入的账号.
-		  	UsernamePasswordToken to = (UsernamePasswordToken) token;
-		  	
+		  	UsernamePasswordToken to = (UsernamePasswordToken) token;	  	
 	        String username = String.valueOf(to.getUsername());
-	        String password = String.valueOf(to.getPassword());
-
-	        String name = token.getPrincipal().toString();
-	        System.out.println(token.getCredentials());
 	        //通过username从数据库中查找 User对象，如果找到，没找到.
 	        //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
 	        User u=new User();
 	        u.setUsername(username);
-	     
 	        User userInfo = userService.getUser(u);
 	        if(userInfo == null){
 	            return null;

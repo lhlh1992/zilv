@@ -8,6 +8,12 @@ public class Role {
 				
 				private String  rolename;
 				
+				private String  roleCode;
+				
+				private String  description;
+				
+				private String  available;
+				
 				private List<Permission> perList;
 				
 				private List<User> UserList;
@@ -28,6 +34,30 @@ public class Role {
 					this.rolename = rolename;
 				}
 
+				public String getRoleCode() {
+					return roleCode;
+				}
+
+				public void setRoleCode(String roleCode) {
+					this.roleCode = roleCode;
+				}
+
+				public String getDescription() {
+					return description;
+				}
+
+				public void setDescription(String description) {
+					this.description = description;
+				}
+
+				public String getAvailable() {
+					return available;
+				}
+
+				public void setAvailable(String available) {
+					this.available = available;
+				}
+
 				public List<Permission> getPerList() {
 					return perList;
 				}
@@ -43,7 +73,10 @@ public class Role {
 				public void setUserList(List<User> userList) {
 					UserList = userList;
 				}
+
 				
+				
+			
 				
 				
 				

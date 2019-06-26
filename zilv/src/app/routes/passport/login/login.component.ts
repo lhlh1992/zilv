@@ -41,7 +41,7 @@ export class UserLoginComponent implements OnDestroy {
     private config:ServicesService
   ) {
     this.form = fb.group({
-      userName: [null, [Validators.required, Validators.minLength(4)]],
+      userName: [null, [Validators.required, Validators.minLength(3)]],
       password: [null, Validators.required],
       mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
       captcha: [null, [Validators.required]],
@@ -53,6 +53,7 @@ export class UserLoginComponent implements OnDestroy {
   // #region fields
 
   get userName() {
+    console.log(this.form.controls.userName)
     return this.form.controls.userName;
   }
   get password() {

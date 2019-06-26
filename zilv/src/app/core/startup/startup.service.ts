@@ -129,8 +129,8 @@ export class StartupService {
             link: '',
             icon: { type: 'icon', value: 'appstore' },
             children: [
-               {text:'字典管理',link:'/sys/dicitem'}
-        
+               {text:'字典管理',link:'/sys/dicitem'},
+               {text:'用户管理',link:'/sys/user'}
             ]
           },
         ] 

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class User {
 					
-				private int id;
+				private String id;
 				
 				private String  username;
 				
@@ -14,12 +14,14 @@ public class User {
 				
 				private List<Role> roleList;
 				
+				
+				
 
-				public int getId() {
+				public String getId() {
 					return id;
 				}
 
-				public void setId(int id) {
+				public void setId(String id) {
 					this.id = id;
 				}
 

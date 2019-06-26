@@ -24,6 +24,26 @@
   			</if>
   		</select>
   		
+  			
+  		<select id="getUserList" parameterType="String"  resultType="User">
+  			SELECT id,username,password,salt
+  			FROM
+  			t_user
+  			WHERE
+  			 1=1		 
+  			<if test="username!='' and username!=null">
+  				AND username=#{username}
+  			</if>
+  		</select>
+  		
+  		
+  		<insert id="addUser" parameterType="User">
+  			 INSERT INTO t_user (id,username,password,salt) VALUES(#{id},#{username},#{password},#{salt})
+  		</insert>
+  		
+  		
+  		
+  		
   	
 	
 </mapper> 

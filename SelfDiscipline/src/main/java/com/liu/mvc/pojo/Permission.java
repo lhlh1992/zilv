@@ -11,7 +11,17 @@ public class Permission {
 				
 	     private int id;
 	     
-	     private String PName;
+	     private String code;
+	     
+	     private String permissionName;
+	     
+	     private String url;
+	     
+	     private String type;
+	     
+	     private String pCode;
+	     
+	     private String available;
 	     
 	     private List<Role> roleList;
 
@@ -23,12 +33,52 @@ public class Permission {
 			this.id = id;
 		}
 
-		public String getPName() {
-			return PName;
+		public String getCode() {
+			return code;
 		}
 
-		public void setPName(String pName) {
-			PName = pName;
+		public void setCode(String code) {
+			this.code = code;
+		}
+
+		public String getPermissionName() {
+			return permissionName;
+		}
+
+		public void setPermissionName(String permissionName) {
+			this.permissionName = permissionName;
+		}
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+		public String getpCode() {
+			return pCode;
+		}
+
+		public void setpCode(String pCode) {
+			this.pCode = pCode;
+		}
+
+		public String getAvailable() {
+			return available;
+		}
+
+		public void setAvailable(String available) {
+			this.available = available;
 		}
 
 		public List<Role> getRoleList() {
@@ -38,6 +88,13 @@ public class Permission {
 		public void setRoleList(List<Role> roleList) {
 			this.roleList = roleList;
 		}
+	     
+	     
+	     
+	     
+	     
+
+	     
 	     
 	     
 	     
