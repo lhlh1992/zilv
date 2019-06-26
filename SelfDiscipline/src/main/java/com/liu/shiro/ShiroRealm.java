@@ -53,6 +53,7 @@ public class ShiroRealm extends AuthorizingRealm{
 	        if(userInfo == null){
 	            return null;
 	        }
+	        
 	        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
 	        		userInfo.getUsername(), //用户名
 	                userInfo.getPassword(), //密码

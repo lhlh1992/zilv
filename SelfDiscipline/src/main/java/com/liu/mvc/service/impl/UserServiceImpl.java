@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
 
-import com.liu.mvc.dao.user.userMapper;
+import com.liu.mvc.dao.user.UserMapper;
 import com.liu.mvc.pojo.User;
 import com.liu.mvc.service.IUserService;
 
@@ -16,7 +16,7 @@ import com.liu.mvc.service.IUserService;
 public class UserServiceImpl implements IUserService{
 	
 	@Resource
-	public userMapper userDao;
+	public UserMapper userDao;
 
 	@Override
 	public User getUser(User u) {

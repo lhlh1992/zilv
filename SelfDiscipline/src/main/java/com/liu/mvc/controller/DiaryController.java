@@ -30,12 +30,12 @@ import com.liu.mvc.pojo.Diary;
 import com.liu.mvc.pojo.excelPoi;
 import com.liu.mvc.service.IDiaryService;
 import com.liu.mvc.utils.DateUtils;
-import com.liu.mvc.utils.poiUtils;
+import com.liu.mvc.utils.PoiUtils;
 
 @Controller
 @CrossOrigin
 @RequestMapping(value = "/Diary")
-public class diaryController {
+public class DiaryController {
 
 	@Autowired
 	public IDiaryService iDiaryService;
@@ -224,7 +224,7 @@ public class diaryController {
 //	                    e.printStackTrace();
 //	                }
 
-		HSSFWorkbook wb = poiUtils.getHSSFWrokbook("aa", poi);
+		HSSFWorkbook wb = PoiUtils.getHSSFWrokbook("aa", poi);
 
 		try {
 			this.setResponseHeader(response, "aaa.xsl");

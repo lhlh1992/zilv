@@ -10,7 +10,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.liu.mvc.pojo.excelPoi;
 
-public class poiUtils {
+public class PoiUtils {
 				
 				public static HSSFWorkbook getHSSFWrokbook(String sheetName,excelPoi ep) {
 					HSSFWorkbook  wb=new HSSFWorkbook();

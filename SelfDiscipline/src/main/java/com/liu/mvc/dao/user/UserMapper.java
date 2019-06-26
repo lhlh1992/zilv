@@ -8,7 +8,7 @@ import com.liu.mvc.pojo.User;
 
 
 
-public interface userMapper {
+public interface UserMapper {
 			 
 	       User getUser(User u);
 	       

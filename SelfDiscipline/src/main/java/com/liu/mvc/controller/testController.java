@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.liu.mvc.dao.classInfo.classInfoMapper;
-import com.liu.mvc.dao.user.userMapper;
+import com.liu.mvc.dao.user.UserMapper;
 import com.liu.mvc.pojo.DicItem;
 import com.liu.mvc.pojo.DicType;
 import com.liu.mvc.pojo.User;
@@ -51,7 +51,7 @@ public class testController {
 	private classInfoMapper classInfoMapper;
 	
 	@Autowired
-	private userMapper userMapper;
+	private UserMapper userMapper;
 	
 	
 	@Autowired

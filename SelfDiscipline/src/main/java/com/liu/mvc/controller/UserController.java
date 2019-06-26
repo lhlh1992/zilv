@@ -20,7 +20,7 @@ import com.liu.mvc.service.IUserService;
 @CrossOrigin
 
 @RequestMapping(value="/user")
-public class userController {
+public class UserController {
 			@Autowired	
 			private IUserService userService;
 	

@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.liu.mvc.dao.user.userMapper;
+import com.liu.mvc.dao.user.UserMapper;
 import com.liu.mvc.pojo.User;
 
 @Controller
 @CrossOrigin
-public class loginController {
+public class LoginController {
 	@Autowired
-	private userMapper userMapper;
+	private UserMapper userMapper;
 
 	   		
 	  //跳转到登录表单页面

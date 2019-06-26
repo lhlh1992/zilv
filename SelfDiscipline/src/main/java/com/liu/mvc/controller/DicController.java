@@ -20,7 +20,7 @@ import com.liu.mvc.service.IDictypeService;
 @Controller
 @CrossOrigin
 @RequestMapping(value="/dic")
-public class dicController {
+public class DicController {
             
 	@Autowired
 	private IDictypeService dictypeService;
