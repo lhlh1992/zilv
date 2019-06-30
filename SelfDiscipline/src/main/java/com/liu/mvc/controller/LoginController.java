@@ -6,10 +6,14 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,22 +61,28 @@ public class LoginController {
      */
     @RequestMapping(value="/login",method= RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> submitLogin(@RequestBody Map<String,String> json) {
+    public Map<String,Object> submitLogin(@RequestBody Map<String,String> json,ServletRequest request) {
+    	
+    	 HttpServletRequest req = (HttpServletRequest) request;
+    	   String authorization = req.getHeader("Content-Type");
+    	 System.out.println(authorization);
+    	 
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         String username = json.get("username").toString();
   	    String password = json.get("password").toString();
         try {
 
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            Subject currentUser = SecurityUtils.getSubject();
+                  
             SecurityUtils.getSubject().login(token);
-           
-//            resultMap.put("status", 200);
-//            resultMap.put("message", "登录成功");
-            Date d = new Date();
+       
+           Date d = new Date();
       	   SimpleDateFormat s = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
       	   String time = s.format(d);
       	   Map<String,String> userMap = new HashMap<String, String>();
-      	   userMap.put("token", "123456789");
+      	   
+      	   userMap.put("token", "111111");
       	   userMap.put("name", username);
       	   userMap.put("email", username+"qq@.com");
       	   userMap.put("id", "10000");

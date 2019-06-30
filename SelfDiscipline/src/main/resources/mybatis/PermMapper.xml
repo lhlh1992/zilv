@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间是对应接口的包名+类名 -->
+<mapper namespace="com.liu.mvc.dao.perm.PermMapper">
+		<resultMap type="Perm" id="BaseResultMap">
+			<id column="id" property="id" />
+			<result column="code" property="code" />
+			<result column="permissionName" property="permissionName" />
+			<result column="url" property="url" />
+			<result column="type" property="type" />
+			<result column="pCode" property="pCode" />
+			<result column="available" property="available" />
+			<collection property="roleList" ofType="com.liu.mvc.pojo.Role" javaType="ArrayList">
+				<id column="id" property="id" />
+				<result column="rolename" property="rolename" />
+				<result column="roleCode" property="roleCode" />
+				<result column="description" property="description" />
+				<result column="available" property="available" />
+			</collection>
+		</resultMap>
+  		
+  	
+  		
+  			
+  		<select id="getPermList" parameterType="String"  resultMap="BaseResultMap">
+			SELECT
+					p.id,
+					p.`code`,
+					p.permissionName,
+					p.url,
+					p.type,
+					p.pCode,
+					p.available,
+					r.rolename,
+					r.roleCode
+			FROM
+				t_permission as p
+			LEFT JOIN t_role_per as rp ON p.id=rp.per_id
+			LEFT JOIN t_role as r ON r.id=rp.role_id
+  			WHERE
+  			 1=1		 
+  			<if test="permissionName!='' and permissionName!=null">
+  				AND permissionName=#{permissionName}
+  			</if>
+  		</select>
+  		
+  		
+  		
+  		
+  		
+  		
+  	
+	
+</mapper> 

@@ -1,4 +1,6 @@
 spring:
+  aop:
+    proxy-target-class: true
   profiles:
     active: dev
   datasource:
@@ -6,6 +8,7 @@ spring:
     password: zaqxsw
     url: jdbc:mysql://localhost:3306/zilv?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
+
 #Redis配置    
   redis:
     database : 0  

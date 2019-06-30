@@ -7,7 +7,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-public class Permission {
+public class Perm {
 				
 	     private int id;
 	     

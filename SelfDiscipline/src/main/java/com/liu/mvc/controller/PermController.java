@@ -13,31 +13,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.liu.mvc.pojo.Perm;
 import com.liu.mvc.pojo.User;
+import com.liu.mvc.service.IPermService;
 import com.liu.mvc.service.IUserService;
 
 @Controller
 @CrossOrigin
-@RequestMapping(value="/user")
-public class UserController {
+@RequestMapping(value="/perm")
+public class PermController {
 			@Autowired	
-			private IUserService userService;
+			private IPermService permService;
 	
-			@RequestMapping(value="/getUserList")
+			@RequestMapping(value="/getPermList")
 			@ResponseBody
-			public List<User> getUserList(@RequestBody Map<String,Object> map){				
-				String uname = map.get("username").toString();		
-				List<User> userList = userService.getUserList(uname);
-				System.out.println(userList.size());
-				return userList;
+			public List<Perm> getPermList(@RequestBody Map<String,Object> map){				
+				String pname = map.get("pname").toString();		
+				List<Perm> permList = permService.getPermList(pname);			
+				return permList;
 			}
 			
-			@RequestMapping(value="/addUser")
-			@ResponseBody
-			public int addUser(User u){				
-				
-				int i = userService.addUser(u);
-				
-				return i;
-			}
+		
 }

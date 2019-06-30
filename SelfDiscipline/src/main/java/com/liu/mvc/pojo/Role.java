@@ -14,7 +14,7 @@ public class Role {
 				
 				private String  available;
 				
-				private List<Permission> perList;
+				private List<Perm> perList;
 				
 				private List<User> UserList;
 
@@ -58,11 +58,11 @@ public class Role {
 					this.available = available;
 				}
 
-				public List<Permission> getPerList() {
+				public List<Perm> getPerList() {
 					return perList;
 				}
 
-				public void setPerList(List<Permission> perList) {
+				public void setPerList(List<Perm> perList) {
 					this.perList = perList;
 				}
 

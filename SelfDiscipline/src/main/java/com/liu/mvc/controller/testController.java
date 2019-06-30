@@ -92,7 +92,7 @@ public class testController {
 	        
 	           
 	           /**
-	            * mybatis一对多映射测试
+	            * mybatis一对多映射测试 
 	            * @param id
 	            * @return
 	            */

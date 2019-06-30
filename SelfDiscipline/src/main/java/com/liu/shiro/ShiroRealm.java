@@ -2,6 +2,7 @@ package com.liu.shiro;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -11,10 +12,11 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.liu.mvc.pojo.Permission;
+import com.liu.mvc.pojo.Perm;
 import com.liu.mvc.pojo.Role;
 import com.liu.mvc.pojo.User;
 import com.liu.mvc.service.IUserService;
@@ -31,10 +33,11 @@ public class ShiroRealm extends AuthorizingRealm{
 	        User userInfo  = (User)principals.getPrimaryPrincipal();
 	        for(Role role:userInfo.getRoleList()){
 	            authorizationInfo.addRole(role.getRolename());
-	            for(Permission p:role.getPerList()){
+	            for(Perm p:role.getPerList()){
 	                authorizationInfo.addStringPermission(p.getPermissionName());
 	            }
 	        }
+	       
 	        return authorizationInfo;
 	
 	}
@@ -53,7 +56,7 @@ public class ShiroRealm extends AuthorizingRealm{
 	        if(userInfo == null){
 	            return null;
 	        }
-	        
+	       
 	        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
 	        		userInfo.getUsername(), //用户名
 	                userInfo.getPassword(), //密码
