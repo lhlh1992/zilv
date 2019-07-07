@@ -69,7 +69,7 @@ public class mdTest {
 //        System.out.println(result);
     	
     		String hashAlgorithmName = "MD5";//加密方式
-    	    Object crdentials = "adminq";//密码原值
+    	    Object crdentials = "666666";//密码原值
     	    Object salt = null;//盐值
     	    int hashIterations = 1024;//加密1024次
     	    Object result = new SimpleHash(hashAlgorithmName,crdentials,salt,hashIterations);

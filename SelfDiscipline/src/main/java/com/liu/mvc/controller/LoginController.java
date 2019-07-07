@@ -64,7 +64,7 @@ public class LoginController {
     public Map<String,Object> submitLogin(@RequestBody Map<String,String> json,ServletRequest request) {
     	
     	 HttpServletRequest req = (HttpServletRequest) request;
-    	   String authorization = req.getHeader("Content-Type");
+    	   String authorization = req.getHeader("Authorization");
     	 System.out.println(authorization);
     	 
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
@@ -73,9 +73,9 @@ public class LoginController {
         try {
 
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-            Subject currentUser = SecurityUtils.getSubject();
-                  
+            Subject currentUser = SecurityUtils.getSubject();             
             SecurityUtils.getSubject().login(token);
+            
        
            Date d = new Date();
       	   SimpleDateFormat s = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
@@ -89,12 +89,12 @@ public class LoginController {
       	   userMap.put("time", time);
       	   Map<String,Object> m = new HashMap<String, Object>();
       	   m.put("user", userMap);
-      	   m.put("msg", "ok");
+      	   m.put("msg", "success");
       	   return m;
 
         } catch (UnknownAccountException e) {
         	Map<String,Object> m = new HashMap<String, Object>();
-        	m.put("msg", "no");
+        	m.put("msg", "error");
         	m.put("count", "此账号不存在");
         	return m;
 //            resultMap.put("status", 500);
@@ -102,7 +102,7 @@ public class LoginController {
 //            resultMap.put("count", "不存在的账号");
         }catch (IncorrectCredentialsException e) {
         	Map<String,Object> m = new HashMap<String, Object>();
-        	m.put("msg", "no");
+        	m.put("msg", "error");
         	m.put("count", "密码不正确");
         	return m;
 //            resultMap.put("status", 500);

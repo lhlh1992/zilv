@@ -36,8 +36,8 @@ public class DicController {
 	
 	
 	
-//    @RequiresRoles("admin")
-//    @RequiresPermissions("字典管理")
+    @RequiresRoles("admin")
+    @RequiresPermissions("字典管理")
     @RequestMapping(value="/dictypeList")
     @ResponseBody        
        public  List<DicType> dictypeList() {
