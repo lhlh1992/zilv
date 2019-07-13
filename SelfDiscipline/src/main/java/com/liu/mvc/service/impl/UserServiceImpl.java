@@ -41,7 +41,7 @@ public class UserServiceImpl implements IUserService{
 		String unsalt = username+salt;   //盐值处理成用户名+盐值，有利于数据的安全
 		//加密加盐后的MD5密码
 		Object result = new SimpleHash(hashAlgorithmName,password,unsalt,hashIterations);
-		u.setId(id);
+		u.setUid(id);
 		u.setUsername(username);
 		u.setPassword(result.toString());
 		u.setSalt(salt);

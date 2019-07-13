@@ -5,13 +5,13 @@
 <mapper namespace="com.liu.mvc.dao.role.RoleMapper">
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="role" >
-			<id column="id" property="id" />
+			<id column="rid" property="rid" />
 			<result column="rolename" property="rolename" />
 			<result column="roleCode" property="roleCode" />
 			<result column="description" property="description" />
 			<result column="available" property="available" />
 			<collection property="perList" ofType="com.liu.mvc.pojo.Perm" javaType="ArrayList">
-				<id column="id" property="id" />
+				<id column="peid" property="peid" />
 				<result column="code" property="code" />
 				<result column="permissionName" property="permissionName" />
 				<result column="url" property="url" />
@@ -20,7 +20,7 @@
 				<result column="available" property="available" />
 			</collection>
 			<collection property="UserList" ofType="com.liu.mvc.pojo.User" javaType="ArrayList">
-				<id column="id" property="id" />
+				<id column="uid" property="uid" />
 				<result column="username" property="username" />
 				<result column="password" property="password" />
 				<result column="salt" property="salt" />
@@ -30,7 +30,7 @@
     
   	<select id="getRoleList" parameterType="String"  resultMap="BaseResultMap">
 		   SELECT
-					r.id,
+					r.rid,
 					r.roleCode,
 					r.rolename,
 					r.available,
@@ -44,10 +44,10 @@
 					u.username
 			FROM
 				t_role as r
-			LEFT JOIN t_role_per as rp ON rp.role_id=r.id
-			LEFT JOIN  t_permission as p ON p.id=rp.per_id
-			LEFT JOIN t_user_role as ur ON ur.role_id=r.id
-			LEFT JOIN t_user as u ON u.id=ur.user_id
+			LEFT JOIN t_role_per as rp ON rp.role_id=r.rid
+			LEFT JOIN  t_permission as p ON p.peid=rp.per_id
+			LEFT JOIN t_user_role as ur ON ur.role_id=r.rid
+			LEFT JOIN t_user as u ON u.uid=ur.user_id
   			WHERE
   			 1=1		 
   			<if test="rolename!='' and rolename!=null">

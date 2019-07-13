@@ -97,7 +97,7 @@ export class SystemManageDicitemComponent implements OnInit {
   }
   //获取字典类型列表
   query(){
-    this.http.post(this.config.url+'dic/dictypeList',
+    this.config.post(this.config.url+'dic/dictypeList',
     {}
     ) .subscribe((res: any) => {
                this.data=res;     
@@ -116,7 +116,7 @@ export class SystemManageDicitemComponent implements OnInit {
     }
     //获取字典配置列表
     queryItem(code){
-      this.http.post(this.config.url+'dic/dicitemList',
+      this.config.post(this.config.url+'dic/dicitemList',
       {code:code}
       ) .subscribe((res: any) => {
                  this.itemData = res;   
@@ -141,7 +141,7 @@ export class SystemManageDicitemComponent implements OnInit {
     handleOk(): void {
       console.log(this.typeAddorEdit)
          if(this.typeAddorEdit=='add'){
-            this.http.post(this.config.url+'dic/insertDictype',
+            this.config.post(this.config.url+'dic/insertDictype',
             {dic_type_code:this.dic_type_code,dic_type_name:this.dic_type_name}
             ) .subscribe((res: any) => {
                         if(res==1){
@@ -152,7 +152,7 @@ export class SystemManageDicitemComponent implements OnInit {
                         }
               });
          }else if(this.typeAddorEdit=='edit'){
-          this.http.post(this.config.url+'dic/updateDictype',
+          this.config.post(this.config.url+'dic/updateDictype',
           {dic_type_code:this.dic_type_code,dic_type_name:this.dic_type_name,id:this.id}
           ) .subscribe((res: any) => {
                       if(res==1){
@@ -176,7 +176,7 @@ export class SystemManageDicitemComponent implements OnInit {
     }
 
     handledelete(){
-      this.http.post(this.config.url+'dic/deleteDictype',
+      this.config.post(this.config.url+'dic/deleteDictype',
       {id:this.id}
       ) .subscribe((res: any) => {
                   if(res==1){
@@ -232,7 +232,7 @@ export class SystemManageDicitemComponent implements OnInit {
     //字典类型模态框确定方法
     handleOkItem(): void {
          if(this.typeAddorEditItem=='add'){
-            this.http.post(this.config.url+'dic/insertDicItem',
+            this.config.post(this.config.url+'dic/insertDicItem',
             {dicItemCode:this.dicItemCode,dicItemName:this.dicItemName,dicTypeId:this.dictypeCode}
             ) .subscribe((res: any) => {
                         if(res==1){
@@ -243,7 +243,7 @@ export class SystemManageDicitemComponent implements OnInit {
                         }
               });
          }else if(this.typeAddorEditItem=='edit'){
-          this.http.post(this.config.url+'dic/updateDicitem',
+          this.config.post(this.config.url+'dic/updateDicitem',
           {dicItemCode:this.dicItemCode,dicItemName:this.dicItemName,id:this.itemID}
           ) .subscribe((res: any) => {
                       if(res==1){
@@ -257,7 +257,7 @@ export class SystemManageDicitemComponent implements OnInit {
     }
 
     handledeleteItem(){
-      this.http.post(this.config.url+'dic/deleteDicitem',
+      this.config.post(this.config.url+'dic/deleteDicitem',
       {id:this.itemID}
       ) .subscribe((res: any) => {
                   if(res==1){

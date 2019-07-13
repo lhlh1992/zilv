@@ -1,5 +1,7 @@
 package com.liu.shiro;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.shiro.SecurityUtils;
@@ -19,25 +21,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.liu.mvc.pojo.Perm;
 import com.liu.mvc.pojo.Role;
 import com.liu.mvc.pojo.User;
+import com.liu.mvc.service.IRoleService;
 import com.liu.mvc.service.IUserService;
 
 public class ShiroRealm extends AuthorizingRealm{
 	
 	@Resource
 	private IUserService userService;
+	@Resource
+	private IRoleService roleService;
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		  System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
+		
 	        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-	        User userInfo  = (User)principals.getPrimaryPrincipal();
-	        for(Role role:userInfo.getRoleList()){
-	            authorizationInfo.addRole(role.getRolename());
-	            for(Perm p:role.getPerList()){
-	                authorizationInfo.addStringPermission(p.getPermissionName());
-	            }
-	        }
-	       
+	      
+	        	User u=new User();
+	 	        u.setUsername(String.valueOf(principals.getPrimaryPrincipal()));
+	 	        List<User> userInfoList = userService.getUserList(String.valueOf(principals.getPrimaryPrincipal()));
+	 	        User userInfo=userInfoList.get(0);
+	 	        System.out.println(userInfo.getRoleList());
+	 	        List<Role> roleList = userInfo.getRoleList();
+		        for(Role role:roleList){        	
+		            authorizationInfo.addRole(role.getRolename());
+		            List<Role> r = roleService.getRoleList(role.getRolename());
+		            Role ro = r.get(0);
+		            for(Perm p:ro.getPerList()){
+		                authorizationInfo.addStringPermission(p.getPermissionName());
+		            }
+		        }
+		       System.out.println("获取到一下权限=============");
+		       System.out.println(authorizationInfo.getStringPermissions().toString());
+		       
+	     
+	        
 	        return authorizationInfo;
 	
 	}

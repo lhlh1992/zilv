@@ -62,14 +62,14 @@ public class testController {
 	           
 	           @RequestMapping(value="/redisSet")
 	           @ResponseBody        
-	              public  void redisSet(@RequestBody String key) {
+	              public  void redisSet( String key) {
 	        	  
 	        	   RedisUtil.set(key, "oooo");
 	              }
 	           
 	           @RequestMapping(value="/redisfind")
 	           @ResponseBody        
-	              public boolean  redisfind(@RequestBody String key) {
+	              public boolean  redisfind( String key) {
 	        	   
 
 	        	    boolean b = RedisUtil.exists(key);
@@ -83,7 +83,7 @@ public class testController {
 	            */
 	           @RequestMapping(value="/classInfo")
 	           @ResponseBody
-	           public List<classInfo> queryClassInfo(@RequestBody String id){
+	           public List<classInfo> queryClassInfo( String id){
 	        	   System.out.println("pppppppp");
 	        	   List<classInfo> l= classInfoMapper.queryClassInfo(id);
 	        	   

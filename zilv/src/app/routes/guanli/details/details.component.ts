@@ -59,7 +59,7 @@ export class GuanliDetailsComponent implements OnInit {
   downExcel(){
           let d = this.data;
           console.log(JSON.stringify(d))
-          this.http.post(this.config.url+'Diary/downExcel',
+          this.config.post(this.config.url+'Diary/downExcel',
           {'diary':JSON.stringify(d)}
           ) .subscribe((res: any) => {
                     console.log(res)

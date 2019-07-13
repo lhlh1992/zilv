@@ -9,7 +9,7 @@
 			<result column="password" property="password" />
 			<result column="salt" property="salt" />
 			<collection property="roleList" ofType="com.liu.mvc.pojo.Role" javaType="ArrayList">
-				<id column="id" property="id" />
+				<id column="rid" property="rid" />
 				<result column="rolename" property="rolename" />
 				<result column="description" property="description" />
 				<result column="available" property="available" />
@@ -18,7 +18,7 @@
   		
   		
   		<select id="getUser" parameterType="User"  resultType="User">
-  			SELECT id,username,password,salt
+  			SELECT uid,username,password,salt
   			FROM
   			t_user
   			WHERE
@@ -34,18 +34,18 @@
   			
   		<select id="getUserList" parameterType="String"  resultMap="BaseResultMap">
 			SELECT
-				u.id,
+				u.uid,
 				u.username,
 				u.PASSWORD,
 				u.salt,
-			    r.id,
+			    r.rid,
 				r.rolename,
 				r.available,
 				r.description
 			FROM
 				t_user as u
-			LEFT JOIN t_user_role as ur  ON ur.user_id=u.id
-			LEFT JOIN t_role as r ON ur.role_id=r.id
+			LEFT JOIN t_user_role as ur  ON ur.user_id=u.uid
+			LEFT JOIN t_role as r ON ur.role_id=r.rid
   			WHERE
   			 1=1		 
   			<if test="username!='' and username!=null">

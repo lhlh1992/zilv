@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Perm {
 				
-	     private int id;
+	     private int peid;
 	     
 	     private String code;
 	     
@@ -25,12 +25,14 @@ public class Perm {
 	     
 	     private List<Role> roleList;
 
-		public int getId() {
-			return id;
+	     
+
+		public int getPeid() {
+			return peid;
 		}
 
-		public void setId(int id) {
-			this.id = id;
+		public void setPeid(int peid) {
+			this.peid = peid;
 		}
 
 		public String getCode() {

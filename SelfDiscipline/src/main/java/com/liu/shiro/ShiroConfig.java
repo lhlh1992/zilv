@@ -73,32 +73,23 @@ public class ShiroConfig {
         
 		//拦截器.
 		Map<String,String> hashMap = new LinkedHashMap<String,String>();
-//		hashMap.put("/user/**", "authc");
-		hashMap.put("/dic/**", "authc,kickout");
+		hashMap.put("/user/**", "authc");
+		hashMap.put("/dic/**", "authc");
 		hashMap.put("/**", "anon");
-		// 配置不会被拦截的链接 顺序判断
-		//filterChainDefinitionMap.put("/static/**", "anon");
-		//配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
-		//filterChainDefinitionMap.put("/logout", "logout");
-		//<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
-		//<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-		//filterChainDefinitionMap.put("/static/templates/**", "authc");
-		// 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-		//shiroFilterFactoryBean.setLoginUrl("/login/loginUser");
-		// 登录成功后要跳转的链接
-		//shiroFilterFactoryBean.setSuccessUrl("/login/home");
-
-		//未授权界面;
-		//shiroFilterFactoryBean.setUnauthorizedUrl("/base/error");
-		shiroFilter.setFilterChainDefinitionMap(hashMap);
-		
-
-		
-		
+		shiroFilter.setFilterChainDefinitionMap(hashMap);	
 		return shiroFilter;
 
 	}
 	
+	@Bean
+	public DefaultWebSecurityManager securityManager(){
+		DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+		 securityManager.setCacheManager(ehCacheManager());//用户授权/认证信息Cache, 采用EhCache 缓存
+		 securityManager.setSessionManager(sessionManager());
+		 securityManager.setRealm(myShiroRealm());
+		return securityManager;
+	}
+	 
 
 	@Bean(name = "ehCacheManager")
     @DependsOn("lifecycleBeanPostProcessor")
@@ -115,7 +106,7 @@ public class ShiroConfig {
     public RedisCacheManager cacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
-        redisCacheManager.setKeyPrefix("SPRINGBOOT_CACHE:");   //设置前缀
+        redisCacheManager.setKeyPrefix("token_cache:");   //设置前缀
         return redisCacheManager;
     }
     
@@ -161,7 +152,7 @@ public class ShiroConfig {
     public RedisSessionDAO redisSessionDAO() {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         redisSessionDAO.setRedisManager(redisManager());
-        redisSessionDAO.setKeyPrefix("SPRINGBOOT_SESSION:");
+        redisSessionDAO.setKeyPrefix("UserToken:");
         return redisSessionDAO;
     }
 
@@ -209,14 +200,6 @@ public class ShiroConfig {
 	}
 
 
-	@Bean
-	public DefaultWebSecurityManager securityManager(){
-		DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
-		 securityManager.setCacheManager(ehCacheManager());//用户授权/认证信息Cache, 采用EhCache 缓存
-		 securityManager.setSessionManager(sessionManager());
-		 securityManager.setRealm(myShiroRealm());
-		return securityManager;
-	}
 	
 	
 	

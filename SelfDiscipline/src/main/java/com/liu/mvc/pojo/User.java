@@ -4,7 +4,7 @@ import java.util.List;
 
 public class User {
 					
-				private String id;
+				private String uid;
 				
 				private String  username;
 				
@@ -17,12 +17,14 @@ public class User {
 				
 				
 
-				public String getId() {
-					return id;
+				
+
+				public String getUid() {
+					return uid;
 				}
 
-				public void setId(String id) {
-					this.id = id;
+				public void setUid(String uid) {
+					this.uid = uid;
 				}
 
 				public String getUsername() {

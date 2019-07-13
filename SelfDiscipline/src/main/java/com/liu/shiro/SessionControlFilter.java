@@ -3,6 +3,7 @@ package com.liu.shiro;
 
 import com.alibaba.fastjson.JSON;
 import com.liu.mvc.pojo.User;
+import com.liu.mvc.service.IUserService;
 
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
@@ -12,7 +13,8 @@ import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
- 
+
+import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +35,9 @@ public class SessionControlFilter extends AccessControlFilter{
 	 
 	    private SessionManager sessionManager;
 	    private Cache<String, Deque<Serializable>> cache;
+	    
+	    @Resource
+		private IUserService userService;
 	 
 	    @Override
 	    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
@@ -46,10 +51,13 @@ public class SessionControlFilter extends AccessControlFilter{
 	            //如果没有登录，直接进行之后的流程
 	            return true;
 	        }
-	        System.out.println("777777777777");
-	 
+ 
 	        Session session = subject.getSession();
-	        User user = (User) subject.getPrincipal();
+	        System.out.println(String.valueOf(subject.getPrincipal()));
+	        User u = new User();
+	        u.setUsername(String.valueOf(subject.getPrincipal()));
+	        User user = userService.getUser(u);
+	        //User user = (User) subject.getPrincipal();
 	        String username = user.getUsername();
 	        Serializable sessionId = session.getId();
 	 

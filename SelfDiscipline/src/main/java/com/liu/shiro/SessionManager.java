@@ -11,6 +11,8 @@ import org.apache.shiro.web.util.WebUtils;
  
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
 import java.io.Serializable;
 
 
@@ -28,6 +30,9 @@ public class SessionManager extends DefaultWebSessionManager{
 	    @Override
 	    protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
 	    	System.out.println("getSessionId+++++++++");
+	    	 HttpServletRequest req = (HttpServletRequest) request;
+	    	 String authorization = req.getHeader("Authorization");
+	    	 System.out.println(authorization);
 	        //获取请求头，或者请求参数中的Token
 	        String id = StringUtils.isEmpty(WebUtils.toHttp(request).getHeader(AUTHORIZATION))
 	                ? request.getParameter(AUTHORIZATION) : WebUtils.toHttp(request).getHeader(AUTHORIZATION);

@@ -50,6 +50,7 @@ public class DicController {
     @RequestMapping(value="/dicitemList")
     @ResponseBody        
        public  List<DicItem> dicitemList(@RequestBody  Map<String,Object> map) {	  
+    	System.out.println("///////////////////////////");
  	    String code ="";
  	   if( map.get("code")!=null) {
  		  code =  map.get("code").toString();

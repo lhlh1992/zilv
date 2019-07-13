@@ -37,7 +37,7 @@ export class SystemManageUserComponent implements OnInit {
   }
 
   query(){
-    this.http.post(this.config.url+'user/getUserList',
+    this.config.post(this.config.url+'user/getUserList',
     {username:''}
     ) .subscribe((res: any) => {       
                     this.data = res;

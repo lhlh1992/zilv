@@ -98,7 +98,7 @@ export class GuanliViewComponent implements OnInit {
   //获取回填
   queryRiji(){
     console.log('获取回填。。。。。。')
-      this.http.post(this.config.url+'Diary/selectDiary',
+      this.config.post(this.config.url+'Diary/selectDiary',
       {'id':this.rijiId}
       ) .subscribe((res: any) => {
              this.dateTime = res[0].create_time!=''?res[0].create_time:'';//获取添加时间，当做页面回填展示
@@ -160,7 +160,7 @@ export class GuanliViewComponent implements OnInit {
 
    //获取运动字典配置列表
    queryItem(){
-    this.http.post(this.config.url+'dic/dicitemList',
+    this.config.post(this.config.url+'dic/dicitemList',
     {code:'sports_type'}
     ) .subscribe((res: any) => {       
              this.listOfData = res           
@@ -169,7 +169,7 @@ export class GuanliViewComponent implements OnInit {
     //获取饮食字典配置列表
     queryDiet(){
       console.log('获取饮食字典。。。。。。')
-      this.http.post(this.config.url+'dic/dicitemList',
+      this.config.post(this.config.url+'dic/dicitemList',
       {code:'diet_type'}
       ) .subscribe((res: any) => {  
                let map={} 
@@ -241,7 +241,7 @@ export class GuanliViewComponent implements OnInit {
           addORedit='Diary/editDiary' 
           message='修改'
         }      
-        this.http.post(this.config.url+addORedit,
+        this.config.post(this.config.url+addORedit,
         {studyTimeStart:this.dateFtt('hh:mm',this.studyTimeStart)==null?'null':this.dateFtt('hh:mm',this.studyTimeStart),
          studyTimeEnd:this.dateFtt('hh:mm',this.studyTimeEnd)==null?'null':this.dateFtt('hh:mm',this.studyTimeEnd),
          studyContent:this.studyContent,

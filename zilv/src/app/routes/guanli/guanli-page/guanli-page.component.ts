@@ -49,7 +49,7 @@ export class GuanliGuanliPageComponent implements OnInit {
   
  //获取日记表数据
   query(){
-       this.http.post(this.config.url+'Diary/selectDiary',
+       this.config.post(this.config.url+'Diary/selectDiary',
        {'id':''}
        ) .subscribe((res: any) => {
                   console.log(res)
@@ -219,7 +219,7 @@ delete(ele){
 }
 //删除方法
 handledelete(){
-  this.http.post(this.config.url+'Diary/delDiary',
+  this.config.post(this.config.url+'Diary/delDiary',
   {id:this.id}
   ) .subscribe((res: any) => {
               if(res==1){
@@ -234,7 +234,7 @@ handledelete(){
 //=============导出=======================
 
 download(){
-  this.http.post(this.config.url+'Diary/downExcel',
+  this.config.post(this.config.url+'Diary/downExcel',
   {'id':''}
   ) .subscribe((res: any) => {
              console.log(res)

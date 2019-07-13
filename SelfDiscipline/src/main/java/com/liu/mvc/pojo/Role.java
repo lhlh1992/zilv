@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Role {
 					
-				private int id;
+				private int rid;
 				
 				private String  rolename;
 				
@@ -18,12 +18,15 @@ public class Role {
 				
 				private List<User> UserList;
 
-				public int getId() {
-					return id;
+				
+				
+				
+				public int getRid() {
+					return rid;
 				}
 
-				public void setId(int id) {
-					this.id = id;
+				public void setRid(int rid) {
+					this.rid = rid;
 				}
 
 				public String getRolename() {

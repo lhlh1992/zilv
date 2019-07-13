@@ -22,7 +22,11 @@ import com.liu.mvc.service.IUserService;
 public class UserController {
 			@Autowired	
 			private IUserService userService;
-	
+			
+			
+			
+			@RequiresRoles("admin")
+			@RequiresPermissions("用户管理")
 			@RequestMapping(value="/getUserList")
 			@ResponseBody
 			public List<User> getUserList(@RequestBody Map<String,Object> map){				

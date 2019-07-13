@@ -34,24 +34,6 @@ public class LoginController {
 	private UserMapper userMapper;
 
 	   		
-	  //跳转到登录表单页面
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
-        return "need login";
-    }
-    
-    //登录成功后，跳转的页面
-    @RequestMapping("/success")
-    public String index(Model model) {
-        return "success";
-    }
-
-    //未登录，可以访问的页面
-    @RequestMapping("/index")
-    public String list(Model model) {
-        return "index";
-    }
-	
 
     /**
      * ajax登录请求接口方式登陆
@@ -64,7 +46,7 @@ public class LoginController {
     public Map<String,Object> submitLogin(@RequestBody Map<String,String> json,ServletRequest request) {
     	
     	 HttpServletRequest req = (HttpServletRequest) request;
-    	   String authorization = req.getHeader("Authorization");
+    	 String authorization = req.getHeader("Authorization");
     	 System.out.println(authorization);
     	 
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
@@ -82,7 +64,7 @@ public class LoginController {
       	   String time = s.format(d);
       	   Map<String,String> userMap = new HashMap<String, String>();
       	   
-      	   userMap.put("token", "111111");
+      	   userMap.put("token", String.valueOf(currentUser.getSession().getId()));
       	   userMap.put("name", username);
       	   userMap.put("email", username+"qq@.com");
       	   userMap.put("id", "10000");
