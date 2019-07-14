@@ -173,7 +173,7 @@ export class SystemManageDicitemComponent implements OnInit {
     deleteItem(ele){
       this.itemID = ele.id;
       this.isVisibledeleteItem = true;
-    }
+    } 
 
     handledelete(){
       this.config.post(this.config.url+'dic/deleteDictype',

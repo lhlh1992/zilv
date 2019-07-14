@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ServicesService} from '../../../services/services.service';
+import { StorageService} from '../../../services/storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
   SocialService,
@@ -41,7 +42,8 @@ export class UserLoginComponent implements OnDestroy {
     private startupSrv: StartupService,
     public http: _HttpClient,
     public msg: NzMessageService,
-    private config:ServicesService
+    private config:ServicesService,
+    private Storag:StorageService
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required, Validators.minLength(3)]],
@@ -114,7 +116,7 @@ export class UserLoginComponent implements OnDestroy {
     // 默认配置中对所有HTTP请求都会强制 [校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
 
-    this.config
+    this.http
       .post(this.config.url+'/login',{
           username: this.userName.value,
           password: this.password.value,
@@ -127,8 +129,7 @@ export class UserLoginComponent implements OnDestroy {
       // 清空路由复用信息
       this.reuseTabService.clear();
       // 设置用户Token信息
-      console.log(res.user.token)
-      this.config.setToken(res.user.token)
+      this.Storag.setlocalStorage('Token',res.user.token)
       this.tokenService.set(res.user);
       // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
       console.log(this.tokenService.referrer.url)
@@ -141,30 +142,7 @@ export class UserLoginComponent implements OnDestroy {
     });
 
 
-    // this.http
-    //   .post(this.config.url+'/login', {
-    //     username: this.userName.value,
-    //     password: this.password.value,
-    //   })
-    //   .subscribe((res: any) => {
-    //     if (res.msg !== 'ok') {
-    //       this.error = res.count;
-    //       return 
-    //     }
-    //     // 清空路由复用信息
-    //     this.reuseTabService.clear();
-    //     // 设置用户Token信息
-    //     this.tokenService.set(res.user);
-    //     // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
-    //     console.log(this.tokenService.referrer.url)
-    //     this.startupSrv.load().then(() => {
-    //       let url = this.tokenService.referrer.url || '/';
-    //       console.log(url)
-    //       if (url.includes('/passport')) url = '/';
-    //       this.router.navigateByUrl(url);
-    //     });
-    //   });
-
+ 
  
   }
 

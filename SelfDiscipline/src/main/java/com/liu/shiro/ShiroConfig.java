@@ -121,7 +121,7 @@ public class ShiroConfig {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(redisHost);
         redisManager.setPort(redisPort);
-        redisManager.setTimeout(1); //设置过期时间
+        redisManager.setTimeout(60); //设置过期时间
         redisManager.setPassword(redisPassword);
         return redisManager;
     }

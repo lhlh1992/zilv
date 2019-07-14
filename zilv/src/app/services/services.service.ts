@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { StorageService} from '../services/storage.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -7,16 +8,12 @@ export class ServicesService {
   public url='http://localhost:8080/';
 
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient,
+              private Storag:StorageService        
+            ) { 
 
   }
 
-  public token=''
-
-  //设置token，作为和后端交互的令牌，通过请求头传到后端
-  setToken(token){
-      this.token=token
-  } 
  
     /**
   * post查询方式
@@ -27,7 +24,7 @@ export class ServicesService {
  post(url, param) {
   let headers= new HttpHeaders(
     {'Content-Type':'application/json',
-     'Authorization':this.token
+     'Authorization':this.Storag.getItem('Token')
     }
   )
   return this.http.post(url, param,{headers:headers}) 
