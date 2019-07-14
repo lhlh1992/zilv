@@ -43,7 +43,6 @@ public class ShiroConfig {
 	
 	@Bean
 	public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {		
-		System.out.println("ShiroConfiguration.shirFilter()");
 		ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
 		shiroFilter.setSecurityManager(securityManager);
 		  /**
@@ -68,14 +67,16 @@ public class ShiroConfig {
         //自定义拦截器
         Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
         //限制同一帐号同时在线的个数。
-        filtersMap.put("kickout", kickoutSessionControlFilter());
-        shiroFilter.setFilters(filtersMap);
+//        filtersMap.put("kickout", kickoutSessionControlFilter());
+//        shiroFilter.setFilters(filtersMap);
         
 		//拦截器.
 		Map<String,String> hashMap = new LinkedHashMap<String,String>();
+		hashMap.put("/login", "anon");
 		hashMap.put("/user/**", "authc");
 		hashMap.put("/dic/**", "authc");
-		hashMap.put("/**", "anon");
+		hashMap.put("/**", "authc");
+		
 		shiroFilter.setFilterChainDefinitionMap(hashMap);	
 		return shiroFilter;
 
@@ -83,7 +84,7 @@ public class ShiroConfig {
 	
 	@Bean
 	public DefaultWebSecurityManager securityManager(){
-		DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+		 DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
 		 securityManager.setCacheManager(ehCacheManager());//用户授权/认证信息Cache, 采用EhCache 缓存
 		 securityManager.setSessionManager(sessionManager());
 		 securityManager.setRealm(myShiroRealm());
@@ -94,12 +95,12 @@ public class ShiroConfig {
 	@Bean(name = "ehCacheManager")
     @DependsOn("lifecycleBeanPostProcessor")
         public EhCacheManager ehCacheManager(){
-        EhCacheManager ehCacheManager = new EhCacheManager();
+        EhCacheManager ehCacheManager = new EhCacheManager();      
         return ehCacheManager;
     }
 	  /**
      * cacheManager 缓存 redis实现
-                  * 使用的是shiro-redis开源插件
+     * 使用的是shiro-redis开源插件
      *
      * @return
      */
@@ -120,7 +121,7 @@ public class ShiroConfig {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(redisHost);
         redisManager.setPort(redisPort);
-        redisManager.setTimeout(1800); //设置过期时间
+        redisManager.setTimeout(1); //设置过期时间
         redisManager.setPassword(redisPassword);
         return redisManager;
     }
@@ -161,16 +162,16 @@ public class ShiroConfig {
      *
      * @return
      */
-    @Bean
-    public SessionControlFilter kickoutSessionControlFilter() {
-        SessionControlFilter kickoutSessionControlFilter = new SessionControlFilter();
-        kickoutSessionControlFilter.setCache(cacheManager());
-        kickoutSessionControlFilter.setSessionManager(sessionManager());
-        kickoutSessionControlFilter.setKickoutAfter(false);
-        kickoutSessionControlFilter.setMaxSession(1);
-        kickoutSessionControlFilter.setKickoutUrl("/common/kickout");
-        return kickoutSessionControlFilter;
-    }
+//    @Bean
+//    public SessionControlFilter kickoutSessionControlFilter() {
+//        SessionControlFilter kickoutSessionControlFilter = new SessionControlFilter();
+//        kickoutSessionControlFilter.setCache(cacheManager());
+//        kickoutSessionControlFilter.setSessionManager(sessionManager());
+//        kickoutSessionControlFilter.setKickoutAfter(false);
+//        kickoutSessionControlFilter.setMaxSession(1);
+//        kickoutSessionControlFilter.setKickoutUrl("/common/kickout");
+//        return kickoutSessionControlFilter;
+//    }
 
 
 
@@ -189,7 +190,7 @@ public class ShiroConfig {
 		return hashedCredentialsMatcher;
 	}
 	/**
-	    *     身份认证realm; (这个需要自己写，账号密码校验；权限等)
+	 * 身份认证realm; (这个需要自己写，账号密码校验；权限等)
 	 * @return
 	 */
 	@Bean

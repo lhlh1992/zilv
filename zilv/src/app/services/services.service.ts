@@ -11,28 +11,13 @@ export class ServicesService {
 
   }
 
-//     /**
-//   * post查询方式
-//   * @param url   请求地址
-//   * @param param   参数
-//   * @returns {any}  返回json格式数据
-//   */
-//  post(url, param, callback) {
-//   let headers= new HttpHeaders(
-//     {'Content-Type':'application/json',
-//      'Authorization':'eqweqwe'
-//     }
-//   )
+  public token=''
 
-//   this.http.post(url, param,{headers:headers}) 
-//     .subscribe(function (res) {  
-//       callback('success', res)
-//     }, function (err) {
-//       callback('error', err)
-//     });
-// }
-
-
+  //设置token，作为和后端交互的令牌，通过请求头传到后端
+  setToken(token){
+      this.token=token
+  } 
+ 
     /**
   * post查询方式
   * @param url   请求地址
@@ -42,7 +27,7 @@ export class ServicesService {
  post(url, param) {
   let headers= new HttpHeaders(
     {'Content-Type':'application/json',
-     'Authorization':'df4b5474-fd86-4a02-9078-4d4977a83356'
+     'Authorization':this.token
     }
   )
   return this.http.post(url, param,{headers:headers}) 

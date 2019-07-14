@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class SessionManager extends DefaultWebSessionManager{
 			
 	
-	 private static final String AUTHORIZATION = "Token";
+	 private static final String AUTHORIZATION = "Authorization";
 	 
 	    private static final String REFERENCED_SESSION_ID_SOURCE = "Stateless request";
 	 
@@ -29,14 +29,12 @@ public class SessionManager extends DefaultWebSessionManager{
 	 
 	    @Override
 	    protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
-	    	System.out.println("getSessionId+++++++++");
 	    	 HttpServletRequest req = (HttpServletRequest) request;
 	    	 String authorization = req.getHeader("Authorization");
-	    	 System.out.println(authorization);
 	        //获取请求头，或者请求参数中的Token
 	        String id = StringUtils.isEmpty(WebUtils.toHttp(request).getHeader(AUTHORIZATION))
 	                ? request.getParameter(AUTHORIZATION) : WebUtils.toHttp(request).getHeader(AUTHORIZATION);
-	               System.out.println(id);
+	        System.out.println("getSessionId::----"+id);
 	        // 如果请求头中有 Token 则其值为sessionId
 	        if (StringUtils.isNotEmpty(id)) {
 	            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, REFERENCED_SESSION_ID_SOURCE);

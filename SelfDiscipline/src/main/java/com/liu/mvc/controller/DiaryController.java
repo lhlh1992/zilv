@@ -44,7 +44,6 @@ public class DiaryController {
 	@RequestMapping(value = "/selectDiary")
 	@ResponseBody
 	public List<Diary> selectDiary(@RequestBody Map<String, Object> map) {
-		System.out.println();
 		String id = map.get("id").toString();
 		return iDiaryService.selectDiary(id);
 	}
