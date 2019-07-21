@@ -41,7 +41,6 @@ public class ShiroRealm extends AuthorizingRealm{
 	 	        u.setUsername(String.valueOf(principals.getPrimaryPrincipal()));
 	 	        List<User> userInfoList = userService.getUserList(String.valueOf(principals.getPrimaryPrincipal()));
 	 	        User userInfo=userInfoList.get(0);
-	 	        System.out.println(userInfo.getRoleList());
 	 	        List<Role> roleList = userInfo.getRoleList();
 		        for(Role role:roleList){        	
 		            authorizationInfo.addRole(role.getRolename());

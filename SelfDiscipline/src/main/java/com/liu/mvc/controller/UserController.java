@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.liu.mvc.pojo.Role;
 import com.liu.mvc.pojo.User;
 import com.liu.mvc.service.IUserService;
 
@@ -23,16 +24,13 @@ public class UserController {
 			@Autowired	
 			private IUserService userService;
 			
-			
-			
-			//@RequiresRoles("liu")
+		
 			@RequiresPermissions("用户管理列表查看")
 			@RequestMapping(value="/getUserList")
 			@ResponseBody
 			public List<User> getUserList(@RequestBody Map<String,Object> map){				
 				String uname = map.get("username").toString();		
 				List<User> userList = userService.getUserList(uname);
-				System.out.println(userList.size());
 				return userList;
 			}
 			

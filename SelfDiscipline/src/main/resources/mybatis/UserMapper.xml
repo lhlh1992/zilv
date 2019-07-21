@@ -4,10 +4,11 @@
 <!--命名空间是对应接口的包名+类名 -->
 <mapper namespace="com.liu.mvc.dao.user.UserMapper">
 		<resultMap id="BaseResultMap" type="user" >
-			<id column="id" property="id" />
+			<id column="uid" property="uid" />
 			<result column="username" property="username" />
 			<result column="password" property="password" />
 			<result column="salt" property="salt" />
+			<result column="is_Banning" property="is_Banning" />
 			<collection property="roleList" ofType="com.liu.mvc.pojo.Role" javaType="ArrayList">
 				<id column="rid" property="rid" />
 				<result column="rolename" property="rolename" />
@@ -15,8 +16,8 @@
 				<result column="available" property="available" />
 			</collection>
 		</resultMap>
-  		
-  		
+		
+  			
   		<select id="getUser" parameterType="User"  resultType="User">
   			SELECT uid,username,password,salt
   			FROM
@@ -38,6 +39,7 @@
 				u.username,
 				u.PASSWORD,
 				u.salt,
+				u.is_Banning,
 			    r.rid,
 				r.rolename,
 				r.available,
@@ -57,10 +59,5 @@
   		<insert id="addUser" parameterType="User">
   			 INSERT INTO t_user (id,username,password,salt) VALUES(#{id},#{username},#{password},#{salt})
   		</insert>
-  		
-  		
-  		
-  		
-  	
-	
+
 </mapper> 

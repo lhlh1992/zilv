@@ -24,8 +24,31 @@ public class Perm {
 	     private String available;
 	     
 	     private List<Role> roleList;
-
 	     
+	     private String routeName;
+	     
+	     private String fore_End;
+
+	     	
+	     	
+	    
+	
+
+		public String getFore_End() {
+			return fore_End;
+		}
+
+		public void setFore_End(String fore_End) {
+			this.fore_End = fore_End;
+		}
+
+		public String getRouteName() {
+			return routeName;
+		}
+
+		public void setRouteName(String routeName) {
+			this.routeName = routeName;
+		}
 
 		public int getPeid() {
 			return peid;

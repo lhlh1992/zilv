@@ -4,13 +4,15 @@
 <!--命名空间是对应接口的包名+类名 -->
 <mapper namespace="com.liu.mvc.dao.perm.PermMapper">
 		<resultMap type="Perm" id="BaseResultMap">
-			<id column="id" property="id" />
+			<id column="peid" property="peid" />
 			<result column="code" property="code" />
 			<result column="permissionName" property="permissionName" />
 			<result column="url" property="url" />
 			<result column="type" property="type" />
 			<result column="pCode" property="pCode" />
 			<result column="available" property="available" />
+			<result column="routeName" property="routeName" />
+			<result column="fore_End" property="fore_End" />
 			<collection property="roleList" ofType="com.liu.mvc.pojo.Role" javaType="ArrayList">
 				<id column="id" property="id" />
 				<result column="rolename" property="rolename" />
@@ -25,23 +27,29 @@
   			
   		<select id="getPermList" parameterType="String"  resultMap="BaseResultMap">
 			SELECT
-					p.id,
+					p.peid,
 					p.`code`,
 					p.permissionName,
 					p.url,
 					p.type,
 					p.pCode,
+					p.routeName,
 					p.available,
+					p.fore_End,
 					r.rolename,
 					r.roleCode
+					
 			FROM
 				t_permission as p
-			LEFT JOIN t_role_per as rp ON p.id=rp.per_id
-			LEFT JOIN t_role as r ON r.id=rp.role_id
+			LEFT JOIN t_role_per as rp ON p.peid=rp.per_id
+			LEFT JOIN t_role as r ON r.rid=rp.role_id
   			WHERE
   			 1=1		 
   			<if test="permissionName!='' and permissionName!=null">
   				AND permissionName=#{permissionName}
+  			</if>
+  			<if test="peid!='' and peid!=null">
+  				AND p.peid=#{peid}
   			</if>
   		</select>
   		

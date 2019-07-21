@@ -14,10 +14,26 @@ public class User {
 				
 				private List<Role> roleList;
 				
+				private String is_Banning;
+							
+				private String roleStr; //拥有角色字符串，逗号分隔
 				
-				
+			
+				public String getIs_Banning() {
+					return is_Banning;
+				}
 
-				
+				public void setIs_Banning(String is_Banning) {
+					this.is_Banning = is_Banning;
+				}
+
+				public String getRoleStr() {
+					return roleStr;
+				}
+
+				public void setRoleStr(String roleStr) {
+					this.roleStr = roleStr;
+				}
 
 				public String getUid() {
 					return uid;

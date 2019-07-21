@@ -130,12 +130,12 @@ export class UserLoginComponent implements OnDestroy {
       this.reuseTabService.clear();
       // 设置用户Token信息
       this.Storag.setlocalStorage('Token',res.user.token)
+      this.Storag.setlocalStorage('menu',res.user.menu)
       this.tokenService.set(res.user);
       // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
       console.log(this.tokenService.referrer.url)
       this.startupSrv.load().then(() => {
         let url = this.tokenService.referrer.url || '/';
-        console.log(url)
         if (url.includes('/passport')) url = '/';
         this.router.navigateByUrl(url);
       });

@@ -18,6 +18,8 @@
 				<result column="type" property="type" />
 				<result column="pCode" property="pCode" />
 				<result column="available" property="available" />
+				<result column="routeName" property="routeName" />
+				<result column="fore_End" property="fore_End" />
 			</collection>
 			<collection property="UserList" ofType="com.liu.mvc.pojo.User" javaType="ArrayList">
 				<id column="uid" property="uid" />
@@ -35,6 +37,7 @@
 					r.rolename,
 					r.available,
 					r.description,
+					p.peid,
 					p.`code`,
 					p.permissionName,
 					p.available,
@@ -54,5 +57,45 @@
   				AND r.rolename=#{rolename}
   			</if>
   	</select>
+  	
+  	<select id="createRoute" parameterType="String" resultMap="BaseResultMap">
+			SELECT
+				b.permissionName ,
+				a.routeName,
+				a.fore_End,
+				a.url,
+				a.peid,
+				a.pCode 
+			FROM
+				(
+					SELECT
+						u.username,
+						r.rolename,
+						p.url,
+						p.pCode,
+						p.routeName,
+						p.fore_End,
+						p.peid
+					FROM
+						t_user AS u
+					LEFT JOIN t_user_role AS ur ON ur.user_id = u.uid
+					LEFT JOIN t_role AS r ON ur.role_id = r.rid
+					LEFT JOIN t_role_per AS rp ON rp.role_id = r.rid
+					LEFT JOIN t_permission AS p ON p.peid = rp.per_id
+				) a
+			LEFT JOIN (
+				SELECT
+					tp.peid,
+					tp.permissionName
+				FROM
+					t_permission tp
+			) b ON a.pCode = b.peid
+			WHERE
+			1 = 1
+  			<if test="username!='' and username!=null">
+  				AND a.username=#{username}
+  			</if>
+  		</select>
+  		
 	
 </mapper> 

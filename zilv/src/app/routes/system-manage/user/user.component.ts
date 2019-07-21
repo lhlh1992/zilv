@@ -15,6 +15,8 @@ export class SystemManageUserComponent implements OnInit {
   @ViewChild('st') st: STComponent;
   columns: STColumn[] = [
     { title: '用户名', index: 'username' },
+    { title: '所属角色', index: 'roleStr' },
+    { title: '是否启用', index: 'is_Banning' },
     {
       title: '',
       buttons: [
@@ -40,7 +42,7 @@ export class SystemManageUserComponent implements OnInit {
     this.config.post(this.config.url+'user/getUserList',
     {username:''}
     ) .subscribe((res: any) => {       
-                    this.data = res;
+                    this.data = res;                            
       });
   }
 

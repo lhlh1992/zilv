@@ -73,6 +73,7 @@ public class ShiroConfig {
 		//拦截器.
 		Map<String,String> hashMap = new LinkedHashMap<String,String>();
 		hashMap.put("/login", "anon");
+		hashMap.put("/createRoute", "anon");
 		hashMap.put("/user/**", "authc");
 		hashMap.put("/dic/**", "authc");
 		hashMap.put("/**", "authc");

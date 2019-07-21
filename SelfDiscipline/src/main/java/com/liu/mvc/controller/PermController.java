@@ -28,8 +28,9 @@ public class PermController {
 			@RequestMapping(value="/getPermList")
 			@ResponseBody
 			public List<Perm> getPermList(@RequestBody Map<String,Object> map){				
-				String pname = map.get("pname").toString();		
-				List<Perm> permList = permService.getPermList(pname);			
+				String pname = map.get("pname").toString();	
+				String id = map.get("peid").toString();	
+				List<Perm> permList = permService.getPermList(pname,id);			
 				return permList;
 			}
 			

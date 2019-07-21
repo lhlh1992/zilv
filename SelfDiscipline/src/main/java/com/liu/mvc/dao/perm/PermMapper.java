@@ -9,5 +9,5 @@ import com.liu.mvc.pojo.Perm;
 
 public interface PermMapper {
 			
-	 List<Perm> getPermList(@Param("permissionName") String u);
+	 List<Perm> getPermList(@Param("permissionName") String u,@Param("peid")String id);
 }

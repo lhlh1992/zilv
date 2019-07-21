@@ -9,10 +9,10 @@ public interface IPermService {
 				
 	      
 	         
-	         public List<Perm> getPermList(String u);
+	         public List<Perm> getPermList(String u,String id);
 	         
 	         
-	      
+	         public  String getUserMenu(String uname);
 
 	
 }

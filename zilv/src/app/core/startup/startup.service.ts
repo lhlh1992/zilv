@@ -12,7 +12,7 @@ import { I18NService } from '../i18n/i18n.service';
 import { NzIconService } from 'ng-zorro-antd';
 import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
-
+import { StorageService} from '../../services/storage.service';
 /**
  * 用于应用启动时
  * 一般用来获取应用所需要的基础数据等
@@ -29,7 +29,8 @@ export class StartupService {
     private titleService: TitleService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private httpClient: HttpClient,
-    private injector: Injector
+    private injector: Injector,
+    private Storag:StorageService
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
@@ -103,37 +104,31 @@ export class StartupService {
     this.settingService.setUser(user);
     // ACL：设置权限为全量
     this.aclService.setFull(true);
+    console.log(JSON.parse(this.Storag.getItem("menu"))  )
+
+    
+    
     // 初始化菜单
     this.menuService.add([
       {
-        text: '主导航',
-        group: true,
-        children: [
-          // {
-          //   text: '仪表盘',
-          //   link: '/dashboard',
-          //   icon: { type: 'icon', value: 'appstore' }
-          // },
-  
-          {
-            text: '每日记录',
-            link: '/guanli',
-            icon: { type: 'icon', value: 'appstore' },
-            children: [
-               {text:'每日记录',link:'/guanli/guanliPage'}
+        text: '',
+        children: JSON.parse(this.Storag.getItem("menu"))
+        // [           
+        //   {
+        //     "text": '每日记录',
+        //     "children": [
+        //        {"text":'日记',"link":'/guanli/guanliPage'}
         
-            ]
-          },
-          {
-            text: '系统管理',
-            link: '',
-            icon: { type: 'icon', value: 'appstore' },
-            children: [
-               {text:'字典管理',link:'/sys/dicitem'},
-               {text:'用户管理',link:'/sys/user'}
-            ]
-          },
-        ] 
+        //     ]
+        //   },
+        //   {
+        //     "text": '系统管理',
+        //     "children": [
+        //        {"text":'字典管理',"link":'/sys/dicitem'},
+        //        {"text":'用户管理',"link":'/sys/user'}
+        //     ]
+        //   },
+        // ] 
       }
     ]);
     // 设置页面标题的后缀
@@ -142,6 +137,9 @@ export class StartupService {
     resolve({});
   }
 
+  jsonToMap(jsonStr) {
+    return new Map(JSON.parse(jsonStr));
+  }
   load(): Promise<any> {
     // only works with promises
     // https://github.com/angular/angular/issues/15088

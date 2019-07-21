@@ -1,6 +1,7 @@
 package com.liu.mvc.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.liu.mvc.pojo.User;
 
@@ -12,6 +13,6 @@ public interface IUserService {
 	         
 	         
 	         public int addUser(User u);
+	         
 
-	
 }

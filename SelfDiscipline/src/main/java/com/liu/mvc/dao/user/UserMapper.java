@@ -1,6 +1,7 @@
 package com.liu.mvc.dao.user;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -13,7 +14,7 @@ public interface UserMapper {
 	       User getUser(User u);
 	       
 	       List<User> getUserList(@Param("username") String u);
-	       
-	       
+	       	       
 	       int addUser(User u);
+	       
 }

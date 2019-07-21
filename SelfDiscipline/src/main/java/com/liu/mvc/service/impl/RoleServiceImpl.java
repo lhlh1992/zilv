@@ -1,6 +1,9 @@
 package com.liu.mvc.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -8,8 +11,10 @@ import javax.annotation.Resource;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
 import com.liu.mvc.dao.role.RoleMapper;
 import com.liu.mvc.dao.user.UserMapper;
+import com.liu.mvc.pojo.Perm;
 import com.liu.mvc.pojo.Role;
 import com.liu.mvc.pojo.User;
 import com.liu.mvc.service.IRoleService;
@@ -25,6 +30,67 @@ public class RoleServiceImpl implements IRoleService{
 	public List<Role> getRoleList(String u) {
 		// TODO Auto-generated method stub
 		return roleDao.getRoleList(u);
+	}
+
+	@Override
+	public String createRoute(String uname) {
+		// TODO Auto-generated method stub
+		List<Role> rList = roleDao.createRoute(uname);
+		List<Map<String,Object>> list = new ArrayList<>();//向前台传的List
+		List<String> rolePerm= new ArrayList<>();//判断一级菜单的重复
+		for(Role r:rList) {		
+		  if(r!=null) {
+			  Map<String,Object> level1=new HashMap();
+				List<Perm> pList =r.getPerList();
+				//循环权限菜单  
+				for(Perm p:pList) {
+					//这里进行判断，如果一级菜单没有产生过
+					if(!(rolePerm.contains(p.getpCode()))) {
+						level1.put("text", p.getPermissionName());	
+						rolePerm.add(p.getpCode());	
+						List<Map<String,String>> lm=new ArrayList<>();
+						Map<String,String>  map = new HashMap<>();//children里的子菜单，map
+						map.put("text",p.getRouteName());
+		    			map.put("link",p.getFore_End()); 
+		    			lm.add(map);
+		    			level1.put("children", lm);
+		    			
+	  	        	}
+					//这里进行判断，如果产生过这个一级菜单，就把这条路由，加到这个一级菜单下
+					else {
+	  	        		Map<String,Object> bigMap=new HashMap<>();
+	  	        			for(Map<String,Object> l1:list) {
+		  	        		 bigMap=l1;
+		  	        		 //这里不用再对bigMap进行遍历！！！遍历了反而会乱，因为有多个key-value，这里直接指定key为text，就OK撩
+		  	        		 if(bigMap.get("text").equals(p.getPermissionName())) {	
+		  	        			boolean flag=true;
+								List<Map<String,String>> lm=(List<Map<String, String>>) bigMap.get("children");
+								//这个遍历lm的原因在于,如果出现了用户存在多个角色，而多个角色有重复的权限的情况，这里不会对重复的权限进行处理添加
+								for(Map<String,String> childrenMap:lm) {
+										if(childrenMap.get("text").equals(p.getRouteName())) {
+											flag=false;
+										}
+								}
+								if(flag) {
+									Map<String,String>  map = new HashMap<>();//children里的子菜单，map
+									map.put("text",p.getRouteName());
+					    			map.put("link",p.getFore_End()); 
+					    			lm.add(map);
+								}	  	        				
+		  	        		 }
+	  	        		}	        		
+	  	        	}  			
+				}	
+				//判断，如果不是空Map,就加到list里面，完活
+				if(!level1.isEmpty()) {
+					list.add(level1);
+				}		 
+		  }		
+		}	
+		
+		Gson gson = new Gson();
+	    String jsonStr = gson.toJson(list);
+		return jsonStr;
 	}
 
 	

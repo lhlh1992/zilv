@@ -1,6 +1,7 @@
 package com.liu.mvc.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -9,6 +10,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
 
 import com.liu.mvc.dao.user.UserMapper;
+import com.liu.mvc.pojo.Role;
 import com.liu.mvc.pojo.User;
 import com.liu.mvc.service.IUserService;
 
@@ -25,9 +27,30 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public List<User> getUserList(String u) {
+	public List<User> getUserList(String uname) {
 		// TODO Auto-generated method stub
-		return userDao.getUserList(u);
+		List<User> userList =  userDao.getUserList(uname);
+		for(User u:userList) {
+			List<Role> rlist = u.getRoleList();
+			//处理角色显示
+			String str="";
+			for(Role r:rlist) {
+				 str=str+r.getRolename()+",";
+			}
+			str=str.substring(0, str.length()-1);
+			if(str.length()>13) {
+					str=str.substring(0, 13)+"...";
+			}
+			u.setRoleStr(str);
+			//处理状态字段
+			if(u.getIs_Banning().equals("1")) {
+				u.setIs_Banning("已启用");
+			}else {
+				u.setIs_Banning("禁用中");
+			}
+			
+	}
+		return userList;
 	}
 
 	@Override
@@ -47,5 +70,7 @@ public class UserServiceImpl implements IUserService{
 		u.setSalt(salt);
 		return userDao.addUser(u);
 	}
+
+	
 
 }
