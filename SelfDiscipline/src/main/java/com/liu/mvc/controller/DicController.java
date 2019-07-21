@@ -36,7 +36,7 @@ public class DicController {
 	
 	
 	
-    //@RequiresRoles("admin")
+    @RequiresRoles("超级管理员")
     @RequiresPermissions("字典管理列表查看")
     @RequestMapping(value="/dictypeList")
     @ResponseBody        
@@ -46,7 +46,8 @@ public class DicController {
      	List<DicType> list =   dictypeService.selectDictype("", "");
      	return list;
        }
-    
+    @RequiresRoles("超级管理员")
+    @RequiresPermissions("字典配置列表查看")
     @RequestMapping(value="/dicitemList")
     @ResponseBody        
        public  List<DicItem> dicitemList(@RequestBody  Map<String,Object> map) {	  

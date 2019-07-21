@@ -75,7 +75,8 @@
 						p.pCode,
 						p.routeName,
 						p.fore_End,
-						p.peid
+						p.peid,
+						p.type
 					FROM
 						t_user AS u
 					LEFT JOIN t_user_role AS ur ON ur.user_id = u.uid
@@ -91,7 +92,7 @@
 					t_permission tp
 			) b ON a.pCode = b.peid
 			WHERE
-			1 = 1
+			a.type='0' 
   			<if test="username!='' and username!=null">
   				AND a.username=#{username}
   			</if>

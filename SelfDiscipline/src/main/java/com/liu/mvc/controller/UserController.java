@@ -24,7 +24,7 @@ public class UserController {
 			@Autowired	
 			private IUserService userService;
 			
-		
+			@RequiresRoles("超级管理员")
 			@RequiresPermissions("用户管理列表查看")
 			@RequestMapping(value="/getUserList")
 			@ResponseBody

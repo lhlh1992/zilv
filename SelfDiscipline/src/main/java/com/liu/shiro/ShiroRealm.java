@@ -52,7 +52,8 @@ public class ShiroRealm extends AuthorizingRealm{
 		        }
 		       System.out.println("获取到以下权限=============");
 		       System.out.println(authorizationInfo.getStringPermissions().toString());
-		       
+		       System.out.println("获取到以下角色=============");
+		       System.out.println(authorizationInfo.getRoles().toString());
 	     
 	        
 	        return authorizationInfo;
