@@ -2,6 +2,7 @@ package com.liu.mvc.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -31,9 +32,13 @@ public class RoleServiceImpl implements IRoleService{
 		// TODO Auto-generated method stub
 		return roleDao.getRoleList(u);
 	}
-
+	
+	
+	/**
+	  *  获取路由，因数据库表改变，弃用
+	 */
 	@Override
-	public String createRoute(String uname) {
+	public List<Role> createRoute2(String uname) {
 		// TODO Auto-generated method stub
 		List<Role> rList = roleDao.createRoute(uname);
 		List<Map<String,Object>> list = new ArrayList<>();//向前台传的List
@@ -89,6 +94,64 @@ public class RoleServiceImpl implements IRoleService{
 		}	
 		
 		Gson gson = new Gson();
+	    String jsonStr = gson.toJson(list);
+		return rList;
+	}
+	
+	
+
+	@Override
+	public String createRoute(String uname) {
+		// TODO Auto-generated method stub
+		List<Role> rList = roleDao.createRoute(uname);
+		List<Map<String,Object>> list = new ArrayList<>();//向前台传的List
+		List<String> distinctText= new ArrayList<>();//判断一级菜单的重复
+		for(Role r:rList) {		
+		  if(r!=null) {	
+			  List<Perm> pList =r.getPerList();
+				//循环权限菜单  
+				for(Perm p:pList) {
+					Map<String,Object> level1=new LinkedHashMap(); //一级目录
+					if(!(distinctText.contains(String.valueOf(p.getPeid())))) {
+						if(p.getMenu_level().equals("1")) {
+							level1.put("text", p.getPermissionName());	
+							level1.put("id", p.getPeid());	
+							level1.put("children", new ArrayList<>());	
+							distinctText.add(String.valueOf(p.getPeid()));
+						}	
+					}
+						
+					if(!level1.isEmpty()) {
+						list.add(level1);								
+					}							
+					if(!(p.getpCode().equals("0"))) {
+						String pCode=p.getpCode();						
+						for(Map<String,Object> ml:list) {
+							String id=ml.get("id").toString();
+							List<Map<String,String>> children = (List<Map<String, String>>) ml.get("children");//children List
+							if(pCode.equals(id)) {
+								boolean flag = true;
+								for(Map<String,String> m:children) {
+									if(m.get("text").equals(p.getPermissionName())) {
+										flag = false;
+									}								
+								}
+								if(flag){
+									Map<String,String>  map = new LinkedHashMap<>();//children里的子菜单，map
+									map.put("text",p.getPermissionName());
+					    			map.put("link",p.getFore_End()); 
+					    			children.add(map);	
+					    			ml.put("children", children);
+								}					
+							}					
+						}	
+
+					}						
+				}	
+		  }		
+		}	
+		Gson gson = new Gson();
+		System.out.println(list);
 	    String jsonStr = gson.toJson(list);
 		return jsonStr;
 	}

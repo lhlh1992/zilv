@@ -71,7 +71,7 @@ public class LoginController {
             Subject currentUser = SecurityUtils.getSubject();             
             SecurityUtils.getSubject().login(token);
             String menu = roleService.createRoute(username);
-
+            //String menu = "";
       	    Map<String,String> userMap = new HashMap<String, String>();
      	    
       	    userMap.put("token", String.valueOf(currentUser.getSession().getId()));
@@ -105,8 +105,8 @@ public class LoginController {
      */
     @RequestMapping(value="/createRoute",method= RequestMethod.POST)
     @ResponseBody
-    public String createRoute(String name) {
-    	String uuu = roleService.createRoute(name);
+    public List<Role> createRoute(String name) {
+    	List<Role> uuu = roleService.createRoute2(name);
         return uuu;
      
     }

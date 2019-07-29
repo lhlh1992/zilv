@@ -42,13 +42,17 @@ public class ShiroRealm extends AuthorizingRealm{
 	 	        List<User> userInfoList = userService.getUserList(String.valueOf(principals.getPrimaryPrincipal()));
 	 	        User userInfo=userInfoList.get(0);
 	 	        List<Role> roleList = userInfo.getRoleList();
-		        for(Role role:roleList){        	
-		            authorizationInfo.addRole(role.getRolename());
-		            List<Role> r = roleService.getRoleList(role.getRolename());
-		            Role ro = r.get(0);
-		            for(Perm p:ro.getPerList()){
-		                authorizationInfo.addStringPermission(p.getPermissionName());
-		            }
+		        for(Role role:roleList){   
+		        
+		        		 authorizationInfo.addRole(role.getRolename());
+				            List<Role> r = roleService.getRoleList(role.getRolename());
+				            Role ro = r.get(0);
+				            for(Perm p:ro.getPerList()){
+				            	if(p.getPermissionName()!=null &&p.getPermissionName()!="") {
+				            		 authorizationInfo.addStringPermission(p.getPermissionName());
+				            	}	               
+				            }
+          
 		        }
 		       System.out.println("获取到以下权限=============");
 		       System.out.println(authorizationInfo.getStringPermissions().toString());

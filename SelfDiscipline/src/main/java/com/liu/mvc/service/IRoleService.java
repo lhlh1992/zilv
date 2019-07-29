@@ -15,5 +15,7 @@ public interface IRoleService {
 	         
 	         public String createRoute(String u);
 	         
+	         public List<Role> createRoute2(String u);
+	         
 	
 }

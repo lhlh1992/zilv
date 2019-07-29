@@ -25,7 +25,7 @@ public class UserController {
 			private IUserService userService;
 			
 			@RequiresRoles("超级管理员")
-			@RequiresPermissions("用户管理列表查看")
+			@RequiresPermissions("用户管理列表")
 			@RequestMapping(value="/getUserList")
 			@ResponseBody
 			public List<User> getUserList(@RequestBody Map<String,Object> map){				

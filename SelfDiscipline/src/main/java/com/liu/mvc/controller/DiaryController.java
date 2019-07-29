@@ -17,6 +17,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.poi.hssf.record.ProtectRecord;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,7 +43,8 @@ public class DiaryController {
 	@Autowired
 	public IDiaryService iDiaryService;
 
-	@RequiresPermissions("每日日记列表查看")
+	@RequiresPermissions("日记列表查看")
+	//@RequiresRoles("超级管理员")
 	@RequestMapping(value = "/selectDiary")
 	@ResponseBody
 	public List<Diary> selectDiary(@RequestBody Map<String, Object> map) {

@@ -29,10 +29,21 @@ public class Perm {
 	     
 	     private String fore_End;
 
-	     	
+	     private String menu_level;	
 	     	
 	    
-	
+	     
+	     
+	     
+
+	     
+		public String getMenu_level() {
+			return menu_level;
+		}
+
+		public void setMenu_level(String menu_level) {
+			this.menu_level = menu_level;
+		}
 
 		public String getFore_End() {
 			return fore_End;
