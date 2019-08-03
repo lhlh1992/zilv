@@ -166,7 +166,6 @@ export class GuanliGuanliPageComponent implements OnInit {
   // 获取日记表数据
   query() {
     this.config.post(this.config.url + 'Diary/selectDiary', { id: '' }).subscribe((res: any) => {
-      console.log(res);
       this.data = res;
     });
   }
@@ -442,7 +441,7 @@ export class GuanliGuanliPageComponent implements OnInit {
     if (lunarDay % 10 != 0 || lunarDay == 10) {
       day = this.lunar.number.charAt((lunarDay - 1) % 10);
     }
-    let data = {
+    const data = {
       tg,
       dz,
       year,
@@ -456,7 +455,7 @@ export class GuanliGuanliPageComponent implements OnInit {
   // 日期格式化
   dateFtt(fmt, date) {
     // author: meizz
-    let o = {
+    const o = {
       'M+': date.getMonth() + 1, // 月份
       'd+': date.getDate(), // 日
       'h+': date.getHours(), // 小时
@@ -466,7 +465,7 @@ export class GuanliGuanliPageComponent implements OnInit {
       S: date.getMilliseconds(), // 毫秒
     };
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
-    for (let k in o)
+    for (const k in o)
       if (new RegExp('(' + k + ')').test(fmt))
         fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length));
     return fmt;

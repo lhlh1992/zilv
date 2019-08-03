@@ -42,13 +42,6 @@ public class UserServiceImpl implements IUserService{
 					str=str.substring(0, 13)+"...";
 			}
 			u.setRoleStr(str);
-			//处理状态字段
-			if(u.getIs_Banning().equals("1")) {
-				u.setIs_Banning("已启用");
-			}else {
-				u.setIs_Banning("禁用中");
-			}
-			
 	}
 		return userList;
 	}
