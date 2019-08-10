@@ -14,18 +14,21 @@ public class User {
 				
 				private List<Role> roleList;
 				
-				private boolean is_Banning;
+				private boolean Banning;
 							
 				private String roleStr; //拥有角色字符串，逗号分隔
 				
 				
+				
+				
 
-				public boolean isIs_Banning() {
-					return is_Banning;
+				
+				public boolean isBanning() {
+					return Banning;
 				}
 
-				public void setIs_Banning(boolean is_Banning) {
-					this.is_Banning = is_Banning;
+				public void setBanning(boolean banning) {
+					Banning = banning;
 				}
 
 				public String getRoleStr() {

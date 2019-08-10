@@ -8,6 +8,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -78,7 +79,10 @@ public class ShiroRealm extends AuthorizingRealm{
 	        if(userInfo == null){
 	            return null;
 	        }
-	       
+		     
+	        if(!userInfo.isBanning()) {
+	        	 throw new LockedAccountException();
+	        }
 	        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
 	        		userInfo.getUsername(), //用户名
 	                userInfo.getPassword(), //密码

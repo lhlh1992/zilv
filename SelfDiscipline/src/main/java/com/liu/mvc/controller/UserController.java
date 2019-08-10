@@ -34,12 +34,50 @@ public class UserController {
 				return userList;
 			}
 			
+			@RequiresRoles("超级管理员")
+			@RequiresPermissions("用户添加")
 			@RequestMapping(value="/addUser")
 			@ResponseBody
-			public int addUser(User u){				
-				
-				int i = userService.addUser(u);
-				
+			public int addUser(@RequestBody Map<String,Object> map){				
+				User u=new User();		
+				u.setUsername(map.get("username").toString());
+				u.setPassword(map.get("password").toString());
+				int i = userService.addUser(u);			
 				return i;
+			}
+			
+			@RequiresRoles("超级管理员")
+			@RequiresPermissions("用户修改")
+			@RequestMapping(value="/editUser")
+			@ResponseBody
+			public int editUser(@RequestBody Map<String,Object> map){				
+				User u=new User();		
+				u.setUsername(map.get("username").toString());
+				u.setPassword(map.get("password").toString());
+				u.setUid(map.get("uid").toString());
+				int i = userService.editUser(u);			
+				return i;
+			}
+			
+			@RequiresRoles("超级管理员")
+			@RequiresPermissions("用户禁用")
+			@RequestMapping(value="/BanUser")
+			@ResponseBody
+			public User BanUser(@RequestBody Map<String,Object> map){				
+				User u=new User();				
+				u.setUid(map.get("uid").toString());
+				User user = userService.banUser(u);			
+				return user;
+			}
+			
+			
+			@RequiresRoles("超级管理员")
+			@RequiresPermissions("用户删除")
+			@RequestMapping(value="/deleteUser")
+			@ResponseBody
+			public int deleteUser(String uid){				
+				System.out.println(uid);
+				int user = userService.deleteUser(uid);			
+				return user;
 			}
 }

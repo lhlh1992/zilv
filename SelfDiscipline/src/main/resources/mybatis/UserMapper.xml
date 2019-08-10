@@ -8,7 +8,7 @@
 			<result column="username" property="username" />
 			<result column="password" property="password" />
 			<result column="salt" property="salt" />
-			<result column="is_Banning" property="is_Banning" />
+			<result column="Banning" property="Banning" />
 			<collection property="roleList" ofType="com.liu.mvc.pojo.Role" javaType="ArrayList">
 				<id column="rid" property="rid" />
 				<result column="rolename" property="rolename" />
@@ -19,7 +19,7 @@
 		
   			
   		<select id="getUser" parameterType="User"  resultType="User">
-  			SELECT uid,username,password,salt
+  			SELECT uid,username,password,salt,Banning
   			FROM
   			t_user
   			WHERE
@@ -30,6 +30,9 @@
   			<if test="password!='' and password!=null">
   				AND password=#{password}
   			</if>
+  			<if test="uid!='' and uid!=null">
+  				AND uid=#{uid}
+  			</if>
   		</select>
   		
   			
@@ -39,7 +42,7 @@
 				u.username,
 				u.PASSWORD,
 				u.salt,
-				u.is_Banning,
+				u.Banning,
 			    r.rid,
 				r.rolename,
 				r.available,
@@ -57,7 +60,29 @@
   		
   		
   		<insert id="addUser" parameterType="User">
-  			 INSERT INTO t_user (id,username,password,salt) VALUES(#{id},#{username},#{password},#{salt})
+  			 INSERT INTO t_user (uid,username,password,salt,Banning) VALUES(#{uid},#{username},#{password},#{salt},#{Banning})
   		</insert>
-
+		
+		<update id="editUser" parameterType="User" >
+			 UPDATE t_user  t
+	       <set>   
+	        <if test="password!=null and password!=''">
+	        		t.password=#{password},
+	        </if>
+	        <if test="salt!=null and salt!=''">
+	        		t.salt=#{salt},
+	        </if>
+	        <if test="Banning!=null">
+	        		t.Banning=#{Banning},
+	        </if>
+	    </set>   
+	      WHERE 
+	      t.uid = #{uid}	
+		</update>
+		
+		
+		<delete id="deleteUser" parameterType="String">
+			DELETE FROM t_user 
+			WHERE uid = #{uid}
+		</delete>
 </mapper> 

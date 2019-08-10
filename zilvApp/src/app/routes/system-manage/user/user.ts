@@ -1,7 +1,7 @@
 export interface UserBean {
   credentialsSalt: string;
 
-  is_Banning: boolean;
+  banning: boolean;
 
   password: string;
 

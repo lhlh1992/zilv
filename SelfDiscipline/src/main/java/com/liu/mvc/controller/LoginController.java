@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -57,21 +58,14 @@ public class LoginController {
     @RequestMapping(value="/login",method= RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> submitLogin(@RequestBody Map<String,String> json,ServletRequest request) {
-    	
-    	 HttpServletRequest req = (HttpServletRequest) request;
-    	 String authorization = req.getHeader("Authorization");
-    	
-    	 
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         String username = json.get("username").toString();
   	    String password = json.get("password").toString();
         try {
-
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             Subject currentUser = SecurityUtils.getSubject();             
             SecurityUtils.getSubject().login(token);
             String menu = roleService.createRoute(username);
-            //String menu = "";
       	    Map<String,String> userMap = new HashMap<String, String>();
      	    
       	    userMap.put("token", String.valueOf(currentUser.getSession().getId()));
@@ -92,6 +86,11 @@ public class LoginController {
         	Map<String,Object> m = new HashMap<String, Object>();
         	m.put("msg", "error");
         	m.put("count", "密码不正确");
+        	return m;
+        }catch (LockedAccountException e) {
+        	Map<String,Object> m = new HashMap<String, Object>();
+        	m.put("msg", "error");
+        	m.put("count", "账号已冻结");
         	return m;
         }
      

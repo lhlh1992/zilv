@@ -14,5 +14,10 @@ public interface IUserService {
 	         
 	         public int addUser(User u);
 	         
-
+	         public int editUser(User u);
+	         
+	         public User banUser(User u);
+	         
+	         
+	         public int deleteUser(String id);
 }

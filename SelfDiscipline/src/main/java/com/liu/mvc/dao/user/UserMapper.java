@@ -17,4 +17,8 @@ public interface UserMapper {
 	       	       
 	       int addUser(User u);
 	       
+	       int editUser(User u);
+	       
+	       int deleteUser(@Param("uid")String id);
+	       
 }

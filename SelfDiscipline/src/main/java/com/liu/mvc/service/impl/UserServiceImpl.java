@@ -37,10 +37,12 @@ public class UserServiceImpl implements IUserService{
 			for(Role r:rlist) {
 				 str=str+r.getRolename()+",";
 			}
-			str=str.substring(0, str.length()-1);
-			if(str.length()>13) {
+			if(str!="") {
+				str=str.substring(0, str.length()-1);
+				if(str.length()>13) {
 					str=str.substring(0, 13)+"...";
-			}
+				}	
+			}		
 			u.setRoleStr(str);
 	}
 		return userList;
@@ -61,7 +63,48 @@ public class UserServiceImpl implements IUserService{
 		u.setUsername(username);
 		u.setPassword(result.toString());
 		u.setSalt(salt);
+		u.setBanning(true);
 		return userDao.addUser(u);
+	}
+
+	@Override
+	public int editUser(User u) {
+		// TODO Auto-generated method stub
+		String salt = UUID.randomUUID().toString().replaceAll("-", "");  //随机盐值
+		String username=u.getUsername();
+		String password=u.getPassword();
+		String hashAlgorithmName = "MD5";//加密方式
+		int hashIterations = 1024;//加密1024次
+		String unsalt = username+salt;   //盐值处理成用户名+盐值，有利于数据的安全
+		//加密加盐后的MD5密码
+		Object result = new SimpleHash(hashAlgorithmName,password,unsalt,hashIterations);
+		u.setUid(u.getUid());
+		u.setUsername(username);
+		u.setPassword(result.toString());
+		u.setSalt(salt);
+		return userDao.editUser(u);
+	}
+
+	@Override
+	public User banUser(User u) {
+		User uu = userDao.getUser(u);
+		if(uu.isBanning()) {
+			uu.setBanning(false);
+		}else{
+			uu.setBanning(true);
+		}
+		int i= userDao.editUser(uu);
+		User user=new User();
+		if(i>0) {
+			user=userDao.getUser(u);
+		}
+		return user;
+	}
+
+	@Override
+	public int deleteUser(String id) {
+		// TODO Auto-generated method stub
+		return userDao.deleteUser(id);
 	}
 
 	
