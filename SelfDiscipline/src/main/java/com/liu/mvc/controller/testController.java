@@ -139,6 +139,17 @@ public class testController {
 	           
 	           
 	           
+	           /**
+	            * mybatis一对多映射测试
+	            * @param id
+	            * @return
+	            */
+	           @RequestMapping(value="/qqq")
+	           @ResponseBody
+	           public String qqq(){
+	        	  int i=1/0;
+	        	   return "xxx";
+	           }
 	           
 	        
 	           

@@ -31,6 +31,7 @@ export class SystemManageUserComponent implements OnInit {
   password = '';
   checkPassword = '';
   uid = '';
+  Banning = '';
   // ================
 
   // ====删除模态框
@@ -96,6 +97,10 @@ export class SystemManageUserComponent implements OnInit {
   columns: STColumn[] = [
     { title: '用户名', index: 'username' },
     { title: '所属角色', index: 'roleStr' },
+    { title: '创建时间', index: 'create_time' },
+    { title: '创建人', index: 'create_user' },
+    { title: '最后修改时间', index: 'update_time' },
+    { title: '最后修改人', index: 'update_user' },
     { title: '是否启用', index: 'banning', renderTitle: 'customTitle', render: 'custom' },
     {
       title: '操作',
@@ -135,15 +140,21 @@ export class SystemManageUserComponent implements OnInit {
   }
 
   edit(e) {
+    console.log(e);
     this.password = '';
     this.checkPassword = '';
     this.uid = e.uid;
     this.username = e.username;
+    this.Banning = e.banning;
     this.isVisiblePassword = true;
   }
   delete(e) {
-    this.isVisibledelete = true;
-    this.uid = e.uid;
+    if (e.username == 'admin') {
+      this.msg.error('顶级超级管理员不能删除！');
+    } else {
+      this.isVisibledelete = true;
+      this.uid = e.uid;
+    }
   }
 
   addrole(e) {
@@ -222,7 +233,12 @@ export class SystemManageUserComponent implements OnInit {
   // 用户修改
   handleOkEdit() {
     this.config
-      .post(this.config.url + 'user/editUser', { username: this.username, password: this.password, uid: this.uid })
+      .post(this.config.url + 'user/editUser', {
+        username: this.username,
+        password: this.password,
+        uid: this.uid,
+        Banning: this.Banning,
+      })
       .subscribe((res: any) => {
         this.msg.success('修改密码成功');
         this.isVisiblePassword = false;

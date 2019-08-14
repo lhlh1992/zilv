@@ -14,7 +14,7 @@
 			<result column="routeName" property="routeName" />
 			<result column="fore_End" property="fore_End" />
 			<collection property="roleList" ofType="com.liu.mvc.pojo.Role" javaType="ArrayList">
-				<id column="id" property="id" />
+				<id column="rid" property="rid" />
 				<result column="rolename" property="rolename" />
 				<result column="roleCode" property="roleCode" />
 				<result column="description" property="description" />

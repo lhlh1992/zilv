@@ -10,6 +10,10 @@
 			<result column="roleCode" property="roleCode" />
 			<result column="description" property="description" />
 			<result column="available" property="available" />
+			<result column="create_time" property="create_time" />
+			<result column="create_user" property="create_user" />
+			<result column="update_time" property="update_time" />
+			<result column="update_user" property="update_user" />
 			<collection property="perList" ofType="com.liu.mvc.pojo.Perm" javaType="ArrayList">
 				<id column="peid" property="peid" />
 				<result column="code" property="code" />
@@ -30,6 +34,23 @@
 			</collection>
 		</resultMap>
 	
+	<select id="getRole" parameterType="Role"  resultType="Role">
+  			SELECT rid,rolename,roleCode,description,available,create_time,create_user,update_time,update_user
+  			FROM
+  			t_role
+  			WHERE
+  			 1=1		 
+  			<if test="rolename!='' and rolename!=null">
+  				AND rolename=#{rolename}
+  			</if>
+  			<if test="roleCode!='' and roleCode!=null">
+  				AND roleCode=#{roleCode}
+  			</if>
+  			<if test="rid!='' and rid!=null">
+  				AND rid=#{rid}
+  			</if>
+  		</select>
+	
     
   	<select id="getRoleList" parameterType="String"  resultMap="BaseResultMap">
 		   SELECT
@@ -45,7 +66,11 @@
 					p.url,
 					p.type,
 					p.pCode,
-					u.username
+					u.username,
+					r.create_time,
+					r.create_user,
+					r.update_time,
+					r.update_user
 			FROM
 				t_role as r
 			LEFT JOIN t_role_per as rp ON rp.role_id=r.rid
@@ -58,7 +83,7 @@
   				AND r.rolename=#{rolename}
   			</if>
   	</select>
-  	
+  	 <!-- 暂时弃用 -->
   	<select id="createRoute2" parameterType="String" resultMap="BaseResultMap">
 			SELECT
 				b.permissionName ,
@@ -99,29 +124,73 @@
   			</if>
   		</select>
   		
-  			<select id="createRoute" parameterType="String" resultMap="BaseResultMap">
-				SELECT
-				p.peid,
-				p.permissionName,
-				p.url,
-				p.pCode,
-				p.type,
-				p.fore_End,
-				p.menu_level,
-				p.orderNum
-			FROM
-				t_user AS u
-			LEFT JOIN t_user_role AS ur ON ur.user_id = u.uid
-			LEFT JOIN t_role AS r ON ur.role_id = r.rid
-			LEFT JOIN t_role_per AS rp ON rp.role_id = r.rid
-			LEFT JOIN t_permission AS p ON p.peid = rp.per_id
-			WHERE
-				1=1
-  			<if test="username!='' and username!=null">
-  				AND u.username=#{username}
-  			</if>
-  			ORDER BY p.menu_level ASC,p.orderNum ASC
-  		</select>
+  		<!-- 获取登录菜单 -->
+		<select id="createRoute" parameterType="String" resultMap="BaseResultMap">
+			SELECT
+			p.peid,
+			p.permissionName,
+			p.url,
+			p.pCode,
+			p.type,
+			p.fore_End,
+			p.menu_level,
+			p.orderNum
+		FROM
+			t_user AS u
+		LEFT JOIN t_user_role AS ur ON ur.user_id = u.uid
+		LEFT JOIN t_role AS r ON ur.role_id = r.rid
+		LEFT JOIN t_role_per AS rp ON rp.role_id = r.rid
+		LEFT JOIN t_permission AS p ON p.peid = rp.per_id
+		WHERE
+			1=1
+				<if test="username!='' and username!=null">
+					AND u.username=#{username}
+				</if>
+				ORDER BY p.menu_level ASC,p.orderNum ASC
+	  </select>
+	  
+	  
+	  <insert id="addRole" parameterType="Role">
+	  		INSERT INTO t_role (rolename,roleCode,description,available,create_time,create_user) VALUES(#{rolename},#{roleCode},#{description},#{available},Now(),#{create_user})
+	  </insert>
   		
+  	  <update id="editRole" parameterType="Role" >
+			 UPDATE t_role  t
+	       <set>   
+	       		t.update_time=Now(),
+	       		t.update_user=#{update_user},
+	        <if test="rolename!=null and rolename!=''">
+	        		t.rolename=#{rolename},
+	        </if>
+	        <if test="roleCode!=null and roleCode!=''">
+	        		t.roleCode=#{roleCode},
+	        </if>
+	        <if test="description!=null and description!=''">
+	        		t.description=#{description},
+	        </if>
+	        <if test="available!=null">
+	        		t.available=#{available},
+	        </if>
+	        
+	  </set>   
+	      WHERE 
+	      t.rid = #{rid}	
+	  </update>
+  		
+		
+			
+	  <delete id="deleteRole" parameterType="int">
+			DELETE FROM t_role 
+			WHERE rid = #{rid}
+	  </delete>
 	
+	<delete id="deleteUserRole" parameterType="String">
+		DELETE FROM t_user_role 
+		WHERE role_id = #{rid}
+	</delete>
+	
+	<delete id="deleteRolePrem" parameterType="String">
+		DELETE FROM t_role_per 
+		WHERE role_id = #{rid}
+	</delete>
 </mapper> 

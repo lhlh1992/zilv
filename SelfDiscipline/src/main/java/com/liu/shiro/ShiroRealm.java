@@ -18,6 +18,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import com.liu.mvc.pojo.Perm;
 import com.liu.mvc.pojo.Role;
@@ -27,17 +29,19 @@ import com.liu.mvc.service.IUserService;
 
 public class ShiroRealm extends AuthorizingRealm{
 	
-	@Resource
+	@Autowired
+	@Lazy
 	private IUserService userService;
-	@Resource
+	@Autowired
+	@Lazy
 	private IRoleService roleService;
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		  System.out.println("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
-		
+
 	        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-	      
+
 	        	User u=new User();
 	 	        u.setUsername(String.valueOf(principals.getPrimaryPrincipal()));
 	 	        List<User> userInfoList = userService.getUserList(String.valueOf(principals.getPrimaryPrincipal()));
@@ -89,6 +93,7 @@ public class ShiroRealm extends AuthorizingRealm{
 	                ByteSource.Util.bytes(userInfo.getCredentialsSalt()),//salt=username+salt 盐值
 	                getName()  //realm name   
 	        );
+	        //SecurityUtils.getSubject().getSession().setAttribute("permissions", userInfo);
 	        return simpleAuthenticationInfo;
 	}
 

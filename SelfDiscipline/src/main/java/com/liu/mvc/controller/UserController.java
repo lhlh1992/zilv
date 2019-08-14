@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,10 @@ public class UserController {
 			@RequestMapping(value="/editUser")
 			@ResponseBody
 			public int editUser(@RequestBody Map<String,Object> map){				
-				User u=new User();		
+				User u=new User();				
 				u.setUsername(map.get("username").toString());
 				u.setPassword(map.get("password").toString());
+				u.setBanning(Boolean.parseBoolean(map.get("Banning").toString()));
 				u.setUid(map.get("uid").toString());
 				int i = userService.editUser(u);			
 				return i;
@@ -75,9 +77,9 @@ public class UserController {
 			@RequiresPermissions("用户删除")
 			@RequestMapping(value="/deleteUser")
 			@ResponseBody
-			public int deleteUser(String uid){				
+			public int deleteUser(String uid){		
 				System.out.println(uid);
-				int user = userService.deleteUser(uid);			
+				int user= userService.deleteUser(uid);		
 				return user;
 			}
 }

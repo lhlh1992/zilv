@@ -9,8 +9,10 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.liu.mvc.dao.role.RoleMapper;
@@ -151,11 +153,66 @@ public class RoleServiceImpl implements IRoleService{
 		  }		
 		}	
 		Gson gson = new Gson();
-		System.out.println(list);
 	    String jsonStr = gson.toJson(list);
 		return jsonStr;
 	}
 
-	
+
+	@Override
+	public int addRole(Role role) {
+		role.setAvailable(true);
+		//shiro中获取登录名
+		String userName=(String)SecurityUtils.getSubject().getPrincipal();	
+		role.setCreate_user(userName);
+		return roleDao.addRole(role);
+	}
+
+
+	@Override
+	public int editRole(Role role) {
+		System.out.println(role.isAvailable());
+		//shiro中获取登录名
+		String userName=(String)SecurityUtils.getSubject().getPrincipal();	
+		role.setUpdate_user(userName);
+		return  roleDao.editRole(role);
+	}
+
+
+	@Override
+	public Role banRole(Role role) {
+		Role rr = roleDao.getRole(role);
+		
+		if(rr.isAvailable()) {
+			rr.setAvailable(false);
+		}else{
+			rr.setAvailable(true);
+		}
+		//shiro中获取登录名
+		String userName=(String)SecurityUtils.getSubject().getPrincipal();	 
+		rr.setUpdate_user(userName);
+		int i= roleDao.editRole(rr);
+		
+		System.out.println(i);
+		Role ro=new Role();
+		if(i>0) {
+			ro=roleDao.getRole(rr);
+		}
+		return ro;
+	}
+
+
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public int deleteRole(String id) {
+		int i=roleDao.deleteRole(Integer.valueOf(id));
+		if(i>0) {
+			roleDao.deleteRolePrem(id);
+			roleDao.deleteUserRole(id);
+		}
+		return i;
+	}
+
+
+
 
 }

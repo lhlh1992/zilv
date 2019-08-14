@@ -11,14 +11,16 @@ import com.liu.mvc.pojo.User;
 
 public interface UserMapper {
 			 
-	       User getUser(User u);
+		   public  User getUser(User u);
 	       
-	       List<User> getUserList(@Param("username") String u);
+	       public  List<User> getUserList(@Param("username") String u);
 	       	       
-	       int addUser(User u);
+	       public  int addUser(User u);
 	       
-	       int editUser(User u);
+	       public  int editUser(User u);
 	       
-	       int deleteUser(@Param("uid")String id);
+	       public  int deleteUser(@Param("uid")String id);
+	       
+	       public  int deleteUserRole(@Param("uid")String id);
 	       
 }

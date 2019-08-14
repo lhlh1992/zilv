@@ -1,0 +1,50 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl> </ng-template>
+</page-header>
+<div class="mb-md" (keydown)="keydown($event)">
+  <input nz-input [(ngModel)]="searchText" name="searchText" style="width: 250px;" class="mr-sm" />
+  <button nz-button (click)="query()" [nzType]="'primary'">搜索</button>
+  <button nz-button (click)="add()">添加</button>
+  <!-- <button nz-button (click)="deleteuser();st.load(1)">删除</button> -->
+</div>
+
+<st #st [data]="data" [columns]="columns">
+  <ng-template st-row="customTitle" type="title" let-c>
+    {{ c.title }}
+  </ng-template>
+  <ng-template st-row="custom" let-item let-index="index">
+    <nz-switch [ngModel]="item.available" nzCheckedChildren="启用中" nzUnCheckedChildren="已禁用"
+      (ngModelChange)="switchChange(item)">
+    </nz-switch>
+  </ng-template>
+</st>
+
+<!-- 新增角色弹出框 -->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="角色编辑" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <form nz-form [formGroup]="validateForm">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>角色名称</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="角色名称不能为空！">
+        <input nz-input formControlName="rolename" [(ngModel)]="rolename" name="rolename" id="rolename" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="roleCode" nzRequired>角色编号</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="角色编号不能为空">
+        <input nz-input id="roleCode" [(ngModel)]="roleCode" name="roleCode" formControlName="roleCode" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description" nzRequired>描述</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="角色编号不能为空">
+        <input nz-input id="description" [(ngModel)]="description" name="description" formControlName="description" />
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>
+
+
+<!-- 删除确认弹出框 -->
+<nz-modal [(nzVisible)]="isVisibledelete" nzTitle="删除确认" (nzOnCancel)="handleCancel()" (nzOnOk)="handledelete()">
+  确定要删除吗？
+</nz-modal>

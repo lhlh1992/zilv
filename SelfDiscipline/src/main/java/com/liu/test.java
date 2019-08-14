@@ -18,9 +18,7 @@ public class test {
 
 			public static void main(String[] args) {
 
-					String  str="1二3四5六7八九0";
 					
-					System.out.println(str.length());
 				
 			}
 

@@ -9,6 +9,10 @@
 			<result column="password" property="password" />
 			<result column="salt" property="salt" />
 			<result column="Banning" property="Banning" />
+			<result column="create_time" property="create_time" />
+			<result column="create_user" property="create_user" />
+			<result column="update_time" property="update_time" />
+			<result column="update_user" property="update_user" />
 			<collection property="roleList" ofType="com.liu.mvc.pojo.Role" javaType="ArrayList">
 				<id column="rid" property="rid" />
 				<result column="rolename" property="rolename" />
@@ -19,7 +23,7 @@
 		
   			
   		<select id="getUser" parameterType="User"  resultType="User">
-  			SELECT uid,username,password,salt,Banning
+  			SELECT uid,username,password,salt,Banning,create_time,create_user,update_time,update_user
   			FROM
   			t_user
   			WHERE
@@ -46,7 +50,11 @@
 			    r.rid,
 				r.rolename,
 				r.available,
-				r.description
+				r.description,
+				u.create_time,
+				u.create_user,
+				u.update_time,
+				u.update_user
 			FROM
 				t_user as u
 			LEFT JOIN t_user_role as ur  ON ur.user_id=u.uid
@@ -60,12 +68,14 @@
   		
   		
   		<insert id="addUser" parameterType="User">
-  			 INSERT INTO t_user (uid,username,password,salt,Banning) VALUES(#{uid},#{username},#{password},#{salt},#{Banning})
+  			 INSERT INTO t_user (uid,username,password,salt,Banning,create_time,create_user) VALUES(#{uid},#{username},#{password},#{salt},#{Banning},Now(),#{create_user})
   		</insert>
 		
 		<update id="editUser" parameterType="User" >
 			 UPDATE t_user  t
 	       <set>   
+	       		t.update_time=Now(),
+	       		t.update_user=#{update_user},
 	        <if test="password!=null and password!=''">
 	        		t.password=#{password},
 	        </if>
@@ -75,6 +85,7 @@
 	        <if test="Banning!=null">
 	        		t.Banning=#{Banning},
 	        </if>
+	        
 	    </set>   
 	      WHERE 
 	      t.uid = #{uid}	
@@ -85,4 +96,10 @@
 			DELETE FROM t_user 
 			WHERE uid = #{uid}
 		</delete>
+		
+		<delete id="deleteUserRole" parameterType="String">
+			DELETE FROM t_user_role 
+			WHERE user_id = #{uid}
+		</delete>
+		
 </mapper> 

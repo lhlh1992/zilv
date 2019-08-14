@@ -216,7 +216,7 @@ public class ShiroConfig {
 
 	
     /**
-     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证   AOP式方法级权限检查
+                 * 授权所用配置
      */
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {

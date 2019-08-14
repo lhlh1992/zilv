@@ -97,7 +97,7 @@ export class StartupService {
     };
     const user: any = {
       name: 'Admin',
-      avatar: './assets/tmp/img/heipi.jpg',
+      avatar: './assets/tmp/img/liuhui.jpg',
       email: 'cipchk@qq.com',
       token: '123456789',
     };

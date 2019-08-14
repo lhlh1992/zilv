@@ -7,7 +7,7 @@
     <div class="mb-md" (keydown)="keydown($event)">
       <input nz-input [(ngModel)]="searchText" name="searchText" style="width: 250px;" class="mr-sm">
       <button nz-button (click)="query()" [nzType]="'primary'">搜索</button>
-      <button nz-button [acl]="'user'" (click)="add()">添加</button>
+      <button nz-button (click)="add()">添加</button>
       <!-- <button nz-button (click)="deleteuser();st.load(1)">删除</button> -->
     </div>
     <div>

@@ -19,5 +19,5 @@ public interface IUserService {
 	         public User banUser(User u);
 	         
 	         
-	         public int deleteUser(String id);
+	         public int deleteUser (String id);
 }
