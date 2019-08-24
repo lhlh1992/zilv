@@ -1,89 +1,92 @@
+<nz-layout>
+  <nz-content id='rili'>
+    <div>
+      <div
+        style=" text-align: center;font-size: 18px;color: #ffffff;border-bottom: 1px solid #99CCFF;padding-bottom: 20px;padding-top: 10px;  background-color:#3366CC;  ">
+        {{ Today | date: 'yyyy年MM月dd日' }}</div>
+      <div style="position:absolute;top:15%;margin-left: 15px;">
+        <button nz-button nzType="primary" (click)="add(date)"><i nz-icon [nzType]="'plus'"></i>添加今日日记</button>
+        <button nz-button nzType="primary" (click)="download()"><i nz-icon [nzType]="'plus'"></i>导出excel</button>
+      </div>
+    </div>
 
- <nz-layout>
- <nz-content id='rili'>
- <div>
-      <div style=" text-align: center;font-size: 18px;color: #ffffff;border-bottom: 1px solid #99CCFF;padding-bottom: 20px;padding-top: 10px;  background-color:#3366CC;  ">{{ Today | date: 'yyyy年MM月dd日' }}</div>
-         <div style="position:absolute;top:15%;margin-left: 15px;">
-            <button nz-button  nzType="primary"  (click)="add(date)"><i nz-icon [nzType]="'plus'"></i>添加今日日记</button>
-            <button nz-button  nzType="primary"  (click)="download()"><i nz-icon [nzType]="'plus'"></i>导出excel</button>
-         </div>
-  </div>
+    <div>
+      <nz-calendar [(ngModel)]="selectedValue" (click)="selectChange($event)" id='calendar'>
+        <ng-container *nzDateCell="let date">
+          <div *ngIf="getData(date) as Data" class="notes-month">
+            <div *ngIf="Data.str == '--暂无记录--'">
+              <div class='tdDiv' style="font-size: 10px;">
+                <div style="line-height: 5px;margin-top: 3px;">
+                  <p>{{Data.date}}</p>
+                  <p>{{Data.chinaDate}}</p>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+                  <p>{{Data.str}}</p>
+                </div>
+                <div calss='divBut'
+                  style="position: absolute; bottom: 0;right: 0;margin-right: 10px;margin-bottom: 3px; ">
+                  <button class="but" nz-button nzType="primary" nzSize="small" (click)="add(date)" title="添加"> <i
+                      nz-icon [nzType]="'plus'"></i></button>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="Data.str!= '--暂无记录--'">
+              <div class='tdDiv' style="font-size: 10px;">
+                <div style="line-height: 5px;margin-top: 3px;">
+                  <span>{{Data.create_time}}</span> &nbsp; &nbsp; <span>{{Data.chinaDate}}</span>
+                  <p></p>
 
-<div>  
-    <nz-calendar [(ngModel)]="selectedValue" (click)="selectChange($event)" id='calendar'  >       
-         <ng-container *nzDateCell="let date" >              
-             <div *ngIf="getData(date) as Data" class="notes-month" >             
-                  <div *ngIf="Data.str == '--暂无记录--'" >
-                      <div class='tdDiv' style="font-size: 10px;" >                       
-                         <div style="line-height: 5px;margin-top: 3px;">
-                           <p>{{Data.date}}</p>
-                           <p>{{Data.chinaDate}}</p>
-                           <br>
-                           <br>
-                           <br>
-                           <br>
-                           <p>{{Data.str}}</p>                       
-                          </div> 
-                          <div calss='divBut' style="position: absolute; bottom: 0;right: 0;margin-right: 10px;margin-bottom: 3px; ">
-                            <button  class="but" nz-button nzType="primary" nzSize="small" (click)="add(date)" title="添加"> <i nz-icon [nzType]="'plus'"></i></button>  
-                          </div>                                                                    
-                      </div>
-                  </div>    
-                  <div *ngIf="Data.str!= '--暂无记录--'" >
-                    <div  class='tdDiv' style="font-size: 10px;" >          
-                      <div style="line-height: 5px;margin-top: 3px;">
-                        <span>{{Data.create_time}}</span> &nbsp; &nbsp;  <span>{{Data.chinaDate}}</span><p></p>
-                     
-                        <span *ngIf="Data.studyTime!=''">
-                           <nz-tag [nzColor]="'#87d068'">学习{{Data.studyTime}}分钟</nz-tag> 
-                        </span>
-                         <span *ngIf="Data.studyTime==''">
-                            <nz-tag [nzColor]="'#87d068'">没学习</nz-tag> 
-                         </span> 
-                        <span *ngIf="Data.sportsTime!=''"> 
-                          <nz-tag [nzColor]="'#2db7f5'">健身{{Data.sportsTime}}分钟</nz-tag>
-                         </span>
-                         <span *ngIf="Data.sportsTime==''"> 
-                            <nz-tag [nzColor]="'#2db7f5'">没健身</nz-tag>
-                         </span> 
-                        <span *ngIf="Data.sleepTime!=''">
-                           <nz-tag [nzColor]="'#108ee9'">{{Data.sleepTime}}睡觉</nz-tag>
-                        </span>
-                        <span *ngIf="Data.badHabits=='1'">
-                           <nz-tag [nzColor]="'orange'">戒色</nz-tag> 
-                        </span>
-                      <span *ngIf="Data.badHabits=='0'">
-                            <nz-tag [nzColor]="'#f50'">破戒！！</nz-tag> 
-                         </span> 
-                      
-                      <span *ngIf="Data.healthStatus=='1'">
-                            <nz-tag [nzColor]="'#CC3333'">尿床！！</nz-tag> 
-                         </span> 
-                         <span *ngIf="Data.healthStatus=='0'">
-                           <nz-tag [nzColor]="'#99CCFF'">正常！！</nz-tag> 
-                        </span>                        
-                       </div> 
-                       <div calss='divBut' style="position: absolute; bottom: 0;right: 0;margin-right: 10px;margin-bottom: 3px; ">
-                         <button  class="but" nz-button nzType="primary" nzSize="small" (click)="update(Data)" title="编辑修改"> <i nz-icon [nzType]="'edit'"></i></button> 
-                         <button  class="but" nz-button nzType="primary" nzSize="small" (click)="Details(Data)" title="查看详情"> <i nz-icon type="search"></i></button> 
-                         <button  class="but" nz-button nzType="danger" nzSize="small" (click)="delete(Data)" title="删除"> <i nz-icon [nzType]="'delete'"></i></button>  
-                       </div>                       
-                    </div>
-              </div>             
-             </div>
-          </ng-container>           
-    </nz-calendar>
-</div> 
- </nz-content>
+                  <span *ngIf="Data.studyTime!=''">
+                    <nz-tag [nzColor]="'#87d068'">学习{{Data.studyTime}}分钟</nz-tag>
+                  </span>
+                  <span *ngIf="Data.studyTime==''">
+                    <nz-tag [nzColor]="'#87d068'">没学习</nz-tag>
+                  </span>
+                  <span *ngIf="Data.sportsTime!=''">
+                    <nz-tag [nzColor]="'#2db7f5'">健身{{Data.sportsTime}}分钟</nz-tag>
+                  </span>
+                  <span *ngIf="Data.sportsTime==''">
+                    <nz-tag [nzColor]="'#2db7f5'">没健身</nz-tag>
+                  </span>
+                  <span *ngIf="Data.sleepTime!=''">
+                    <nz-tag [nzColor]="'#108ee9'">{{Data.sleepTime}}睡觉</nz-tag>
+                  </span>
+                  <span *ngIf="Data.badHabits=='1'">
+                    <nz-tag [nzColor]="'orange'">戒色</nz-tag>
+                  </span>
+                  <span *ngIf="Data.badHabits=='0'">
+                    <nz-tag [nzColor]="'#f50'">破戒！！</nz-tag>
+                  </span>
+
+                  <span *ngIf="Data.healthStatus=='1'">
+                    <nz-tag [nzColor]="'#CC3333'">虚弱！！</nz-tag>
+                  </span>
+                  <span *ngIf="Data.healthStatus=='0'">
+                    <nz-tag [nzColor]="'#99CCFF'">正常</nz-tag>
+                  </span>
+                </div>
+                <div calss='divBut'
+                  style="position: absolute; bottom: 0;right: 0;margin-right: 10px;margin-bottom: 3px; ">
+                  <button class="but" nz-button nzType="primary" nzSize="small" (click)="update(Data)" title="编辑修改"> <i
+                      nz-icon [nzType]="'edit'"></i></button>
+                  <button class="but" nz-button nzType="primary" nzSize="small" (click)="Details(Data)" title="查看详情"> <i
+                      nz-icon type="search"></i></button>
+                  <button class="but" nz-button nzType="danger" nzSize="small" (click)="delete(Data)" title="删除"> <i
+                      nz-icon [nzType]="'delete'"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </nz-calendar>
+    </div>
+  </nz-content>
 </nz-layout>
 
 
 <!-- 删除确认弹出框 -->
 <nz-modal [(nzVisible)]="isVisibledelete" nzTitle="删除确认" (nzOnCancel)="handleCanceldelete()" (nzOnOk)="handledelete()">
-   确定要删除{{todayData.create_time}}号的日记吗？
- </nz-modal>
-
-
-
-
-
+  确定要删除{{todayData.create_time}}号的日记吗？
+</nz-modal>
