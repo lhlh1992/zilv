@@ -18,6 +18,118 @@ export class GuanliDetailsComponent implements OnInit {
   ) {}
   data = [];
 
+  // =========================
+
+  nodes = [
+    {
+      value: '66666666',
+      type: 'home',
+      index: '0',
+    },
+    {
+      value: '11111111111',
+      type: 'phone',
+      index: '1',
+    },
+    {
+      value: '22222222222',
+      type: 'phone',
+      index: '2',
+    },
+    {
+      value: '33333333333',
+      type: 'phone',
+      index: '3',
+    },
+    {
+      value: '44444444444',
+      type: 'phone',
+      index: '4',
+    },
+    {
+      value: '55555555555',
+      type: 'phone',
+      index: '5',
+    },
+    {
+      value: 'aaa',
+      type: 'weixin',
+      index: '6',
+    },
+    {
+      value: 'bbb',
+      type: 'weixin',
+      index: '7',
+    },
+    {
+      value: 'ccc',
+      type: 'weixin',
+      index: '8',
+    },
+    {
+      value: 'ddd',
+      type: 'weixin',
+      index: '9',
+    },
+    {
+      value: 'eee',
+      type: 'weixin',
+      index: '10',
+    },
+    {
+      value: 'fff',
+      type: 'weixin',
+      index: '11',
+    },
+  ];
+  links = [
+    {
+      source: 0,
+      target: 1,
+    },
+    {
+      source: 0,
+      target: 2,
+    },
+    {
+      source: 0,
+      target: 3,
+    },
+    {
+      source: 0,
+      target: 4,
+    },
+    {
+      source: 0,
+      target: 5,
+    },
+    {
+      source: 2,
+      target: 6,
+    },
+    {
+      source: 2,
+      target: 7,
+    },
+    {
+      source: 2,
+      target: 8,
+    },
+    {
+      source: 3,
+      target: 9,
+    },
+    {
+      source: 3,
+      target: 10,
+    },
+    {
+      source: 3,
+      target: 11,
+    },
+  ];
+  // ================================
+
   dataSet = [
     {
       content: '学习',

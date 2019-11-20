@@ -17,8 +17,9 @@ import org.apache.commons.net.ftp.FTPClient;
 public class test {
 
 			public static void main(String[] args) {
-
-					
+			String	str1="abcd";
+			String	str2="ab";
+		
 				
 			}
 
